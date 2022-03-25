@@ -50,7 +50,7 @@ PODS:
     - RCSceneService
     - RongCloudRTC/RongRTCLib
     - SVProgressHUD
-  - RCSceneRoom (0.0.1):
+  - RCSceneRoom (0.0.2):
     - RCSceneChatroomKit
     - RCSceneMessage
     - RCSceneService
@@ -71,7 +71,7 @@ PODS:
     - RCSceneChat
     - RCSceneGift
     - RCSceneMusic
-    - RCSceneRoom
+    - RCSceneRoom (>= 0.0.2)
     - RCSceneRoomSetting
     - RCVoiceRoomLib
     - ReactorKit
@@ -190,10 +190,10 @@ SPEC CHECKSUMS:
   RCSceneLog: e699010f47737890a3cfab83d830858d16accf6d
   RCSceneMessage: 926880788dcb19bf49c9631e82e1e8abc2957397
   RCSceneMusic: 964f37d0fb47503010255999e51a0e8981e53372
-  RCSceneRoom: 86d8d2e94ad347efc3fcae2d74bdde878a5375ff
+  RCSceneRoom: 01f3043f3501e116e8cd98bba59ff14410f3d0f3
   RCSceneRoomSetting: 11a8e424f770e752205a3dfd5497aa0b0e1ee46e
   RCSceneService: 35b74247b37f15d6ee345e1f05a1a956cfe5f3f2
-  RCSceneVoiceRoom: 0b59652d5858f3fe6904f9e49a2a82cacb5596f7
+  RCSceneVoiceRoom: cfea923528e079ee0c57bfa4f9fcf68c350960f6
   RCVoiceRoomLib: d7ecdac4c55f77e1551692cc6dab129862c9c9fb
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   ReactorKit: e8b11d6b9c415405f381669b095c154a05b59eca
