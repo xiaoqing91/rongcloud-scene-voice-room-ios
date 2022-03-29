@@ -95,7 +95,7 @@ class VoiceRookPKMasterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func updateUser(_ user: VoiceRoomUser) {
+    func updateUser(_ user: RCSceneRoomUser) {
         avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
         nameLabel.text = user.userName
     }

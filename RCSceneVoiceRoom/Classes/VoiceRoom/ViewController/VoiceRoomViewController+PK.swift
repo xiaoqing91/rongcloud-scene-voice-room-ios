@@ -327,7 +327,7 @@ extension VoiceRoomViewController {
         } else if voiceRoomInfo.roomId == pkInfo.inviteeRoomId {
             lookUpUserId = pkInfo.inviterId
         }
-        UserInfoDownloaded.shared.fetch([lookUpUserId]) { list in
+        RCSceneUserManager.shared.fetch([lookUpUserId]) { list in
             guard let user = list.first else {
                 return
             }
@@ -457,7 +457,10 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
         voiceRoomService.isPK(roomId: roomId) { result in
             switch result {
             case .success(let response):
-                guard let status = try? JSONDecoder().decode(RoomPKStatus.self, from: response.data), !status.data else {
+                guard
+                    let status = try? JSONDecoder().decode(RCNetworkWrapper<Bool>.self, from: response.data),
+                        status.data == true
+                else {
                     SVProgressHUD.showError(withStatus: "对方正在PK中")
                     return
                 }

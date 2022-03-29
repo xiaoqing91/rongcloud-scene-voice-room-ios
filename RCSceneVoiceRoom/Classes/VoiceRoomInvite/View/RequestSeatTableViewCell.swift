@@ -85,7 +85,7 @@ class RequestSeatTableViewCell: UITableViewCell, Reusable {
         }
     }
     
-    func updateCell(user: VoiceRoomUser) {
+    func updateCell(user: RCSceneRoomUser) {
         userId = user.userId
         nameLabel.text = user.userName
         avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)

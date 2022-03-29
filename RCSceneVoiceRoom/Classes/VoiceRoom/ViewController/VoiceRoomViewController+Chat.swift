@@ -12,7 +12,7 @@ import RCSceneService
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: managers)
-    private var chat_managers: [VoiceRoomUser] {
+    private var chat_managers: [RCSceneRoomUser] {
         get {
             return managers
         }
@@ -56,7 +56,7 @@ extension VoiceRoomViewController: RCChatroomSceneEventProtocol {
 
 extension VoiceRoomViewController {
     func sendJoinRoomMessage() {
-        UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
+        RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
             let event = RCChatroomEnter()
             event.userId = user.userId
             event.userName = user.userName

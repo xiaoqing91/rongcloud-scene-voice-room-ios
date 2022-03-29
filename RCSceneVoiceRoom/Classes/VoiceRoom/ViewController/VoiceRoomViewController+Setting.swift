@@ -27,7 +27,7 @@ extension VoiceRoomViewController {
                 .seatLock(!roomState.isLockAll),
                 .speaker(enable: !roomState.isSilence),
                 .seatCount(roomState.isSeatModeLess ? 8 : 4),
-                .forbidden(SceneRoomManager.shared.forbiddenWordlist),
+                .forbidden(SceneRoomManager.shared.forbiddenWords),
                 .music
             ]
         }
@@ -94,7 +94,7 @@ extension VoiceRoomViewController {
             switch result {
             case let .success(response):
                 guard
-                    let model = try? JSONDecoder().decode(AppResponse.self, from: response.data),
+                    let model = try? JSONDecoder().decode(RCSceneResponse.self, from: response.data),
                     model.validate()
                 else { return onError() }
                 onSuccess()
@@ -139,7 +139,7 @@ extension VoiceRoomViewController {
     }
     /// 房间背景
     func modifyRoomBackgroundDidClick() {
-        navigator(.changeBackground(imagelist: SceneRoomManager.shared.backgroundlist ,delegate: self))
+        navigator(.changeBackground(imagelist: SceneRoomManager.shared.backgrounds, delegate: self))
     }
     /// 座位数量
     func lessSeatDidClick(isLess: Bool) {
@@ -165,12 +165,12 @@ extension VoiceRoomViewController {
 }
 
 // MARK: - Modify Room type Delegate
-extension VoiceRoomViewController: InputPasswordProtocol {
+extension VoiceRoomViewController: RCSceneRoomPasswordProtocol {
     func passwordDidEnter(password: String) {
         setRoomType(isPrivate: true, password: password)
     }
     #warning("这里可能是从礼物广播消息点击围观房间，输入完成房间密码后，走到这里")
-    func passwordDidVerify(_ room: VoiceRoom) {
+    func passwordDidVerify(_ room: RCSceneRoom) {
         self.roomContainerSwitchRoom(room)
     }
 }
@@ -179,7 +179,7 @@ extension VoiceRoomViewController: ChangeBackgroundImageProtocol {
     func didConfirmImage(urlSuffix: String) {
         NotificationNameRoomBackgroundUpdated.post((voiceRoomInfo.roomId, urlSuffix))
         voiceRoomService.updateRoomBackground(roomId: voiceRoomInfo.roomId, backgroundUrl: urlSuffix) { result in
-            switch result.map(AppResponse.self) {
+            switch result.map(RCSceneResponse.self) {
             case let .success(response):
                 if response.validate() {
                     SVProgressHUD.showSuccess(withStatus: "更新房间背景成功")
@@ -197,7 +197,7 @@ extension VoiceRoomViewController: ChangeBackgroundImageProtocol {
 extension VoiceRoomViewController {
     func roomUpdate(name: String) {
         voiceRoomService.setRoomName(roomId: voiceRoomInfo.roomId, name: name) { result in
-            switch result.map(AppResponse.self) {
+            switch result.map(RCSceneResponse.self) {
             case let .success(response):
                 if response.validate() {
                     SVProgressHUD.showSuccess(withStatus: "更新房间名称成功")

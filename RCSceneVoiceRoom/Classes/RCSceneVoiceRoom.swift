@@ -9,33 +9,7 @@ import UIKit
 import XCoordinator
 import RCSceneRoom
 
-//import RCSceneChat
-//
-//public enum VoiceRoomRouter: Route {
-//    case initial
-//    case messageList
-//    case back
-//}
-//
-//public class VoiceRoomCoordinator: NavigationCoordinator<VoiceRoomRouter> {
-//    override func prepareTransition(for route: VoiceRoomRouter) -> NavigationTransition {
-//        switch route {
-//        case .initial:
-//            let vc = RCRoomEntranceViewController(router: unownedRouter)
-//            vc.hidesBottomBarWhenPushed = true
-//            return .push(vc)
-//        case .back:
-//            return .pop()
-//        case .messageList:
-//            let vc = ChatListViewController(displayConversationTypes: [RCConversationType.ConversationType_PRIVATE.rawValue], collectionConversationType: [])
-//            return .push(vc!)
-//        }
-//    }
-//}
-
-//init(roomInfo: VoiceRoom, isCreate: Bool = false, floatingManager: RCSceneRoomFloatingProtocol?)
-
-public func RCVoiceRoomController(room: VoiceRoom, creation: Bool = false) -> RCRoomCycleProtocol {
+public func RCVoiceRoomController(room: RCSceneRoom, creation: Bool = false) -> RCRoomCycleProtocol {
     return VoiceRoomViewController(roomInfo: room,
                                    isCreate: creation)
 }
@@ -61,4 +35,3 @@ extension VoiceRoomViewController: RCRoomCycleProtocol {
         return [messageView.tableView]
     }
 }
-

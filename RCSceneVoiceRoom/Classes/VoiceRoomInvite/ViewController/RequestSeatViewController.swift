@@ -18,10 +18,10 @@ class RequestSeatViewController: UIViewController {
         instance.dataSource = self
         return instance
     }()
-    private lazy var emptyView = VoiceRoomUserListEmptyView()
+    private lazy var emptyView = RCSceneRoomUsersEmptyView()
     private let acceptUserCallback:((String) -> Void)
     private var userIdlist = [String]()
-    private var userlist = [VoiceRoomUser]() {
+    private var userlist = [RCSceneRoomUser]() {
         didSet {
             emptyView.isHidden = userlist.count > 0
         }
@@ -72,7 +72,7 @@ class RequestSeatViewController: UIViewController {
     
     private func fetchAllUserInfo() {
         voiceRoomService.usersInfo(id: self.userIdlist) { result in
-            switch result.map(RCNetworkWapper<[VoiceRoomUser]>.self) {
+            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 guard let list = wrapper.data else {return}
                 self.userlist = list

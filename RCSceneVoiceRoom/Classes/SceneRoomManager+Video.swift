@@ -10,23 +10,6 @@ import RCSceneFoundation
 import RCSceneService
 import RCSceneRoom
 
-enum PKStatus: Int {
-    case begin = 0
-    case pause
-    case close
-    
-    var name: String {
-        switch self {
-        case .begin:
-            return "开始"
-        case .pause:
-            return "暂停"
-        case .close:
-            return "结束"
-        }
-    }
-}
-
 extension SceneRoomManager {
     /// 合流状态
     var currentPlayingStatus: RCRTCAudioMixingState {
@@ -35,7 +18,7 @@ extension SceneRoomManager {
     
     /// 是否在麦位上：支持语聊房
     func isSitting(_ userId: String = Environment.currentUserId) -> Bool {
-        return seatlist.contains { $0 == userId }
+        return seats.contains { $0 == userId }
     }
     
     /// 是否在麦位上：支持语聊房、直播
@@ -61,7 +44,7 @@ extension SceneRoomManager {
     }
     
     func clear() {
-        seatlist.removeAll()
+        seats.removeAll()
         managers.removeAll()
     }
 }

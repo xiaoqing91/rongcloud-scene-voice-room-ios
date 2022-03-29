@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneVoiceRoom'
-  s.version          = '0.0.2'
+  s.version          = '0.0.2.1'
   s.summary          = 'Scene Voice Room'
   s.description      = "Scene Voice Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -37,8 +37,7 @@ Pod::Spec.new do |s|
   s.dependency 'XCoordinator'
   s.dependency 'IQKeyboardManager'
   
-  s.dependency 'RCSceneRoom', '>= 0.0.2'
-  s.dependency 'RCSceneChat'
+  s.dependency 'RCSceneRoom', '>= 0.0.2.3'
   s.dependency 'RCSceneGift'
   s.dependency 'RCSceneMusic'
   s.dependency 'RCSceneRoomSetting'

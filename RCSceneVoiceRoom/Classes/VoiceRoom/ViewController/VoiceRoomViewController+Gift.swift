@@ -49,7 +49,7 @@ extension VoiceRoomViewController {
         userIds.insert(voiceRoomInfo.userId, at: 0)
         
         let seatUsers: [String] = seatlist.map { $0.userId ?? "" }
-        let dependency = VoiceRoomGiftDependency(room: voiceRoomInfo,
+        let dependency = RCSceneGiftDependency(room: voiceRoomInfo,
                                                  seats: seatUsers,
                                                  userIds: userIds)
         navigator(.gift(dependency: dependency, delegate: self))
@@ -83,7 +83,7 @@ extension VoiceRoomViewController {
 }
 
 
-extension VoiceRoomViewController: VoiceRoomGiftViewControllerDelegate {
+extension VoiceRoomViewController: RCSceneGiftViewControllerDelegate {
     func didSendGift(message: RCMessageContent) {
         if let message = message as? RCChatroomSceneMessageProtocol {
             messageView.addMessage(message)

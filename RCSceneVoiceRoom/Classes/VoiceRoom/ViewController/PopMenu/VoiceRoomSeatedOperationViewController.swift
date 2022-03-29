@@ -77,7 +77,7 @@ class VoiceRoomSeatedOperationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         buildLayout()
-        UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
+        RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
             guard let self = self else { return }
             self.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
             self.nameLabel.text = user.userName

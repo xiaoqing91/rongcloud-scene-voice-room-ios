@@ -122,7 +122,7 @@ class VoiceRoomMasterView: UIView {
     func updateOwner(seatInfo: RCVoiceSeatInfo) {
         self.seatInfo = seatInfo
         if let userId = seatInfo.userId {
-            UserInfoDownloaded.shared.fetchUserInfo(userId: userId) { [weak self] user in
+            RCSceneUserManager.shared.fetchUserInfo(userId: userId) { [weak self] user in
                 self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
                 self?.nameLabel.text = user.userName
             }
@@ -162,7 +162,7 @@ class VoiceRoomMasterView: UIView {
         giftView.isHidden = isHidden
     }
     
-    func updateUser(_ user: VoiceRoomUser) {
+    func updateUser(_ user: RCSceneRoomUser) {
         avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
         nameLabel.text = user.userName
     }

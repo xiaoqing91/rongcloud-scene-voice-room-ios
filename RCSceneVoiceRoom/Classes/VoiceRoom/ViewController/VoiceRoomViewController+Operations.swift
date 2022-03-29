@@ -9,7 +9,6 @@ import UIKit
 import SVProgressHUD
 
 import RCSceneGift
-import RCSceneChat
 import RCSceneRoom
 import RCSceneMessage
 
@@ -50,7 +49,7 @@ extension VoiceRoomViewController {
             seat.userId == userId
         }
         let lock: Bool = seat?.status == .locking
-        let dependency = UserOperationDependency(room: voiceRoomInfo,
+        let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
                                                  userId: userId,
                                                  userRole: role,
                                                  userSeatIndex: index,
@@ -133,7 +132,7 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
 }
 
 // MARK: - Owner Click User Seat Pop view Deleagte
-extension VoiceRoomViewController: UserOperationProtocol {
+extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
     /// 抱下麦
     func kickUserOffSeat(seatIndex: UInt) {
         guard let userId = seatlist[Int(seatIndex)].userId else {
@@ -166,8 +165,8 @@ extension VoiceRoomViewController: UserOperationProtocol {
     /// 踢出房间
     func kickoutRoom(userId: String) {
         RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId) {
-            UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
-                UserInfoDownloaded.shared.fetchUserInfo(userId: userId) { targetUser in
+            RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
+                RCSceneUserManager.shared.fetchUserInfo(userId: userId) { targetUser in
                     let event = RCChatroomKickOut()
                     event.userId = user.userId
                     event.userName = user.userName
@@ -182,7 +181,7 @@ extension VoiceRoomViewController: UserOperationProtocol {
     
     func didSetManager(userId: String, isManager: Bool) {
         fetchmanagers()
-        UserInfoDownloaded.shared.fetchUserInfo(userId: userId) { user in
+        RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in
             let event = RCChatroomAdmin()
             event.userId = user.userId
             event.userName = user.userName
@@ -220,7 +219,7 @@ extension VoiceRoomViewController: UserOperationProtocol {
         }
          
         let seatUsers: [String] = seatlist.map { $0.userId ?? "" }
-        let dependency = VoiceRoomGiftDependency(room: voiceRoomInfo,
+        let dependency = RCSceneGiftDependency(room: voiceRoomInfo,
                                                  seats: seatUsers,
                                                  userIds: [userId])
         navigator(.gift(dependency: dependency, delegate: self))
@@ -232,9 +231,9 @@ extension VoiceRoomViewController: UserOperationProtocol {
     }
     
     func didFollow(userId: String, isFollow: Bool) {
-        UserInfoDownloaded.shared.refreshUserInfo(userId: userId) { followUser in
+        RCSceneUserManager.shared.refreshUserInfo(userId: userId) { followUser in
             guard isFollow else { return }
-            UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
+            RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
                 let message = RCChatroomFollow()
                 message.userInfo = user.rcUser
                 message.targetUserInfo = followUser.rcUser

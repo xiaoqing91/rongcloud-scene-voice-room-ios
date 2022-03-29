@@ -15,13 +15,13 @@ let alertTypeConfirmCloseRoom = "alertTypeConfirmCloseRoom"
 
 struct managersWrapper: Codable {
     let code: Int
-    let data: [VoiceRoomUser]?
+    let data: [RCSceneRoomUser]?
 }
 
 class VoiceRoomViewController: UIViewController {
     weak var roomContainerAction: RCRoomContainerAction?
     dynamic var kvRoomInfo: RCVoiceRoomInfo?
-    dynamic var voiceRoomInfo: VoiceRoom
+    dynamic var voiceRoomInfo: RCSceneRoom
     dynamic var seatlist: [RCVoiceSeatInfo] = {
         var list = [RCVoiceSeatInfo]()
         for _ in 0...8 {
@@ -31,7 +31,7 @@ class VoiceRoomViewController: UIViewController {
         }
         return list
     }()
-    dynamic var managers = [VoiceRoomUser]()
+    dynamic var managers = [RCSceneRoomUser]()
     dynamic var userGiftInfo = [String: Int]()
     dynamic var roomState: RoomSettingState
     dynamic var isRoomClosed = false
@@ -78,7 +78,7 @@ class VoiceRoomViewController: UIViewController {
     
     var floatingManager: RCSceneRoomFloatingProtocol?
     
-    init(roomInfo: VoiceRoom, isCreate: Bool = false) {
+    init(roomInfo: RCSceneRoom, isCreate: Bool = false) {
         voiceRoomInfo = roomInfo
         self.isCreate = isCreate
         roomState = RoomSettingState(room: roomInfo)
@@ -87,7 +87,6 @@ class VoiceRoomViewController: UIViewController {
         RCVoiceRoomEngine.sharedInstance().setDelegate(self)
         DataSourceImpl.instance.roomId = roomInfo.roomId
         DelegateImpl.instance.roomId = roomInfo.roomId
-        PlayerImpl.instance.type = .voice
         /**TO BE FIX 后续用新的router替换*/
         Router.default.setupAppNavigation(appNavigation: RCAppNavigation())
     }
@@ -135,7 +134,7 @@ class VoiceRoomViewController: UIViewController {
         }
     }
     
-    func roomContainerSwitchRoom(_ room: VoiceRoom) {
+    func roomContainerSwitchRoom(_ room: RCSceneRoom) {
         self.roomContainerAction?.switchRoom(room)
     }
     
@@ -233,13 +232,7 @@ class VoiceRoomViewController: UIViewController {
     ///设置模块，在viewDidLoad中调用
     dynamic func setupModules() {}
     ///消息回调，在engine模块中触发
-    dynamic func handleReceivedMessage(_ message: RCMessage) {
-        handleCommandMessage(message)
-    }
-    
-    func handleCommandMessage(_ message: RCMessage) {
-        RoomMessageHandlerManager.handleMessage(message, musicInfoBubbleView)
-    }
+    dynamic func handleReceivedMessage(_ message: RCMessage) {}
 }
 
 extension VoiceRoomViewController {
@@ -294,7 +287,7 @@ extension VoiceRoomViewController {
         clearMusicData()
         voiceRoomService.closeRoom(roomId: voiceRoomInfo.roomId) { result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-                switch result.map(AppResponse.self) {
+                switch result.map(RCSceneResponse.self) {
                 case let .success(response):
                     if response.validate() {
                         SVProgressHUD.showSuccess(withStatus: "直播结束，房间已关闭")

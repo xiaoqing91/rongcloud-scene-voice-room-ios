@@ -10,21 +10,21 @@ import RCSceneGift
 import RCSceneService
 import RCSceneRoom
 import RCSceneFoundation
+import RCSceneRoomSetting
 
 enum RCNavigation: Navigation {
-    case voiceRoom(roomInfo: VoiceRoom, needCreate: Bool)
+    case voiceRoom(roomInfo: RCSceneRoom, needCreate: Bool)
     case requestOrInvite(roomId: String, delegate: HandleRequestSeatProtocol, showPage: Int, onSeatUserIds:[String])
     case masterSeatOperation(String, Bool, VoiceRoomMasterSeatOperationProtocol)
     case userSeatPop(seatIndex: UInt, isUserMute: Bool, isSeatMute: Bool, delegate: VoiceRoomSeatedOperationProtocol)
-    case manageUser(dependency: UserOperationDependency, delegate: UserOperationProtocol?)
+    case manageUser(dependency: RCSceneRoomUserOperationDependency, delegate: RCSceneRoomUserOperationProtocol?)
     case ownerClickEmptySeat(RCVoiceSeatInfo, UInt, VoiceRoomEmptySeatOperationProtocol)
     case inputText(name: String, delegate: VoiceRoomInputTextProtocol)
-    case inputPassword(type: PasswordViewType, delegate: InputPasswordProtocol?)
+    case inputPassword(type: RCSceneRoomPasswordType, delegate: RCSceneRoomPasswordProtocol?)
     case requestSeatPop(delegate: RequestSeatPopProtocol)
     case changeBackground(imagelist: [String], delegate: ChangeBackgroundImageProtocol)
-    case userlist(room: VoiceRoom, delegate: UserOperationProtocol)
-    case gift(dependency: VoiceRoomGiftDependency, delegate: VoiceRoomGiftViewControllerDelegate)
-    case giftCount(sendView: VoiceRoomGiftSendView)
+    case userlist(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol)
+    case gift(dependency: RCSceneGiftDependency, delegate: RCSceneGiftViewControllerDelegate)
     case voiceRoomAlert(title: String, actions: [VoiceRoomAlertAction], alertType: String, delegate: VoiceRoomAlertProtocol?)
     case leaveAlert(isOwner: Bool, delegate: RCSceneLeaveViewProtocol)
     case notice(modify: Bool = false, notice: String, delegate: VoiceRoomNoticeDelegate)
@@ -48,7 +48,6 @@ struct RCAppNavigation: AppNavigation {
                     .changeBackground,
                     .userlist,
                     .gift,
-                    .giftCount,
                     .voiceRoomAlert,
                     .leaveAlert,
                     .notice,
@@ -81,7 +80,7 @@ struct RCAppNavigation: AppNavigation {
             vc.modalPresentationStyle = .popover
             return vc
         case let .manageUser(dependency, delegate):
-            let vc = UserOperationViewController(dependency: dependency, delegate: delegate)
+            let vc = RCSceneRoomUserOperationViewController(dependency: dependency, delegate: delegate)
             vc.modalTransitionStyle = .coverVertical
             vc.modalPresentationStyle = .popover
             return vc
@@ -96,7 +95,7 @@ struct RCAppNavigation: AppNavigation {
             vc.modalPresentationStyle = .popover
             return vc
         case let .inputPassword(type, delegate):
-            let vc = VoiceRoomPasswordViewController(type: type, delegate: delegate)
+            let vc = RCSceneRoomPasswordViewController(type: type, delegate: delegate)
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overFullScreen
             return vc
@@ -111,19 +110,14 @@ struct RCAppNavigation: AppNavigation {
             vc.modalPresentationStyle = .popover
             return vc
         case let .userlist(room, delegate):
-            let vc = SceneRoomUserListViewController(room: room, delegate: delegate)
+            let vc = RCSceneRoomUsersViewController(room: room, delegate: delegate)
             let nav = UINavigationController(rootViewController: vc)
             nav.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
             nav.modalTransitionStyle = .coverVertical
             nav.modalPresentationStyle = .overFullScreen
             return nav
         case let .gift(dependency, delegate):
-            let vc = VoiceRoomGiftViewController(dependency: dependency, delegate: delegate)
-            vc.modalTransitionStyle = .crossDissolve
-            vc.modalPresentationStyle = .overFullScreen
-            return vc
-        case let .giftCount(sendView):
-            let vc = VoiceRoomGiftCountViewController(sendView)
+            let vc = RCSceneGiftViewController(dependency: dependency, delegate: delegate)
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overFullScreen
             return vc

@@ -28,14 +28,14 @@ extension VoiceRoomViewController {
 
 extension VoiceRoomViewController: RCRTCBroadcastDelegate {
     
-    func broadcastViewAccessible(_ room: VoiceRoom) -> Bool {
+    func broadcastViewAccessible(_ room: RCSceneRoom) -> Bool {
         if room.roomId == voiceRoomInfo.roomId { return false }
         if currentUserRole() == .creator { return false }
         if isSitting() { return false }
         return true
     }
     
-    func broadcastViewDidClick(_ room: VoiceRoom) {
+    func broadcastViewDidClick(_ room: RCSceneRoom) {
         if room.isPrivate == 1 {
             let controller = UIApplication.shared.keyWindow()?.rootViewController
             controller?.navigator(.inputPassword(type: .verify(room), delegate: self))

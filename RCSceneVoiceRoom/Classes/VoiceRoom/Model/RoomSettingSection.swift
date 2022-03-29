@@ -48,6 +48,15 @@ struct VoiceRoomPKInfo {
     }
 }
 
+struct VoiceRoomState: Codable {
+    public let roomId: String
+    public var applyOnMic: Bool
+    public var applyAllLockMic: Bool
+    public var applyAllLockSeat: Bool
+    public var setMute: Bool
+    public var setSeatNumber: Int
+}
+
 struct RoomSettingState {
     var isMutePKUser = false {
         didSet {
@@ -93,7 +102,7 @@ struct RoomSettingState {
     var pkConnectStateChanged:((ConnectMicState) -> Void)?
     var mutePKStateChanged:((Bool) -> Void)?
     
-    init(room: VoiceRoom) {
+    init(room: RCSceneRoom) {
         isPrivate = room.isPrivate == 1
     }
     

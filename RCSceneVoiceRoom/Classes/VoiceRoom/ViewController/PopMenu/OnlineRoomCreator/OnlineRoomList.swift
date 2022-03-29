@@ -10,5 +10,5 @@ import RCSceneService
 
 struct OnlineRoomList: Codable {
     let code: Int
-    let data: [VoiceRoom]
+    let data: [RCSceneRoom]
 }

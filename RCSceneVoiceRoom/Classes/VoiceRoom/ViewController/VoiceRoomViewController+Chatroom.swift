@@ -8,9 +8,8 @@
 import UIKit
 import SVProgressHUD
 
-import RCSceneChat
-import RCSceneService
 import RCSceneRoom
+import RCSceneService
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)
@@ -50,9 +49,9 @@ extension VoiceRoomViewController {
     
     func fetchForbidden() {
         voiceRoomService.forbiddenList(roomId: voiceRoomInfo.roomId) { result in
-            switch result.map(RCNetworkWapper<[VoiceRoomForbiddenWord]>.self) {
+            switch result.map(RCNetworkWrapper<[RCSceneRoomForbiddenWord]>.self) {
             case let .success(model):
-                SceneRoomManager.shared.forbiddenWordlist = (model.data ?? []).map { $0.name }
+                SceneRoomManager.shared.forbiddenWords = (model.data ?? []).map { $0.name }
             case let .failure(error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -62,7 +61,7 @@ extension VoiceRoomViewController {
 
 extension VoiceRoomViewController: RCChatroomSceneToolBarDelegate {
     func textInputViewSendText(_ text: String) {
-        UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
+        RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
             let event = RCChatroomBarrage()
             event.userId = user.userId
             event.userName = user.userName
@@ -85,9 +84,13 @@ extension VoiceRoomViewController: RCChatroomSceneToolBarDelegate {
     func audioRecordDidEnd(_ data: Data?, time: TimeInterval) {
         guard let data = data, time > 1 else { return SVProgressHUD.showError(withStatus: "录音时间太短") }
         voiceRoomService.uploadAudio(data: data, extensions: "wav") { [weak self] result in
-            switch result.map(UploadfileResponse.self) {
+            switch result.map(RCNetworkWrapper<String>.self) {
             case let .success(response):
-                let urlString = Environment.url.absoluteString + "/file/show?path=" + response.data
+                guard let path = response.data else {
+                    debugPrint("path is nil")
+                    return
+                }
+                let urlString = Environment.url.absoluteString + "/file/show?path=" + path
                 self?.sendMessage(urlString, time: Int(time) + 1)
             case let .failure(error):
                 print(error)
@@ -96,7 +99,7 @@ extension VoiceRoomViewController: RCChatroomSceneToolBarDelegate {
     }
     
     private func sendMessage(_ URLString: String, time: Int) {
-        UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
+        RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
             let message = RCVRVoiceMessage()
             message.userId = user.userId
             message.userName = user.userName
@@ -110,10 +113,10 @@ extension VoiceRoomViewController: RCChatroomSceneToolBarDelegate {
 
 extension String {
     var civilized: String {
-        return SceneRoomManager.shared.forbiddenWordlist.reduce(self) { $0.replacingOccurrences(of: $1, with: String(repeating: "*", count: $1.count)) }
+        return SceneRoomManager.shared.forbiddenWords.reduce(self) { $0.replacingOccurrences(of: $1, with: String(repeating: "*", count: $1.count)) }
     }
     
     var isCivilized: Bool {
-        return SceneRoomManager.shared.forbiddenWordlist.first(where: { contains($0) }) == nil
+        return SceneRoomManager.shared.forbiddenWords.first(where: { contains($0) }) == nil
     }
 }

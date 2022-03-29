@@ -23,7 +23,7 @@ class OnlineRoomCreatorViewController: UIViewController {
         instance.clipsToBounds = true
         return instance
     }()
-    private var onlineCreators = [VoiceRoomUser]()
+    private var onlineCreators = [RCSceneRoomUser]()
     private lazy var blurView: UIVisualEffectView = {
         let effect = UIBlurEffect(style: .regular)
         let instance = UIVisualEffectView(effect: effect)
@@ -38,7 +38,7 @@ class OnlineRoomCreatorViewController: UIViewController {
         instance.delegate = self
         return instance
     }()
-    private lazy var emptyView = VoiceRoomUserListEmptyView()
+    private lazy var emptyView = RCSceneRoomUsersEmptyView()
     private lazy var nameLabel: UILabel = {
         let instance = UILabel()
         instance.font = .systemFont(ofSize: 17)
@@ -46,7 +46,7 @@ class OnlineRoomCreatorViewController: UIViewController {
         instance.text = "在线房主"
         return instance
     }()
-    private var roomlist = [VoiceRoom]() {
+    private var roomlist = [RCSceneRoom]() {
         didSet {
             emptyView.isHidden = roomlist.count > 0
         }

@@ -8,6 +8,10 @@
 import UIKit
 import IQKeyboardManager
 
+protocol VoiceRoomNoticeDelegate: AnyObject {
+    func noticeDidModified(notice: String)
+}
+
 class VoiceRoomNoticeViewController: UIViewController {
     weak var delegate: VoiceRoomNoticeDelegate?
     private lazy var containerView: UIView = {

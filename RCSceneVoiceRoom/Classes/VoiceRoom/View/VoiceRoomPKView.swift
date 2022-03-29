@@ -275,7 +275,7 @@ class VoiceRoomPKView: UIView {
 
     private func updateUserInfo(info: VoiceRoomPKInfo, currentRoomOwnerId: String) {
         self.pkInfo = info
-        UserInfoDownloaded.shared.fetch([info.inviterId, info.inviteeId]) { userlist in
+        RCSceneUserManager.shared.fetch([info.inviterId, info.inviteeId]) { userlist in
             if let leftUser = userlist.first(where: { user in
                 user.userId == currentRoomOwnerId
             }) {

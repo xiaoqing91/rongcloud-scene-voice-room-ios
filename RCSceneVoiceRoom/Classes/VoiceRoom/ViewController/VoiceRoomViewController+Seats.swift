@@ -39,7 +39,7 @@ extension VoiceRoomViewController {
     }
     
     @_dynamicReplacement(for: managers)
-    private var seats_managers: [VoiceRoomUser] {
+    private var seats_managers: [RCSceneRoomUser] {
         get { managers }
         set {
             managers = newValue

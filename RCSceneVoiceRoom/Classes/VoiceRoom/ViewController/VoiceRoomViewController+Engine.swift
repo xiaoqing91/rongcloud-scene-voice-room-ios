@@ -143,9 +143,9 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
                 SVProgressHUD.showSuccess(withStatus: "用户连线成功")
             }
         case .forbiddenAdd:
-            SceneRoomManager.shared.forbiddenWordlist.append(content)
+            SceneRoomManager.shared.forbiddenWords.append(content)
         case .forbiddenDelete:
-            SceneRoomManager.shared.forbiddenWordlist.removeAll(where: { $0 == content })
+            SceneRoomManager.shared.forbiddenWords.removeAll(where: { $0 == content })
         }
     }
     
@@ -192,7 +192,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         roomInfoView.updateRoomUserNumber()
         if targetId == Environment.currentUserId {
             if managers.contains(where: { $0.userId == userId }) {
-                UserInfoDownloaded.shared.fetchUserInfo(userId: userId) { user in
+                RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in
                     SVProgressHUD.showInfo(withStatus: "您被管理员\(user.userName)踢出房间")
                 }
             } else {

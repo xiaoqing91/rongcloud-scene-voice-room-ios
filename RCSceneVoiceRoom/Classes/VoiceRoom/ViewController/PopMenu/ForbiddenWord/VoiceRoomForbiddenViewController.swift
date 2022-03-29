@@ -13,7 +13,7 @@ protocol VoiceRoomForbiddenDelegate: AnyObject {
 
 enum ForbiddenCellType {
     case append
-    case word(VoiceRoomForbiddenWord)
+    case word(RCSceneRoomForbiddenWord)
 }
 
 class VoiceRoomForbiddenViewController: UIViewController {
@@ -153,7 +153,7 @@ class VoiceRoomForbiddenViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    private func showDeleteAlert(item: VoiceRoomForbiddenWord) {
+    private func showDeleteAlert(item: RCSceneRoomForbiddenWord) {
         let alert = UIAlertController(title: "是否删除屏蔽词", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { _ in
             self.deleteForbidden(item: item)
@@ -214,12 +214,12 @@ extension VoiceRoomForbiddenViewController {
             switch result {
             case .success(let response):
                 let data = response.data
-                let responseModel = try? JSONDecoder().decode(VoiceRoomForbiddenResponse.self, from: data)
+                let responseModel = try? JSONDecoder().decode(RCNetworkWrapper<[RCSceneRoomForbiddenWord]>.self, from: data)
                 let wordlist = responseModel?.data ?? []
                 self.list = [.append] + wordlist.map {
                     ForbiddenCellType.word($0)
                 }
-                SceneRoomManager.shared.forbiddenWordlist = wordlist.map(\.name)
+                SceneRoomManager.shared.forbiddenWords = wordlist.map(\.name)
                 self.reloadForbiddenWords()
             case let .failure(error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -237,7 +237,7 @@ extension VoiceRoomForbiddenViewController {
             switch result {
             case .success(let response):
                 let data = response.data
-                guard let responseModel = try? JSONDecoder().decode(AppResponse.self, from: data), responseModel.validate() else {
+                guard let responseModel = try? JSONDecoder().decode(RCSceneResponse.self, from: data), responseModel.validate() else {
                     SVProgressHUD.showError(withStatus: "添加失败")
                     return
                 }
@@ -245,7 +245,7 @@ extension VoiceRoomForbiddenViewController {
                 
                 let type = VoiceRoomNotification.forbiddenAdd
                 RCVoiceRoomEngine.sharedInstance().notifyVoiceRoom(type.rawValue, content: name)
-                SceneRoomManager.shared.forbiddenWordlist.append(name)
+                SceneRoomManager.shared.forbiddenWords.append(name)
                 
             case let .failure(error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -253,12 +253,12 @@ extension VoiceRoomForbiddenViewController {
         }
     }
     
-    func deleteForbidden(item: VoiceRoomForbiddenWord) {
+    func deleteForbidden(item: RCSceneRoomForbiddenWord) {
         voiceRoomService.deleteForbidden(id: "\(item.id)") { result in
             switch result {
             case .success(let response):
                 let data = response.data
-                guard let responseModel = try? JSONDecoder().decode(AppResponse.self, from: data), responseModel.validate() else {
+                guard let responseModel = try? JSONDecoder().decode(RCSceneResponse.self, from: data), responseModel.validate() else {
                     SVProgressHUD.showError(withStatus: "删除失败")
                     return
                 }
@@ -267,7 +267,7 @@ extension VoiceRoomForbiddenViewController {
                 let name = item.name
                 let type = VoiceRoomNotification.forbiddenDelete
                 RCVoiceRoomEngine.sharedInstance().notifyVoiceRoom(type.rawValue, content: name)
-                SceneRoomManager.shared.forbiddenWordlist.removeAll(where: { $0 == name })
+                SceneRoomManager.shared.forbiddenWords.removeAll(where: { $0 == name })
                 
             case let .failure(error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

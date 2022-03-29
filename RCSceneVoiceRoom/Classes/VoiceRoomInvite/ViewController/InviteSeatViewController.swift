@@ -18,9 +18,9 @@ class InviteSeatViewController: UIViewController {
         instance.dataSource = self
         return instance
     }()
-    private lazy var emptyView = VoiceRoomUserListEmptyView()
+    private lazy var emptyView = RCSceneRoomUsersEmptyView()
     private var userIdlist = [String]()
-    private var userlist = [VoiceRoomUser](){
+    private var userlist = [RCSceneRoomUser](){
         didSet {
             emptyView.isHidden = userlist.count > 0
         }
@@ -66,7 +66,7 @@ class InviteSeatViewController: UIViewController {
     private func fetchRoomUserlist() {
         let seatUserIds = onSeatUserlist
         voiceRoomService.roomUsers(roomId: roomId) { [weak self] result in
-            switch result.map(RCNetworkWapper<[VoiceRoomUser]>.self) {
+            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 if let users = wrapper.data, let self = self {
                     self.userlist = users.filter { !seatUserIds.contains($0.userId) }

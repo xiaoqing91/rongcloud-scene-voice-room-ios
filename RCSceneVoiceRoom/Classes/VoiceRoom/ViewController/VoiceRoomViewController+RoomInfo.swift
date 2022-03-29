@@ -40,9 +40,9 @@ extension VoiceRoomViewController {
 
 extension VoiceRoomViewController: RoomInfoViewClickProtocol {
     func didFollowRoomUser(_ follow: Bool) {
-        UserInfoDownloaded.shared.refreshUserInfo(userId: voiceRoomInfo.userId) { followUser in
+        RCSceneUserManager.shared.refreshUserInfo(userId: voiceRoomInfo.userId) { followUser in
             guard follow else { return }
-            UserInfoDownloaded.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
+            RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { [weak self] user in
                 let message = RCChatroomFollow()
                 message.userInfo = user.rcUser
                 message.targetUserInfo = followUser.rcUser
