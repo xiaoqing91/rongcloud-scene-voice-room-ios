@@ -7,7 +7,6 @@
 
 import UIKit
 import Reusable
-import RCSceneService
 
 class InviteSeatTableViewCell: UITableViewCell, Reusable {
     private lazy var avatarImageView: UIImageView = {

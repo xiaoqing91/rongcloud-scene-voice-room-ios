@@ -6,11 +6,7 @@
 //
 
 import UIKit
-import RCSceneGift
-import RCSceneService
 import RCSceneRoom
-import RCSceneFoundation
-import RCSceneRoomSetting
 
 enum RCNavigation: Navigation {
     case voiceRoom(roomInfo: RCSceneRoom, needCreate: Bool)

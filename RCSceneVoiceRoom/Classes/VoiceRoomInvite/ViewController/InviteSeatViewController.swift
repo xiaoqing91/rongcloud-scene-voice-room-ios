@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import RCSceneService
+
 
 class InviteSeatViewController: UIViewController {
     private let roomId: String

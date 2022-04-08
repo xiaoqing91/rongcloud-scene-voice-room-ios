@@ -9,7 +9,7 @@ import UIKit
 import SVProgressHUD
 
 import RCSceneRoom
-import RCSceneService
+
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)

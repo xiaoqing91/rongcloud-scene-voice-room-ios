@@ -8,6 +8,7 @@
 import UIKit
 import Reusable
 import Kingfisher
+import RCSceneRoom
 
 class BackgroundImageCollectionViewCell: UICollectionViewCell, Reusable {
     private lazy var backgroundImageView: AnimatedImageView = {

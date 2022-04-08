@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import RCSceneService
+
 
 struct OnlineRoomList: Codable {
     let code: Int

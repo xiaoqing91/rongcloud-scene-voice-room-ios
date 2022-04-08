@@ -5,8 +5,6 @@
 //  Created by shaoshuai on 2021/6/18.
 //
 
-import RCSceneMusic
-
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)
     private func setupSettingModule() {

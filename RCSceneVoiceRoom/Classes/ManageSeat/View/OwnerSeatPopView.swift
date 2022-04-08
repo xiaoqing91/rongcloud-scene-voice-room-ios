@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import RCSceneService
+
 
 class OwnerSeatPopView: UIView {
     private lazy var avatarImageView: UIImageView = {

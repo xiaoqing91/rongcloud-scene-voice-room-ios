@@ -6,8 +6,6 @@
 //
 
 import SVProgressHUD
-import RCSceneService
-import RCSceneGift
 
 /// 用户进入房间礼物信息为空
 

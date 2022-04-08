@@ -8,9 +8,7 @@
 import UIKit
 import SVProgressHUD
 
-import RCSceneGift
 import RCSceneRoom
-import RCSceneMessage
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)

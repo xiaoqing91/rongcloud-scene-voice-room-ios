@@ -6,7 +6,6 @@
 //
 
 import SVProgressHUD
-import RCSceneMusic
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: seatlist)

@@ -23,8 +23,6 @@ FOUNDATION_EXPORT const unsigned char RCSceneVoiceRoomVersionString[];
 #import <MJRefresh/MJRefresh.h>
 #import <SVProgressHUD/SVProgressHUD.h>
 
-#import <RCSceneMessage/RCSceneMessage.h>
-#import <RCMusicControlKit/RCMusicControlKit.h>
 #import <RCMusicControlKit/RCMusicControlKit.h>
 #import <RCSceneChatroomKit/RCSceneChatroomKit.h>
 
@@ -33,6 +31,4 @@ FOUNDATION_EXPORT const unsigned char RCSceneVoiceRoomVersionString[];
 
 #import <RCVoiceRoomLib/RCVoiceRoomLib.h>
 
-@import RCSceneService;
 @import RCSceneRoom;
-@import RCSceneFoundation;

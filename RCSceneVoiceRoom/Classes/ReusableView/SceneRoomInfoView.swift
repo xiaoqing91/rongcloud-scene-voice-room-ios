@@ -7,7 +7,7 @@
 
 import UIKit
 import RCSceneRoom
-import RCSceneService
+
 
 protocol RoomInfoViewClickProtocol: AnyObject {
     func roomInfoDidClick()

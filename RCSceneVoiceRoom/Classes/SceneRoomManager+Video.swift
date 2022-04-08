@@ -6,8 +6,6 @@
 //
 
 import SVProgressHUD
-import RCSceneFoundation
-import RCSceneService
 import RCSceneRoom
 
 extension SceneRoomManager {

@@ -7,7 +7,6 @@
 
 import UIKit
 import Kingfisher
-import RCSceneMusic
 import RCSceneRoom
 
 let alertTypeVideoAlreadyClose = "alertTypeVideoAlreadyClose"

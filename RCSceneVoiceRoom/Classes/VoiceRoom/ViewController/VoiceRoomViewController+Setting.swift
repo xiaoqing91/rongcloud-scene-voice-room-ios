@@ -6,7 +6,6 @@
 //
 
 import RCSceneRoom
-import RCSceneRoomSetting
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)
