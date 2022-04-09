@@ -38,7 +38,7 @@ extension VoiceRoomViewController {
         } else {
             config.actions = [micButton, giftButton, messageButton]
         }
-        config.recordButtonEnable = false
+        config.recordButtonEnable = !voiceRoomInfo.isOwner
         chatroomView.toolBar.setConfig(config)
     }
     

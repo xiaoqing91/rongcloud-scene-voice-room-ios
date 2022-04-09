@@ -118,6 +118,7 @@ extension VoiceRoomViewController {
     /// 静音
     func silenceSelfDidClick(isSilence: Bool) {
         roomState.isSilence = isSilence
+        PlayerImpl.instance.isSilence = isSilence
         RCVoiceRoomEngine.sharedInstance().muteAllRemoteStreams(isSilence)
         SVProgressHUD.showSuccess(withStatus: isSilence ? "扬声器已静音" : "已取消静音")
     }
