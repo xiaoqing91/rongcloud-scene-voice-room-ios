@@ -61,13 +61,13 @@ navigationController?.pushViewController(controller, animated: true)
 
 语聊房主要功能如下图所示：
 
-<div style="display:flex;flex=1;overflow: scroll;height:400px">
+<p style="display:flex;flex=1;overflow: scroll;height:400px">
 <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182tc468fj20af0ijq4a.jpg">
 <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182xszyydj20af0ijq3v.jpg">
 <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182u9yw13j20af0ij0tq.jpg">
 <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182wvnukbj20af0ij75a.jpg">
 <img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182xeppm1j20af0ijgmp.jpg">
-</div>
+</p>
 
 
 ### 功能清单
