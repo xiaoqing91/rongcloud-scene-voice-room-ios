@@ -59,24 +59,14 @@ navigationController?.pushViewController(controller, animated: true)
 
 ## 功能
 
-语聊房主要功能如下图所示：
+模块             |  简介 |  示图
+:-------------------------:|:-------------------------:|:-------------------------:
+开启直播 | 主播说话，观众收听，支持房间内观众连麦，支持最多 8 个观众连麦，聊天室消息发送和展示等  |  <img width ="300" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182tc468fj20af0ijq4a.jpg">
+房间音乐 | 基于 Hifive 实现音乐播放，需开通相关业务  |  <img width="200" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182xszyydj20af0ijq3v.jpg">
+赠送礼物 | 支持单人、多人、全服礼物发送，需二次开发对接业务  |  <img width ="300" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182u9yw13j20af0ij0tq.jpg">
+房间设置 | 包含常见的房间信息管理  |  <img width ="300" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182wvnukbj20af0ij75a.jpg">
+跨房间PK | 支持 1v1 跨房间 PK，需要配合服务器实现  |  <img width ="300" src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182xeppm1j20af0ijgmp.jpg">
 
-<p style="display:flex;flex=1;overflow: scroll;height:400px">
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182tc468fj20af0ijq4a.jpg">
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182xszyydj20af0ijq3v.jpg">
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182u9yw13j20af0ij0tq.jpg">
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182wvnukbj20af0ij75a.jpg">
-<img src="https://tva1.sinaimg.cn/large/e6c9d24ely1h182xeppm1j20af0ijgmp.jpg">
-</p>
-
-
-### 功能清单
-- 多人连麦：房间内观众连麦，支持最多 8 个观众连麦
-- 房间音乐：基于 Hifive 实现音乐播放，需开通相关业务
-- 赠送礼物：支持单人、多人、全服礼物发送，需二次开发对接业务
-- 房间设置：包含常见的房间信息管理
-- 公屏消息：聊天室消息发送和展示
-- 跨房间PK：支持 1v1 跨房间 PK，需要配合服务器实现
 
 ## 其他
 如有任何疑问请提交 issue
