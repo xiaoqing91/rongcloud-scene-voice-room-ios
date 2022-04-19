@@ -15,20 +15,12 @@ FOUNDATION_EXPORT const unsigned char RCSceneVoiceRoomVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <RCSceneVoiceRoom/PublicHeader.h>
 
-#import "RCRefreshStateHeader.h"
-
-#import <UIKit/UIKit.h>
-#import <CommonCrypto/CommonCrypto.h>
-
-#import <MJRefresh/MJRefresh.h>
 #import <SVProgressHUD/SVProgressHUD.h>
+
+#import <RongRTCLib/RongRTCLib.h>
+#import <RCVoiceRoomLib/RCVoiceRoomLib.h>
 
 #import <RCMusicControlKit/RCMusicControlKit.h>
 #import <RCSceneChatroomKit/RCSceneChatroomKit.h>
-
-#import <RongIMKit/RongIMKit.h>
-#import <RongRTCLib/RongRTCLib.h>
-
-#import <RCVoiceRoomLib/RCVoiceRoomLib.h>
 
 @import RCSceneRoom;
