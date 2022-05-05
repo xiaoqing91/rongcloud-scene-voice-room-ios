@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		204A53792E20F27481E9B81B /* Pods_RCSceneExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7DCF12300E77E93E6BAE0A /* Pods_RCSceneExample.framework */; };
+		8C189503E3798CF5527C49DA /* Pods_RCSceneExample_Objc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 009A0FF431403433E0795825 /* Pods_RCSceneExample_Objc.framework */; };
+		D3DA24E42817C659002BB3DB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA24E32817C659002BB3DB /* AppDelegate.m */; };
+		D3DA24EA2817C659002BB3DB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA24E92817C659002BB3DB /* ViewController.m */; };
+		D3DA24ED2817C659002BB3DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3DA24EB2817C659002BB3DB /* Main.storyboard */; };
+		D3DA24EF2817C65A002BB3DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3DA24EE2817C65A002BB3DB /* Assets.xcassets */; };
+		D3DA24F22817C65A002BB3DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3DA24F02817C65A002BB3DB /* LaunchScreen.storyboard */; };
+		D3DA24F52817C65A002BB3DB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA24F42817C65A002BB3DB /* main.m */; };
+		D3DA24FB2817D4DA002BB3DB /* OCCallBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA24FA2817D4DA002BB3DB /* OCCallBridge.swift */; };
+		D3DA25002817D7D3002BB3DB /* AppConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DA24FF2817D7D3002BB3DB /* AppConfigs.swift */; };
+		D3DA25072817EF9B002BB3DB /* RCVoiceRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA25062817EF9B002BB3DB /* RCVoiceRoomCell.m */; };
+		D3DA250B281805C3002BB3DB /* RCSceneVoiceRoomList.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA250A281805C3002BB3DB /* RCSceneVoiceRoomList.m */; };
+		D3DA250E2819481C002BB3DB /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA250D2819481C002BB3DB /* LoginController.m */; };
 		D735B24027E601F900EF74B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D735B23F27E601F900EF74B3 /* AppDelegate.swift */; };
 		D735B24427E601F900EF74B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D735B24327E601F900EF74B3 /* ViewController.swift */; };
 		D735B24727E601F900EF74B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D735B24527E601F900EF74B3 /* Main.storyboard */; };
@@ -20,7 +32,29 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		009A0FF431403433E0795825 /* Pods_RCSceneExample_Objc.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RCSceneExample_Objc.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		04AE1865E592E8D4DFC011A9 /* Pods-RCSceneExample-Objc.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCSceneExample-Objc.release.xcconfig"; path = "Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc.release.xcconfig"; sourceTree = "<group>"; };
+		44B5DB1A4FE5B9A994CF9EF0 /* Pods-RCSceneExample-Objc.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCSceneExample-Objc.debug.xcconfig"; path = "Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc.debug.xcconfig"; sourceTree = "<group>"; };
 		A54DD5B5F9047D944C9E039C /* Pods-RCSceneExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RCSceneExample.release.xcconfig"; path = "Target Support Files/Pods-RCSceneExample/Pods-RCSceneExample.release.xcconfig"; sourceTree = "<group>"; };
+		D3DA24E02817C659002BB3DB /* RCSceneExample-Objc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RCSceneExample-Objc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3DA24E22817C659002BB3DB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D3DA24E32817C659002BB3DB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D3DA24E82817C659002BB3DB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		D3DA24E92817C659002BB3DB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D3DA24EC2817C659002BB3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D3DA24EE2817C65A002BB3DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D3DA24F12817C65A002BB3DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D3DA24F32817C65A002BB3DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3DA24F42817C65A002BB3DB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D3DA24F92817D4DA002BB3DB /* RCSceneExample-Objc-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RCSceneExample-Objc-Bridging-Header.h"; sourceTree = "<group>"; };
+		D3DA24FA2817D4DA002BB3DB /* OCCallBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OCCallBridge.swift; sourceTree = "<group>"; };
+		D3DA24FF2817D7D3002BB3DB /* AppConfigs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigs.swift; sourceTree = "<group>"; };
+		D3DA25052817EF9B002BB3DB /* RCVoiceRoomCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCVoiceRoomCell.h; sourceTree = "<group>"; };
+		D3DA25062817EF9B002BB3DB /* RCVoiceRoomCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCVoiceRoomCell.m; sourceTree = "<group>"; };
+		D3DA2509281805C3002BB3DB /* RCSceneVoiceRoomList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCSceneVoiceRoomList.h; sourceTree = "<group>"; };
+		D3DA250A281805C3002BB3DB /* RCSceneVoiceRoomList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCSceneVoiceRoomList.m; sourceTree = "<group>"; };
+		D3DA250C2819481C002BB3DB /* LoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		D3DA250D2819481C002BB3DB /* LoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 		D735B23C27E601F900EF74B3 /* RCSceneExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RCSceneExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D735B23F27E601F900EF74B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D735B24327E601F900EF74B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +71,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D3DA24DD2817C659002BB3DB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8C189503E3798CF5527C49DA /* Pods_RCSceneExample_Objc.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D735B23927E601F900EF74B3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -52,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				FF7DCF12300E77E93E6BAE0A /* Pods_RCSceneExample.framework */,
+				009A0FF431403433E0795825 /* Pods_RCSceneExample_Objc.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -61,14 +104,58 @@
 			children = (
 				D845C46C187A6927390C9749 /* Pods-RCSceneExample.debug.xcconfig */,
 				A54DD5B5F9047D944C9E039C /* Pods-RCSceneExample.release.xcconfig */,
+				44B5DB1A4FE5B9A994CF9EF0 /* Pods-RCSceneExample-Objc.debug.xcconfig */,
+				04AE1865E592E8D4DFC011A9 /* Pods-RCSceneExample-Objc.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D3DA24E12817C659002BB3DB /* RCSceneExample-Objc */ = {
+			isa = PBXGroup;
+			children = (
+				D3DA25082817F403002BB3DB /* Model */,
+				D3DA25012817EF31002BB3DB /* VIew */,
+				D3DA24FF2817D7D3002BB3DB /* AppConfigs.swift */,
+				D3DA24FA2817D4DA002BB3DB /* OCCallBridge.swift */,
+				D3DA24E22817C659002BB3DB /* AppDelegate.h */,
+				D3DA24E32817C659002BB3DB /* AppDelegate.m */,
+				D3DA250C2819481C002BB3DB /* LoginController.h */,
+				D3DA250D2819481C002BB3DB /* LoginController.m */,
+				D3DA24E82817C659002BB3DB /* ViewController.h */,
+				D3DA24E92817C659002BB3DB /* ViewController.m */,
+				D3DA24EB2817C659002BB3DB /* Main.storyboard */,
+				D3DA24EE2817C65A002BB3DB /* Assets.xcassets */,
+				D3DA24F02817C65A002BB3DB /* LaunchScreen.storyboard */,
+				D3DA24F32817C65A002BB3DB /* Info.plist */,
+				D3DA24F42817C65A002BB3DB /* main.m */,
+				D3DA24F92817D4DA002BB3DB /* RCSceneExample-Objc-Bridging-Header.h */,
+			);
+			path = "RCSceneExample-Objc";
+			sourceTree = "<group>";
+		};
+		D3DA25012817EF31002BB3DB /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+				D3DA25052817EF9B002BB3DB /* RCVoiceRoomCell.h */,
+				D3DA25062817EF9B002BB3DB /* RCVoiceRoomCell.m */,
+			);
+			path = VIew;
+			sourceTree = "<group>";
+		};
+		D3DA25082817F403002BB3DB /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D3DA2509281805C3002BB3DB /* RCSceneVoiceRoomList.h */,
+				D3DA250A281805C3002BB3DB /* RCSceneVoiceRoomList.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		D735B23327E601F900EF74B3 = {
 			isa = PBXGroup;
 			children = (
 				D735B23E27E601F900EF74B3 /* RCSceneExample */,
+				D3DA24E12817C659002BB3DB /* RCSceneExample-Objc */,
 				D735B23D27E601F900EF74B3 /* Products */,
 				7C176BCBABE379868997AD28 /* Pods */,
 				26977BA3D6225576864AD9AC /* Frameworks */,
@@ -79,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				D735B23C27E601F900EF74B3 /* RCSceneExample.app */,
+				D3DA24E02817C659002BB3DB /* RCSceneExample-Objc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +207,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D3DA24DF2817C659002BB3DB /* RCSceneExample-Objc */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3DA24F82817C65A002BB3DB /* Build configuration list for PBXNativeTarget "RCSceneExample-Objc" */;
+			buildPhases = (
+				F97E99F0CD7629DBD57699A7 /* [CP] Check Pods Manifest.lock */,
+				D3DA24DC2817C659002BB3DB /* Sources */,
+				D3DA24DD2817C659002BB3DB /* Frameworks */,
+				D3DA24DE2817C659002BB3DB /* Resources */,
+				D9C31799E8EA51660C2F837C /* [CP] Embed Pods Frameworks */,
+				B027C8AB2A54C3228519BAD5 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RCSceneExample-Objc";
+			productName = "RCSceneExample-Objc";
+			productReference = D3DA24E02817C659002BB3DB /* RCSceneExample-Objc.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D735B23B27E601F900EF74B3 /* RCSceneExample */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D735B25027E601FE00EF74B3 /* Build configuration list for PBXNativeTarget "RCSceneExample" */;
@@ -149,6 +257,10 @@
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1330;
 				TargetAttributes = {
+					D3DA24DF2817C659002BB3DB = {
+						CreatedOnToolsVersion = 13.1;
+						LastSwiftMigration = 1310;
+					};
 					D735B23B27E601F900EF74B3 = {
 						CreatedOnToolsVersion = 13.3;
 					};
@@ -168,11 +280,22 @@
 			projectRoot = "";
 			targets = (
 				D735B23B27E601F900EF74B3 /* RCSceneExample */,
+				D3DA24DF2817C659002BB3DB /* RCSceneExample-Objc */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D3DA24DE2817C659002BB3DB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3DA24F22817C65A002BB3DB /* LaunchScreen.storyboard in Resources */,
+				D3DA24EF2817C65A002BB3DB /* Assets.xcassets in Resources */,
+				D3DA24ED2817C659002BB3DB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D735B23A27E601F900EF74B3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -242,9 +365,80 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		B027C8AB2A54C3228519BAD5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D9C31799E8EA51660C2F837C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RCSceneExample-Objc/Pods-RCSceneExample-Objc-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F97E99F0CD7629DBD57699A7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RCSceneExample-Objc-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D3DA24DC2817C659002BB3DB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3DA250E2819481C002BB3DB /* LoginController.m in Sources */,
+				D3DA24EA2817C659002BB3DB /* ViewController.m in Sources */,
+				D3DA25072817EF9B002BB3DB /* RCVoiceRoomCell.m in Sources */,
+				D3DA24FB2817D4DA002BB3DB /* OCCallBridge.swift in Sources */,
+				D3DA24E42817C659002BB3DB /* AppDelegate.m in Sources */,
+				D3DA25002817D7D3002BB3DB /* AppConfigs.swift in Sources */,
+				D3DA24F52817C65A002BB3DB /* main.m in Sources */,
+				D3DA250B281805C3002BB3DB /* RCSceneVoiceRoomList.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D735B23827E601F900EF74B3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -261,6 +455,22 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		D3DA24EB2817C659002BB3DB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D3DA24EC2817C659002BB3DB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D3DA24F02817C65A002BB3DB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D3DA24F12817C65A002BB3DB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		D735B24527E601F900EF74B3 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -280,6 +490,81 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D3DA24F62817C65A002BB3DB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 44B5DB1A4FE5B9A994CF9EF0 /* Pods-RCSceneExample-Objc.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2022042601;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RCSceneExample-Objc/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "语聊房Objective-C Demo";
+				INFOPLIST_KEY_NSCameraUsageDescription = "是否允许使用摄像头？";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "是否允许使用麦克风？";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rcrtc.voice.room.objc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RCSceneExample-Objc/RCSceneExample-Objc-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		D3DA24F72817C65A002BB3DB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04AE1865E592E8D4DFC011A9 /* Pods-RCSceneExample-Objc.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2022042601;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "RCSceneExample-Objc/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "语聊房Objective-C Demo";
+				INFOPLIST_KEY_NSCameraUsageDescription = "是否允许使用摄像头？";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "是否允许使用麦克风？";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.rcrtc.voice.room.objc;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RCSceneExample-Objc/RCSceneExample-Objc-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
 		D735B24E27E601FE00EF74B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -400,12 +685,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2022040801;
-				DEVELOPMENT_TEAM = 69G8BQ9KQW;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RCSceneExample/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "语聊房";
+				INFOPLIST_KEY_CFBundleDisplayName = "语聊房SwiftDemo";
+				INFOPLIST_KEY_NSCameraUsageDescription = "是否允许使用摄像头？";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "是否允许使用麦克风？";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -419,6 +707,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rcrtc.voice.room;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -431,12 +720,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2022040801;
-				DEVELOPMENT_TEAM = 69G8BQ9KQW;
+				DEVELOPMENT_TEAM = 9CVMN4UZK4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RCSceneExample/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "语聊房";
+				INFOPLIST_KEY_CFBundleDisplayName = "语聊房SwiftDemo";
+				INFOPLIST_KEY_NSCameraUsageDescription = "是否允许使用摄像头？";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "是否允许使用麦克风？";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -450,6 +742,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = cn.rcrtc.voice.room;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -459,6 +752,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D3DA24F82817C65A002BB3DB /* Build configuration list for PBXNativeTarget "RCSceneExample-Objc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3DA24F62817C65A002BB3DB /* Debug */,
+				D3DA24F72817C65A002BB3DB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D735B23727E601F900EF74B3 /* Build configuration list for PBXProject "RCSceneExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -58,7 +58,7 @@ PODS:
     - Moya
     - RCSceneRoom/RCSceneFoundation
     - ReachabilitySwift
-  - RCSceneVoiceRoom (0.0.3):
+  - RCSceneVoiceRoom (0.0.3.1):
     - IQKeyboardManager
     - Kingfisher
     - Pulsator
@@ -162,7 +162,7 @@ SPEC CHECKSUMS:
   RCSceneChatroomKit: 5fa306001c88bc075365a3ed8a76776e151670f2
   RCSceneLog: c38de10f8ccd4aa65eb9ac7c0a5c6b2042e7579e
   RCSceneRoom: 6ce83e519386ed91eb66924dba3d4263b78aab17
-  RCSceneVoiceRoom: b6c76d309198715e32d4b4bdd364dfe8c2dcb6ca
+  RCSceneVoiceRoom: cdb8447c3c513584ed2fe7abcbafe231429affe0
   RCVoiceRoomLib: d5b8a2770f69c865ae1304a5d742358f8295ac30
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
@@ -177,6 +177,6 @@ SPEC CHECKSUMS:
   XCoordinator: a5f91e43ee944f508529763921165697d3211629
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: df041d3c54ee3c36753c8e268a46072e0fa2e6e0
+PODFILE CHECKSUM: 23f7d47b8652d740fa7282759e0364889e371494
 
 COCOAPODS: 1.11.3
