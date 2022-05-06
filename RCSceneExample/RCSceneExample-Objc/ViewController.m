@@ -44,7 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"融云-场景化-语聊房";
+    self.title = @"RCSceneVoiceRoom";
     self.tableView.refreshControl = self.refreshControl;
 }
 
