@@ -75,6 +75,7 @@ class ViewController: UIViewController {
             case let .success(roomInfo):
                 self.navigationController?.navigationBar.isHidden = true;
                 let controller = RCVoiceRoomController(room: roomInfo, creation: true)
+                controller.view.backgroundColor = .black
                 self.navigationController?.pushViewController(controller, animated: true)
             case let .failure(error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -99,6 +100,7 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.navigationController?.navigationBar.isHidden = true;
         let controller = RCVoiceRoomController(room: rooms[indexPath.row])
+        controller.view.backgroundColor = .black
         navigationController?.pushViewController(controller, animated: true)
     }
 }

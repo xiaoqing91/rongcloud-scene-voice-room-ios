@@ -146,7 +146,7 @@ class VoiceRoomViewController: UIViewController {
     }
     
     private func buildLayout() {
-        view.backgroundColor = .black
+        view.backgroundColor = .clear
         pkView.alpha = 0
         view.addSubview(backgroundImageView)
         view.addSubview(messageView)

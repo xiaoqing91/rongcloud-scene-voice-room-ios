@@ -88,6 +88,7 @@ import RCSceneVoiceRoom
                 ;
                 guard let roomInfo = wrapper.data else { return  }
                 let controller = RCVoiceRoomController(room: roomInfo, creation: true)
+                controller.view.backgroundColor = .black
                 fromVc.navigationController?.navigationBar.isHidden = true
                 fromVc.navigationController?.pushViewController(controller, animated: true)
                
@@ -104,6 +105,7 @@ import RCSceneVoiceRoom
             return
         }
         let controller = RCVoiceRoomController(room: roomInfo)
+        controller.view.backgroundColor = .black
         fromVc.navigationController?.navigationBar.isHidden = true
         fromVc.navigationController?.pushViewController(controller, animated: true)
     }
