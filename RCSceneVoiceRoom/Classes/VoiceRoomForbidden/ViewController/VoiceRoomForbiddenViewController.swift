@@ -214,7 +214,7 @@ extension VoiceRoomForbiddenViewController {
             switch result {
             case .success(let response):
                 let data = response.data
-                let responseModel = try? JSONDecoder().decode(RCNetworkWrapper<[RCSceneRoomForbiddenWord]>.self, from: data)
+                let responseModel = try? JSONDecoder().decode(RCSceneWrapper<[RCSceneRoomForbiddenWord]>.self, from: data)
                 let wordlist = responseModel?.data ?? []
                 self.list = [.append] + wordlist.map {
                     ForbiddenCellType.word($0)

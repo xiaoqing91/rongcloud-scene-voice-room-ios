@@ -43,6 +43,7 @@ extension VoiceRoomViewController {
     }
     
     @objc func handleGiftButtonClick() {
+        RCSensorAction.giftClick(voiceRoomInfo).trigger()
         var userIds = seatlist[1..<seatlist.count].compactMap { $0.userId }
         userIds.insert(voiceRoomInfo.userId, at: 0)
         

@@ -258,6 +258,7 @@ extension VoiceRoomViewController {
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
                 }
             }
+        RCSensorAction.joinRoom(voiceRoomInfo, enableMic: false, enableCamera: false).trigger()
     }
     
     func leaveRoom() {
@@ -278,6 +279,9 @@ extension VoiceRoomViewController {
                     print("leave room fail: \(error.localizedDescription)")
                 }
             }
+        RCSensorAction.quitRoom(voiceRoomInfo,
+                                enableMic: enableMic,
+                                enableCamera: false).trigger()
     }
     
     /// 关闭房间
@@ -299,6 +303,9 @@ extension VoiceRoomViewController {
                 }
             }
         }
+        RCSensorAction.closeRoom(voiceRoomInfo,
+                                 enableMic: enableMic,
+                                 enableCamera: false).trigger()
     }
     
     func clearMusicData() {
@@ -371,6 +378,15 @@ extension VoiceRoomViewController {
             return .manager
         }
         return .audience
+    }
+    
+    var enableMic: Bool {
+        let tmpSeat = seatlist.first(where: { $0.userId == Environment.currentUserId })
+        guard let seat = tmpSeat else { return false }
+        if RCVoiceRoomEngine.sharedInstance().isDisableAudioRecording() {
+            return false
+        }
+        return !seat.isMuted
     }
 }
 

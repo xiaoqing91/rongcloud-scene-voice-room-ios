@@ -39,6 +39,7 @@ extension VoiceRoomViewController {
 
 extension VoiceRoomViewController: RCSceneRoomSettingProtocol {
     func eventWillTrigger(_ item: Item) -> Bool {
+        RCSensorAction.settingClick(voiceRoomInfo, item: item).trigger()
         switch item {
         case .forbidden:
             let roomId = voiceRoomInfo.roomId

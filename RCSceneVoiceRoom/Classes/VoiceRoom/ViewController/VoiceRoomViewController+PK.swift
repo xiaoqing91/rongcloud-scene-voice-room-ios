@@ -5,9 +5,7 @@
 //  Created by 叶孤城 on 2021/8/9.
 //
 
-import Foundation
 import SVProgressHUD
-import UIKit
 import RCVoiceRoomLib
 
 enum ClosePKReason {
@@ -125,6 +123,7 @@ extension VoiceRoomViewController {
     }
     
     @objc private func handlePkButtonClick() {
+        RCSensorAction.PKClick(voiceRoomInfo).trigger()
         switch roomState.pkConnectState {
         case .connecting:
             showClosePKAlert()
@@ -458,7 +457,7 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
             switch result {
             case .success(let response):
                 guard
-                    let status = try? JSONDecoder().decode(RCNetworkWrapper<Bool>.self, from: response.data),
+                    let status = try? JSONDecoder().decode(RCSceneWrapper<Bool>.self, from: response.data),
                         status.data == true
                 else {
                     SVProgressHUD.showError(withStatus: "对方正在PK中")

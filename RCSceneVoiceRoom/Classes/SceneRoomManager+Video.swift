@@ -54,9 +54,9 @@ extension SceneRoomManager {
     /// 如果有kv信息，默认为创建
     func voice_join(_ roomId: String,
               roomKVInfo: RCVoiceRoomInfo? = nil,
-              complation: @escaping (Result<Void, ReactorError>) -> Void) {
+              complation: @escaping (Result<Void, RCSceneError>) -> Void) {
         queue.async {
-            var result = Result<Void, ReactorError>.success(())
+            var result = Result<Void, RCSceneError>.success(())
             let semaphore = DispatchSemaphore(value: 0)
             
             if let roomKVInfo = roomKVInfo {
@@ -65,7 +65,7 @@ extension SceneRoomManager {
                         result = .success(())
                         semaphore.signal()
                     } error: { errorCode, msg in
-                        result = .failure(ReactorError("创建失败\(msg)"))
+                        result = .failure(RCSceneError("创建失败\(msg)"))
                         semaphore.signal()
                     }
             } else {
@@ -74,7 +74,7 @@ extension SceneRoomManager {
                         result = .success(())
                         semaphore.signal()
                     }, error: { eCode, msg in
-                        result = .failure(ReactorError(msg))
+                        result = .failure(RCSceneError(msg))
                         semaphore.signal()
                     })
             }
@@ -85,15 +85,15 @@ extension SceneRoomManager {
             DispatchQueue.main.async {
                 switch wait {
                 case .success: complation(result)
-                case .timedOut: complation(.failure(ReactorError("加入房间超时")))
+                case .timedOut: complation(.failure(RCSceneError("加入房间超时")))
                 }
             }
         }
     }
     
-    func voice_leave(_ complation: @escaping (Result<Void, ReactorError>) -> Void) {
+    func voice_leave(_ complation: @escaping (Result<Void, RCSceneError>) -> Void) {
         queue.async {
-            var result = Result<Void, ReactorError>.success(())
+            var result = Result<Void, RCSceneError>.success(())
             let semaphore = DispatchSemaphore(value: 0)
             RCVoiceRoomEngine.sharedInstance().leaveRoom({
                 print("leave room")
@@ -101,7 +101,7 @@ extension SceneRoomManager {
                 result = .success(())
                 semaphore.signal()
             }, error: { eCode, msg in
-                result = .failure(ReactorError(msg))
+                result = .failure(RCSceneError(msg))
                 semaphore.signal()
             })
             let wait = semaphore.wait(timeout: .now() + 8)
@@ -111,7 +111,7 @@ extension SceneRoomManager {
             DispatchQueue.main.async {
                 switch wait {
                 case .success: complation(result)
-                case .timedOut: complation(.failure(ReactorError("离开房间超时")))
+                case .timedOut: complation(.failure(RCSceneError("离开房间超时")))
                 }
             }
         }

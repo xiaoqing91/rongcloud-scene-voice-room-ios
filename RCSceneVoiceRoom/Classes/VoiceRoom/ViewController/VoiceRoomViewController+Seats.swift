@@ -85,6 +85,7 @@ extension VoiceRoomViewController {
         guard roomState.connectState == .request else {
             return
         }
+        RCSensorAction.connectRequest(voiceRoomInfo).trigger()
         if roomState.isFreeEnterSeat {
             return enterSeatIfAvailable()
         }
@@ -133,6 +134,7 @@ extension VoiceRoomViewController {
     }
     
     func leaveSeat(isKickout: Bool = false) {
+        RCSensorAction.connectionWithDraw(voiceRoomInfo).trigger()
         RCVoiceRoomEngine.sharedInstance().leaveSeat {
             [weak self] in
             guard let `self` = self else { return }

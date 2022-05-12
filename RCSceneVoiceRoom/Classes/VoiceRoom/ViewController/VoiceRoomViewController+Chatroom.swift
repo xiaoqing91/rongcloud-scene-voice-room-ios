@@ -43,13 +43,14 @@ extension VoiceRoomViewController {
     }
     
     @objc func handleMessageButtonClick() {
+        RCSensorAction.textClick(voiceRoomInfo).trigger()
         let vc = ChatListViewController(.ConversationType_PRIVATE)
         navigationController?.pushViewController(vc, animated: true)
     }
     
     func fetchForbidden() {
         voiceRoomService.forbiddenList(roomId: voiceRoomInfo.roomId) { result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomForbiddenWord]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomForbiddenWord]>.self) {
             case let .success(model):
                 SceneRoomManager.shared.forbiddenWords = (model.data ?? []).map { $0.name }
             case let .failure(error):
@@ -84,7 +85,7 @@ extension VoiceRoomViewController: RCChatroomSceneToolBarDelegate {
     func audioRecordDidEnd(_ data: Data?, time: TimeInterval) {
         guard let data = data, time > 1 else { return SVProgressHUD.showError(withStatus: "录音时间太短") }
         voiceRoomService.uploadAudio(data: data, extensions: "wav") { [weak self] result in
-            switch result.map(RCNetworkWrapper<String>.self) {
+            switch result.map(RCSceneWrapper<String>.self) {
             case let .success(response):
                 guard let path = response.data else {
                     debugPrint("path is nil")

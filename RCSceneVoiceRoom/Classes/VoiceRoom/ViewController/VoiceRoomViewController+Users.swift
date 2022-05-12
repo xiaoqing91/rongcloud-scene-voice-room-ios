@@ -31,6 +31,9 @@ extension VoiceRoomViewController {
                 }
             }
             if state == .connecting {
+                if let room = self?.voiceRoomInfo {
+                    RCSensorAction.connectionWithDraw(room).trigger()
+                }
                 RCVoiceRoomEngine.sharedInstance().cancelRequestSeat {} error: { code, msg in }
             }
         }
@@ -134,6 +137,7 @@ extension VoiceRoomViewController: HandleRequestSeatProtocol {
 
 extension VoiceRoomViewController: RequestSeatPopProtocol {
     func cancelRequestSeatDidClick() {
+        RCSensorAction.connectionWithDraw(voiceRoomInfo).trigger()
         RCVoiceRoomEngine.sharedInstance().cancelRequestSeat {
             SVProgressHUD.showSuccess(withStatus: "已撤回连线申请")
             DispatchQueue.main.async {

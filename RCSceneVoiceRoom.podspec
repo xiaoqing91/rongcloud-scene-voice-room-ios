@@ -38,6 +38,7 @@ Pod::Spec.new do |s|
   s.dependency 'RCSceneRoom/RCSceneRoom'
   s.dependency 'RCSceneRoom/RCSceneGift'
   s.dependency 'RCSceneRoom/RCSceneMusic'
+  s.dependency 'RCSceneRoom/RCSceneAnalytics'
   s.dependency 'RCSceneRoom/RCSceneRoomSetting'
   
   s.dependency 'RCVoiceRoomLib'

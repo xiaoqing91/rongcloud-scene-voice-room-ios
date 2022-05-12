@@ -72,7 +72,7 @@ class RequestSeatViewController: UIViewController {
     
     private func fetchAllUserInfo() {
         voiceRoomService.usersInfo(id: self.userIdlist) { result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 guard let list = wrapper.data else {return}
                 self.userlist = list

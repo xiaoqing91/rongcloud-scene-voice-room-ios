@@ -66,7 +66,7 @@ class InviteSeatViewController: UIViewController {
     private func fetchRoomUserlist() {
         let seatUserIds = onSeatUserlist
         voiceRoomService.roomUsers(roomId: roomId) { [weak self] result in
-            switch result.map(RCNetworkWrapper<[RCSceneRoomUser]>.self) {
+            switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 if let users = wrapper.data, let self = self {
                     self.userlist = users.filter { !seatUserIds.contains($0.userId) }
