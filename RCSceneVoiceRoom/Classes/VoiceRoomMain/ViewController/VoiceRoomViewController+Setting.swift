@@ -178,6 +178,7 @@ extension VoiceRoomViewController: RCSceneRoomPasswordProtocol {
 
 extension VoiceRoomViewController: ChangeBackgroundImageProtocol {
     func didConfirmImage(urlSuffix: String) {
+        voiceRoomInfo.backgroundUrl = urlSuffix
         NotificationNameRoomBackgroundUpdated.post((voiceRoomInfo.roomId, urlSuffix))
         voiceRoomService.updateRoomBackground(roomId: voiceRoomInfo.roomId, backgroundUrl: urlSuffix) { result in
             switch result.map(RCSceneResponse.self) {

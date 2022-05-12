@@ -32,8 +32,6 @@ Pod::Spec.new do |s|
   s.dependency 'Reusable'
   s.dependency 'Pulsator'
   s.dependency 'Kingfisher'
-  s.dependency 'XCoordinator'
-  s.dependency 'IQKeyboardManager'
   
   s.dependency 'RCSceneRoom/RCSceneRoom'
   s.dependency 'RCSceneRoom/RCSceneGift'

@@ -5,13 +5,15 @@
 //  Created by shaoshuai on 2022/2/26.
 //
 
-import UIKit
-import XCoordinator
 import RCSceneRoom
 
+public var RCSceneVoiceRoomEnableSwitchableBackgroundImage = false
+
 public func RCVoiceRoomController(room: RCSceneRoom, creation: Bool = false) -> RCRoomCycleProtocol {
+    RCSceneIMMessageRegistration()
     return VoiceRoomViewController(roomInfo: room,
                                    isCreate: creation)
+    
 }
 
 extension VoiceRoomViewController: RCRoomCycleProtocol {
@@ -34,4 +36,15 @@ extension VoiceRoomViewController: RCRoomCycleProtocol {
     func descendantViews() -> [UIView] {
         return [messageView.tableView]
     }
+}
+
+fileprivate var isIMMessageRegistration = false
+fileprivate func RCSceneIMMessageRegistration() {
+    if isIMMessageRegistration { return }
+    isIMMessageRegistration = true
+    RCChatroomMessageCenter.registerMessageTypes()
+    RCIM.shared().registerMessageType(RCGiftBroadcastMessage.self)
+    RCIM.shared().registerMessageType(RCPKGiftMessage.self)
+    RCIM.shared().registerMessageType(RCPKStatusMessage.self)
+    RCIM.shared().registerMessageType(RCShuMeiMessage.self)
 }

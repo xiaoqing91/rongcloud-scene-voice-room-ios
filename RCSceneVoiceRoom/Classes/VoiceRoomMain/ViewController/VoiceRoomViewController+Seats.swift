@@ -6,6 +6,7 @@
 //
 
 import SVProgressHUD
+import UIKit
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: seatlist)
@@ -232,5 +233,16 @@ extension VoiceRoomViewController: UICollectionViewDelegate {
         @unknown default:
             fatalError()
         }
+    }
+}
+
+extension VoiceRoomViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 56.resize + 4, height: 56.resize + 40)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        let width = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
+        return floor((width - (56.resize + 4) * 4)/3)
     }
 }

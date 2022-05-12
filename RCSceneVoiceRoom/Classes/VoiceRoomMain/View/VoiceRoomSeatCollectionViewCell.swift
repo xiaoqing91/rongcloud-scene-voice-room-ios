@@ -197,11 +197,6 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         layer.insertSublayer(radarView, at: 0)
     }
     
-    static func cellSize() -> CGSize {
-        let cell = VoiceRoomSeatCollectionViewCell()
-        return cell.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-    }
-    
     func setSpeakingState(isSpeaking: Bool) {
         let isMuted = seatInfo?.isMuted ?? true
         guard isSpeaking, seatInfo?.status == .using, !isMuted else {

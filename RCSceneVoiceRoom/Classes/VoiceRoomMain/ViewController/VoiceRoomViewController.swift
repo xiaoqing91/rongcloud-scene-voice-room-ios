@@ -5,7 +5,6 @@
 //  Created by 叶孤城 on 2021/4/20.
 //
 
-import UIKit
 import Kingfisher
 import RCSceneRoom
 
@@ -44,13 +43,21 @@ class VoiceRoomViewController: UIViewController {
     private(set) lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = VoiceRoomSeatCollectionViewCell.cellSize()
+        layout.minimumLineSpacing = 8
+        layout.minimumInteritemSpacing = 0
         let instance = UICollectionView(frame: .zero, collectionViewLayout: layout)
         instance.register(cellType: VoiceRoomSeatCollectionViewCell.self)
         instance.backgroundColor = .clear
         instance.contentInset = UIEdgeInsets(top: 20, left: 23.resize, bottom: 20, right: 23.resize)
         instance.isScrollEnabled = false
         instance.showsVerticalScrollIndicator = false
+        return instance
+    }()
+    private(set) lazy var backgroundImageView: AnimatedImageView = {
+        let instance = AnimatedImageView()
+        instance.contentMode = .scaleAspectFill
+        instance.clipsToBounds = true
+        instance.runLoopMode = .default
         return instance
     }()
     
@@ -67,7 +74,6 @@ class VoiceRoomViewController: UIViewController {
     var toolBarView: RCChatroomSceneToolBar {
         return chatroomView.toolBar
     }
-    
     
     lazy var pkView = VoiceRoomPKView()
     
@@ -115,6 +121,8 @@ class VoiceRoomViewController: UIViewController {
         }
         RCIM.shared().addReceiveMessageDelegate(self)
         PlayerImpl.instance.initializedEarMonitoring()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -138,8 +146,9 @@ class VoiceRoomViewController: UIViewController {
     }
     
     private func buildLayout() {
-        view.backgroundColor = .clear
+        view.backgroundColor = .black
         pkView.alpha = 0
+        view.addSubview(backgroundImageView)
         view.addSubview(messageView)
         view.addSubview(ownerView)
         view.addSubview(roomInfoView)
@@ -148,6 +157,10 @@ class VoiceRoomViewController: UIViewController {
         view.addSubview(toolBarView)
         view.addSubview(roomNoticeView)
         view.addSubview(pkView)
+        
+        backgroundImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         
         messageView.snp.makeConstraints {
             $0.left.equalToSuperview()
