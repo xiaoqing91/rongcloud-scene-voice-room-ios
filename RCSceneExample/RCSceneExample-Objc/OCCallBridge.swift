@@ -27,7 +27,7 @@ import RCSceneVoiceRoom
                                        platform: "mobile")
         
         loginProvider.request(api) { result in
-            switch result.map(RCNetworkWrapper<User>.self) {
+            switch result.map(RCSceneWrapper<User>.self) {
             case let .success(wrapper):
                 let user = wrapper.data!
                 UserDefaults.standard.set(user: user)
@@ -66,7 +66,7 @@ import RCSceneVoiceRoom
         roomProvider.request(.roomList(type: 1, page: 1, size: 20)) { result in
             switch result {
             case let .success(dataResponse):
-                let wrapper = try! JSONDecoder().decode(RCNetworkWrapper<VoiceRoomList>.self, from: dataResponse.data)
+                let wrapper = try! JSONDecoder().decode(RCSceneWrapper<VoiceRoomList>.self, from: dataResponse.data)
                 SceneRoomManager.shared.backgrounds = wrapper.data?.images ?? [""]
                 self.rooms = wrapper.data?.rooms
                 
@@ -84,7 +84,7 @@ import RCSceneVoiceRoom
         roomProvider.request(.createRoom(name: name, themePictureUrl: imageUrl, backgroundUrl: imageUrl, kv: [], isPrivate: 0, password: "1234", roomType: 1)) { result in
             switch result {
             case let .success(dataResponse):
-                let wrapper = try! JSONDecoder().decode(RCNetworkWrapper<RCSceneRoom>.self, from: dataResponse.data)
+                let wrapper = try! JSONDecoder().decode(RCSceneWrapper<RCSceneRoom>.self, from: dataResponse.data)
                 ;
                 guard let roomInfo = wrapper.data else { return  }
                 let controller = RCVoiceRoomController(room: roomInfo, creation: true)

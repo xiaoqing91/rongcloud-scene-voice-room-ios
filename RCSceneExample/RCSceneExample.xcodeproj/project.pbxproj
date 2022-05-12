@@ -20,6 +20,9 @@
 		D3DA25072817EF9B002BB3DB /* RCVoiceRoomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA25062817EF9B002BB3DB /* RCVoiceRoomCell.m */; };
 		D3DA250B281805C3002BB3DB /* RCSceneVoiceRoomList.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA250A281805C3002BB3DB /* RCSceneVoiceRoomList.m */; };
 		D3DA250E2819481C002BB3DB /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3DA250D2819481C002BB3DB /* LoginController.m */; };
+		D72616C5282CAFC000E6DA71 /* RCLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72616C4282CAFC000E6DA71 /* RCLoginService.swift */; };
+		D72616C7282CB00E00E6DA71 /* RCVideoRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72616C6282CB00E00E6DA71 /* RCVideoRoomService.swift */; };
+		D72616C9282CB06000E6DA71 /* RCLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72616C8282CB06000E6DA71 /* RCLoginService.swift */; };
 		D735B24027E601F900EF74B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D735B23F27E601F900EF74B3 /* AppDelegate.swift */; };
 		D735B24427E601F900EF74B3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D735B24327E601F900EF74B3 /* ViewController.swift */; };
 		D735B24727E601F900EF74B3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D735B24527E601F900EF74B3 /* Main.storyboard */; };
@@ -55,6 +58,9 @@
 		D3DA250A281805C3002BB3DB /* RCSceneVoiceRoomList.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCSceneVoiceRoomList.m; sourceTree = "<group>"; };
 		D3DA250C2819481C002BB3DB /* LoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		D3DA250D2819481C002BB3DB /* LoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		D72616C4282CAFC000E6DA71 /* RCLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCLoginService.swift; sourceTree = "<group>"; };
+		D72616C6282CB00E00E6DA71 /* RCVideoRoomService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RCVideoRoomService.swift; path = "RCSceneExample-Objc/RCVideoRoomService.swift"; sourceTree = SOURCE_ROOT; };
+		D72616C8282CB06000E6DA71 /* RCLoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RCLoginService.swift; path = "RCSceneExample-Objc/RCLoginService.swift"; sourceTree = SOURCE_ROOT; };
 		D735B23C27E601F900EF74B3 /* RCSceneExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RCSceneExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D735B23F27E601F900EF74B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D735B24327E601F900EF74B3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 		D3DA25012817EF31002BB3DB /* VIew */ = {
 			isa = PBXGroup;
 			children = (
+				D72616C8282CB06000E6DA71 /* RCLoginService.swift */,
+				D72616C6282CB00E00E6DA71 /* RCVideoRoomService.swift */,
 				D3DA25052817EF9B002BB3DB /* RCVoiceRoomCell.h */,
 				D3DA25062817EF9B002BB3DB /* RCVoiceRoomCell.m */,
 			);
@@ -191,6 +199,7 @@
 		D7750BDB28004180003188F0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				D72616C4282CAFC000E6DA71 /* RCLoginService.swift */,
 				D7750BDC28004180003188F0 /* RCVideoRoomService.swift */,
 			);
 			path = Service;
@@ -436,6 +445,8 @@
 				D3DA25002817D7D3002BB3DB /* AppConfigs.swift in Sources */,
 				D3DA24F52817C65A002BB3DB /* main.m in Sources */,
 				D3DA250B281805C3002BB3DB /* RCSceneVoiceRoomList.m in Sources */,
+				D72616C9282CB06000E6DA71 /* RCLoginService.swift in Sources */,
+				D72616C7282CB00E00E6DA71 /* RCVideoRoomService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +457,7 @@
 				D735B24427E601F900EF74B3 /* ViewController.swift in Sources */,
 				D7750BE128004180003188F0 /* RCVideoRoomService.swift in Sources */,
 				D735B24027E601F900EF74B3 /* AppDelegate.swift in Sources */,
+				D72616C5282CAFC000E6DA71 /* RCLoginService.swift in Sources */,
 				D7750BE328004180003188F0 /* RCVideoRoomCell.swift in Sources */,
 				D7750BE228004180003188F0 /* LoginViewController.swift in Sources */,
 				D7750BE028004180003188F0 /* AppConfigs.swift in Sources */,
@@ -500,7 +512,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2022042601;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
+				DEVELOPMENT_TEAM = 69G8BQ9KQW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RCSceneExample-Objc/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "语聊房Objective-C Demo";
@@ -538,7 +550,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2022042601;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
+				DEVELOPMENT_TEAM = 69G8BQ9KQW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "RCSceneExample-Objc/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "语聊房Objective-C Demo";
@@ -688,7 +700,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2022040801;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
+				DEVELOPMENT_TEAM = 69G8BQ9KQW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RCSceneExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "语聊房SwiftDemo";
@@ -723,7 +735,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2022040801;
-				DEVELOPMENT_TEAM = 9CVMN4UZK4;
+				DEVELOPMENT_TEAM = 69G8BQ9KQW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RCSceneExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "语聊房SwiftDemo";
