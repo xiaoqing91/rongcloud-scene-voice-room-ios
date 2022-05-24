@@ -5,9 +5,7 @@
 //  Created by shaoshuai on 2021/6/30.
 //
 
-import UIKit
 import SVProgressHUD
-
 import RCSceneRoom
 
 extension VoiceRoomViewController {
@@ -26,7 +24,7 @@ extension VoiceRoomViewController {
         vc.addAction(UIAlertAction(title: "取消", style: .cancel, handler: { _ in
             
         }))
-        let topVC = UIApplication.shared.topMostViewController()
+        let topVC = UIApplication.shared.topmostController()
         topVC?.present(vc, animated: true, completion: nil)
     }
     

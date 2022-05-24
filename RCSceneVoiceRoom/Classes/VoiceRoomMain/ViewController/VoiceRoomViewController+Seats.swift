@@ -149,9 +149,7 @@ extension VoiceRoomViewController {
                     self.roomState.connectState = .request
                     self.roomContainerAction?.enableSwitchRoom()
                 }
-                if self.voiceRoomInfo.isOwner {
-                    let _ = PlayerImpl.instance.stopMixing(with: nil)
-                }
+                RCSceneMusic.stop()
             }
         } error: { code, msg in
             debugPrint("下麦失败\(code) \(msg)")

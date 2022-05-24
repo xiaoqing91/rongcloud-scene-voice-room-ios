@@ -16,7 +16,7 @@ enum RCNavigation: Navigation {
     case manageUser(dependency: RCSceneRoomUserOperationDependency, delegate: RCSceneRoomUserOperationProtocol?)
     case ownerClickEmptySeat(RCVoiceSeatInfo, UInt, VoiceRoomEmptySeatOperationProtocol)
     case inputText(name: String, delegate: VoiceRoomInputTextProtocol)
-    case inputPassword(type: RCSceneRoomPasswordType, delegate: RCSceneRoomPasswordProtocol?)
+    case inputPassword(completion: RCSRPasswordCompletion)
     case requestSeatPop(delegate: RequestSeatPopProtocol)
     case changeBackground(imagelist: [String], delegate: ChangeBackgroundImageProtocol)
     case userlist(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol)
@@ -90,8 +90,9 @@ struct RCAppNavigation: AppNavigation {
             vc.modalTransitionStyle = .coverVertical
             vc.modalPresentationStyle = .popover
             return vc
-        case let .inputPassword(type, delegate):
-            let vc = RCSceneRoomPasswordViewController(type: type, delegate: delegate)
+        case let .inputPassword(completion):
+            let vc = RCSRPasswordViewController()
+            vc.completion = completion
             vc.modalTransitionStyle = .crossDissolve
             vc.modalPresentationStyle = .overFullScreen
             return vc

@@ -46,5 +46,4 @@ fileprivate func RCSceneIMMessageRegistration() {
     RCIM.shared().registerMessageType(RCGiftBroadcastMessage.self)
     RCIM.shared().registerMessageType(RCPKGiftMessage.self)
     RCIM.shared().registerMessageType(RCPKStatusMessage.self)
-    RCIM.shared().registerMessageType(RCShuMeiMessage.self)
 }

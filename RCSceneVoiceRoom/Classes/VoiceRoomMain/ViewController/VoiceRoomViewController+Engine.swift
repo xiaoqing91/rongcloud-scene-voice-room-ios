@@ -28,7 +28,7 @@ extension VoiceRoomViewController {
         if let fm = self.floatingManager, fm.showing {
             UIApplication.shared.keyWindow()?.rootViewController?.present(alertVC, animated: true)
         } else {
-            topMostViewController().present(alertVC, animated: true)
+            topmostController().present(alertVC, animated: true)
         }
     }
 }
@@ -153,12 +153,10 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     
     func kickSeatDidReceive(_ seatIndex: UInt) {
         SVProgressHUD.showSuccess(withStatus: "您已被抱下麦")
-        if !(currentUserRole() == .creator) {
-            self.roomState.connectState = .request
+        if currentUserRole() == .creator {
+            RCSceneMusic.stop()
         } else {
-            if (self.voiceRoomInfo.isOwner && (PlayerImpl.instance.currentPlayState == .mixingStatePlaying || PlayerImpl.instance.currentPlayState == .mixingStatePause)) {
-                let _ = PlayerImpl.instance.stopMixing(with: nil)
-            }
+            roomState.connectState = .request
         }
     }
     

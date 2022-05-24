@@ -34,8 +34,10 @@ extension VoiceRoomViewController: RCRTCBroadcastDelegate {
     
     func broadcastViewDidClick(_ room: RCSceneRoom) {
         if room.isPrivate == 1 {
-            let controller = UIApplication.shared.keyWindow()?.rootViewController
-            controller?.navigator(.inputPassword(type: .verify(room), delegate: self))
+            navigator(.inputPassword(completion: { [weak self] password in
+                guard room.password == password else { return }
+                self?.roomContainerAction?.switchRoom(room)
+            }))
         } else {
             self.roomContainerSwitchRoom(room)
         }

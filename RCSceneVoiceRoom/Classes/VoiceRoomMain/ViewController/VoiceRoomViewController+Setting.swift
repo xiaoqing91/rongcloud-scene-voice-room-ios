@@ -30,7 +30,7 @@ extension VoiceRoomViewController {
                 .music
             ]
         }
-        let controller = RCSceneRoomSettingViewController(items: items, delegate: self)
+        let controller = RCSRSettingViewController(items: items, delegate: self)
         controller.modalTransitionStyle = .crossDissolve
         controller.modalPresentationStyle = .overFullScreen
         present(controller, animated: true)
@@ -162,17 +162,6 @@ extension VoiceRoomViewController {
         } error: { code, msg in
             SVProgressHUD.showError(withStatus: msg)
         }
-    }
-}
-
-// MARK: - Modify Room type Delegate
-extension VoiceRoomViewController: RCSceneRoomPasswordProtocol {
-    func passwordDidEnter(password: String) {
-        setRoomType(isPrivate: true, password: password)
-    }
-    #warning("这里可能是从礼物广播消息点击围观房间，输入完成房间密码后，走到这里")
-    func passwordDidVerify(_ room: RCSceneRoom) {
-        self.roomContainerSwitchRoom(room)
     }
 }
 

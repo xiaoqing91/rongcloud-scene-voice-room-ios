@@ -90,8 +90,6 @@ class VoiceRoomViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         hidesBottomBarWhenPushed = true
         RCVoiceRoomEngine.sharedInstance().setDelegate(self)
-        DataSourceImpl.instance.roomId = roomInfo.roomId
-        DelegateImpl.instance.roomId = roomInfo.roomId
         /**TO BE FIX 后续用新的router替换*/
         Router.default.setupAppNavigation(appNavigation: RCAppNavigation())
     }
@@ -114,15 +112,8 @@ class VoiceRoomViewController: UIViewController {
         addObserver()
         bubbleViewAddGesture()
         UserDefaults.standard.increaseFeedbackCountdown()
-        if (!voiceRoomInfo.isOwner) {
-            DataSourceImpl.instance.fetchRoomPlayingMusicInfo { info in
-                self.musicInfoBubbleView?.info = info;
-            }
-        }
         RCIM.shared().addReceiveMessageDelegate(self)
-        PlayerImpl.instance.initializedEarMonitoring()
-        
-        
+        RCSceneMusic.join(voiceRoomInfo)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -235,7 +226,7 @@ class VoiceRoomViewController: UIViewController {
     }
     
     @objc private func handleNotification(noti: Notification) {
-        if isRoomClosed, let vc = UIApplication.shared.topMostViewController(), vc == self {
+        if isRoomClosed, let vc = UIApplication.shared.topmostController(), vc == self {
             navigator(.voiceRoomAlert(title: "当前直播已结束", actions: [.confirm("确定")], alertType: alertTypeVideoAlreadyClose, delegate: self))
         }
     }
@@ -275,16 +266,15 @@ extension VoiceRoomViewController {
     }
     
     func leaveRoom() {
-        clearMusicData()
+        RCSceneMusic.clear()
         SceneRoomManager.shared
             .voice_leave { [weak self] result in
                 SceneRoomManager.shared.currentRoom = nil
-                self?.navigationController?.safe_popToViewController(animated: true)
+                self?.backTrigger()
                 if let fm = self?.floatingManager {
                     fm.hide()
                 }
-                DataSourceImpl.instance.clear()
-                PlayerImpl.instance.clear()
+                RCSceneMusic.clear()
                 switch result {
                 case .success:
                     print("leave room success")
@@ -300,7 +290,7 @@ extension VoiceRoomViewController {
     /// 关闭房间
     func closeRoom() {
         SVProgressHUD.show()
-        clearMusicData()
+        RCSceneMusic.clear()
         voiceRoomService.closeRoom(roomId: voiceRoomInfo.roomId) { result in
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
                 switch result.map(RCSceneResponse.self) {
@@ -319,14 +309,6 @@ extension VoiceRoomViewController {
         RCSensorAction.closeRoom(voiceRoomInfo,
                                  enableMic: enableMic,
                                  enableCamera: false).trigger()
-    }
-    
-    func clearMusicData() {
-        if (self.voiceRoomInfo.isOwner) {
-            DataSourceImpl.instance.clear()
-            PlayerImpl.instance.clear()
-            DelegateImpl.instance.clear()
-        }
     }
 }
 
