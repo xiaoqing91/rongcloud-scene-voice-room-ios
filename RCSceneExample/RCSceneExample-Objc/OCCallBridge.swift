@@ -40,6 +40,11 @@ import RCSceneVoiceRoom
             }
         }
     }
+    
+    @objc
+    public static func logout() {
+        UserDefaults.standard.clearLoginStatus()
+    }
 }
 
 

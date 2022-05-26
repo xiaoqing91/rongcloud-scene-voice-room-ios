@@ -6,11 +6,9 @@
 //
 
 import SVProgressHUD
-
-import RCSceneRoom
 import RCSceneVoiceRoom
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -85,7 +83,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rooms.count
     }
@@ -96,32 +94,11 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.navigationController?.navigationBar.isHidden = true;
         let controller = RCVoiceRoomController(room: rooms[indexPath.row])
         controller.view.backgroundColor = .black
         navigationController?.pushViewController(controller, animated: true)
-    }
-}
-
-/// Connection
-extension ViewController {
-    private func connection() {
-        if RCIM.shared().getConnectionStatus() == .ConnectionStatus_Connected {
-            return
-        }
-        guard let token = UserDefaults.standard.rongToken() else {
-            return performSegue(withIdentifier: "Login", sender: nil)
-        }
-        RCIM.shared().initWithAppKey(Environment.rcKey)
-        RCIM.shared().connect(withToken: token) { code in
-            debugPrint("RCIM db open failed: \(code.rawValue)")
-        } success: { userId in
-            debugPrint("userId: \(userId ?? "")")
-            self.refresh()
-        } error: { errorCode in
-            debugPrint("RCIM connect failed: \(errorCode.rawValue)")
-        }
     }
 }

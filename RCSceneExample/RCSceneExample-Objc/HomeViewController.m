@@ -5,14 +5,14 @@
 //  Created by hanxiaoqing on 2022/4/26.
 //
 
-#import "ViewController.h"
+#import "HomeViewController.h"
 #import "RCSceneVoiceRoomList.h"
 #import "RCSceneExample_Objc-Swift.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 #import "RCVoiceRoomCell.h"
 #import <RCIM.h>
 
-@interface ViewController () <UITableViewDelegate, UITableViewDataSource, VoiceRoomBridgeDelegate>
+@interface HomeViewController () <UITableViewDelegate, UITableViewDataSource, VoiceRoomBridgeDelegate, RCIMConnectionStatusDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation ViewController
+@implementation HomeViewController
 
 - (VoiceRoomBridge *)voiceRoomBridge {
     if (!_voiceRoomBridge) {
@@ -122,5 +122,18 @@
     }
 }
 
+#pragma mark - RCIMConnectionStatusDelegate -
+
+- (void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status {
+    switch (status) {
+        case ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT:
+            [LoginBridge logout];
+            [self performSegueWithIdentifier:@"Login" sender:nil];
+            break;
+            
+        default:
+            break;
+    }
+}
 
 @end

@@ -6,7 +6,6 @@
 //
 
 import SVProgressHUD
-import UIKit
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: seatlist)

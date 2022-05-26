@@ -29,9 +29,9 @@ class AppConfigs {
     }
     
     static func configHiFive() {
-        Environment.hiFiveAppId = "6f78321c38ee4db3bb4dae7e56d464b1"
-        Environment.hiFiveServerCode = "ca41ad68e8054610a2"
-        Environment.hiFiveServerVersion = "V4.1.2"
+        Environment.hiFiveAppId = ""
+        Environment.hiFiveServerCode = ""
+        Environment.hiFiveServerVersion = ""
     }
     
     static func configBusinessToken() {
