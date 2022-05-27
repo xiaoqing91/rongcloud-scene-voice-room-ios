@@ -29,6 +29,7 @@
 		D735B24927E601FE00EF74B3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D735B24827E601FE00EF74B3 /* Assets.xcassets */; };
 		D735B24C27E601FE00EF74B3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D735B24A27E601FE00EF74B3 /* LaunchScreen.storyboard */; };
 		D7503F39283F2C4B007F5C0A /* HomeViewController+IM.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7503F38283F2C4B007F5C0A /* HomeViewController+IM.swift */; };
+		D7503F3F28411A84007F5C0A /* ENV.plist in Resources */ = {isa = PBXBuildFile; fileRef = D7503F3E28411A84007F5C0A /* ENV.plist */; };
 		D7750BE028004180003188F0 /* AppConfigs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7750BDA28004180003188F0 /* AppConfigs.swift */; };
 		D7750BE128004180003188F0 /* RCVideoRoomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7750BDC28004180003188F0 /* RCVideoRoomService.swift */; };
 		D7750BE228004180003188F0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7750BDD28004180003188F0 /* LoginViewController.swift */; };
@@ -70,6 +71,7 @@
 		D735B24B27E601FE00EF74B3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D735B24D27E601FE00EF74B3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7503F38283F2C4B007F5C0A /* HomeViewController+IM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+IM.swift"; sourceTree = "<group>"; };
+		D7503F3E28411A84007F5C0A /* ENV.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = ENV.plist; sourceTree = SOURCE_ROOT; };
 		D7750BDA28004180003188F0 /* AppConfigs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigs.swift; sourceTree = "<group>"; };
 		D7750BDC28004180003188F0 /* RCVideoRoomService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RCVideoRoomService.swift; sourceTree = "<group>"; };
 		D7750BDD28004180003188F0 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 		D735B23E27E601F900EF74B3 /* RCSceneExample */ = {
 			isa = PBXGroup;
 			children = (
+				D7503F3E28411A84007F5C0A /* ENV.plist */,
 				D735B23F27E601F900EF74B3 /* AppDelegate.swift */,
 				D735B24327E601F900EF74B3 /* HomeViewController.swift */,
 				D7503F38283F2C4B007F5C0A /* HomeViewController+IM.swift */,
@@ -312,6 +315,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7503F3F28411A84007F5C0A /* ENV.plist in Resources */,
 				D735B24C27E601FE00EF74B3 /* LaunchScreen.storyboard in Resources */,
 				D735B24927E601FE00EF74B3 /* Assets.xcassets in Resources */,
 				D735B24727E601F900EF74B3 /* Main.storyboard in Resources */,

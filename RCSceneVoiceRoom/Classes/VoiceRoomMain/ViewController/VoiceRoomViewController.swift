@@ -113,7 +113,7 @@ class VoiceRoomViewController: UIViewController {
         bubbleViewAddGesture()
         UserDefaults.standard.increaseFeedbackCountdown()
         RCIM.shared().addReceiveMessageDelegate(self)
-        RCSceneMusic.join(voiceRoomInfo)
+        RCSceneMusic.join(voiceRoomInfo, bubbleView: musicInfoBubbleView!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
