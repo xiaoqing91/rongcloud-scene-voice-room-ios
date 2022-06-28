@@ -38,10 +38,10 @@ extension VoiceRoomViewController {
             }
             return .audience
         }()
-        let index = seatlist.firstIndex { seat in
+        let index = seatList.firstIndex { seat in
             seat.userId == userId
         }
-        let seat = seatlist.first { seat in
+        let seat = seatList.first { seat in
             seat.userId == userId
         }
         let lock: Bool = seat?.status == .locking
@@ -58,16 +58,31 @@ extension VoiceRoomViewController {
 // MARK: - Owner Seat View Click Delegate
 extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
     func masterViewDidClick() {
-        guard currentUserRole() == .creator else { return }
+        guard currentUserRole() == .creator else {
+            return userDidClickMasterView()
+        }
         guard let index = seatIndex(), index == 0 else {
             return enterSeat(index: 0)
         }
         var disableRecording = false
-        if let seatInfo = seatlist.first {
+        if let seatInfo = seatList.first {
             disableRecording = seatInfo.disableRecording
         }
         let navigation = RCNavigation.masterSeatOperation(Environment.currentUserId, disableRecording, self)
         navigator(navigation)
+    }
+    
+    func userDidClickMasterView() {
+        guard let userId = seatList.first?.userId, userId.count > 0 else {
+            return
+        }
+        let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
+                                                            userId: userId,
+                                                            userRole: .audience,
+                                                            userSeatIndex: 0,
+                                                            userSeatMute: false,
+                                                            userSeatLock: false)
+        navigator(.manageUser(dependency: dependency, delegate: self))
     }
 }
 
@@ -122,7 +137,7 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
         let navigation = RCNavigation.requestOrInvite(roomId: voiceRoomInfo.roomId,
                                                       delegate: self,
                                                       showPage: 1,
-                                                      onSeatUserIds: seatlist.compactMap(\.userId))
+                                                      onSeatUserIds: seatList.compactMap(\.userId))
         navigator(navigation)
     }
 }
@@ -131,7 +146,7 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
 extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
     /// 抱下麦
     func kickUserOffSeat(seatIndex: UInt) {
-        guard let userId = seatlist[Int(seatIndex)].userId else {
+        guard let userId = seatList[Int(seatIndex)].userId else {
             return
         }
         RCVoiceRoomEngine.sharedInstance().kickUser(fromSeat: userId) {
@@ -214,7 +229,7 @@ extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
             return
         }
          
-        let seatUsers: [String] = seatlist.map { $0.userId ?? "" }
+        let seatUsers: [String] = seatList.map { $0.userId ?? "" }
         let dependency = RCSceneGiftDependency(room: voiceRoomInfo,
                                                  seats: seatUsers,
                                                  userIds: [userId])

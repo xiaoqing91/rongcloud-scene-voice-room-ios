@@ -18,8 +18,8 @@ enum RCNavigation: Navigation {
     case inputText(name: String, delegate: VoiceRoomInputTextProtocol)
     case inputPassword(completion: RCSRPasswordCompletion)
     case requestSeatPop(delegate: RequestSeatPopProtocol)
-    case changeBackground(imagelist: [String], delegate: ChangeBackgroundImageProtocol)
-    case userlist(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol)
+    case changeBackground(imageList: [String], delegate: ChangeBackgroundImageProtocol)
+    case userList(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol)
     case gift(dependency: RCSceneGiftDependency, delegate: RCSceneGiftViewControllerDelegate)
     case voiceRoomAlert(title: String, actions: [VoiceRoomAlertAction], alertType: String, delegate: VoiceRoomAlertProtocol?)
     case leaveAlert(isOwner: Bool, delegate: RCSceneLeaveViewProtocol)
@@ -42,7 +42,7 @@ struct RCAppNavigation: AppNavigation {
                     .inputPassword,
                     .requestSeatPop,
                     .changeBackground,
-                    .userlist,
+                    .userList,
                     .gift,
                     .voiceRoomAlert,
                     .leaveAlert,
@@ -101,12 +101,12 @@ struct RCAppNavigation: AppNavigation {
             vc.modalTransitionStyle = .coverVertical
             vc.modalPresentationStyle = .popover
             return vc
-        case let .changeBackground(imagelist, delegate):
-            let vc = ChangeBackgroundViewController(imagelist: imagelist, delegate: delegate)
+        case let .changeBackground(imageList, delegate):
+            let vc = ChangeBackgroundViewController(imageList: imageList, delegate: delegate)
             vc.modalTransitionStyle = .coverVertical
             vc.modalPresentationStyle = .popover
             return vc
-        case let .userlist(room, delegate):
+        case let .userList(room, delegate):
             let vc = RCSceneRoomUsersViewController(room: room, delegate: delegate)
             let nav = UINavigationController(rootViewController: vc)
             nav.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]

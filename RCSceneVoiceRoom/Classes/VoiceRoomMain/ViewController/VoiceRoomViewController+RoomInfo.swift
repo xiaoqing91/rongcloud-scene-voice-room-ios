@@ -59,6 +59,6 @@ extension VoiceRoomViewController: RoomInfoViewClickProtocol {
     }
     
     func roomInfoDidClick() {
-        navigator(.userlist(room: voiceRoomInfo, delegate: self))
+        navigator(.userList(room: voiceRoomInfo, delegate: self))
     }
 }

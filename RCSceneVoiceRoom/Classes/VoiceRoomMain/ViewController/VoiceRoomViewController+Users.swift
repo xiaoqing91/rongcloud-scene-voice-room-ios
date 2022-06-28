@@ -55,7 +55,7 @@ extension VoiceRoomViewController {
         let navigation: RCNavigation = .requestOrInvite(roomId: voiceRoomInfo.roomId,
                                                         delegate: self,
                                                         showPage: 0,
-                                                        onSeatUserIds: seatlist.compactMap(\.userId))
+                                                        onSeatUserIds: seatList.compactMap(\.userId))
         navigator(navigation)
     }
     
@@ -70,15 +70,15 @@ extension VoiceRoomViewController {
         case .waiting:
             navigator(.requestSeatPop(delegate: self))
         case .connecting:
-            let tmpIndex = seatlist.firstIndex { $0.userId == Environment.currentUserId }
+            let tmpIndex = seatList.firstIndex { $0.userId == Environment.currentUserId }
             guard let seatIndex = tmpIndex else { return }
-            let seatInfo = seatlist[seatIndex]
+            let seatInfo = seatList[seatIndex]
             navigator(.userSeatPop(seatIndex: UInt(seatIndex), isUserMute: roomState.isCloseSelfMic, isSeatMute: seatInfo.isMuted, delegate: self))
         }
     }
     
     func hasEmptySeat() -> Bool {
-        return seatlist[1..<seatlist.count].contains { $0.isEmpty }
+        return seatList[1..<seatList.count].contains { $0.isEmpty }
     }
     
     func setupRequestStateAndMicOrderListState() {

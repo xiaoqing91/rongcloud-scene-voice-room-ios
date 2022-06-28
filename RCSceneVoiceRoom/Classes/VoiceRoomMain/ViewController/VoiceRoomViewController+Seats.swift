@@ -10,15 +10,15 @@ import SVProgressHUD
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: seatlist)
     private var seats_seatlist: [RCVoiceSeatInfo] {
-        get { seatlist }
+        get { seatList }
         set {
-            seatlist = newValue
+            seatList = newValue
             collectionView.reloadData()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.updateCollectionViewHeight()
             })
             
-            if let seatInfo = seatlist.first {
+            if let seatInfo = seatList.first {
                 ownerView.updateOwner(seatInfo: seatInfo)
                 ownerView.updateGiftVales(giftValues: userGiftInfo)
             }
@@ -29,7 +29,7 @@ extension VoiceRoomViewController {
                 micButton.micState = voiceRoomInfo.isOwner ? .user : .connecting
             }
 
-            if seatlist.contains(where: { $0.userId == Environment.currentUserId }) {
+            if seatList.contains(where: { $0.userId == Environment.currentUserId }) {
                 self.roomContainerAction?.disableSwitchRoom()
             } else if voiceRoomInfo.isOwner == false {
                 self.roomContainerAction?.enableSwitchRoom()
@@ -104,7 +104,7 @@ extension VoiceRoomViewController {
     
     func enterSeatIfAvailable(_ isPicked: Bool = false) {
         RCVoiceRoomEngine.sharedInstance().cancelRequestSeat {} error: { code, msg in }
-        if let index = seatlist[1..<seatlist.count].firstIndex(where: { $0.isEmpty }) {
+        if let index = seatList[1..<seatList.count].firstIndex(where: { $0.isEmpty }) {
             enterSeat(index: index, isPicked)
         } else {
             SVProgressHUD.showError(withStatus: "没有空座了，请稍后重试")
@@ -156,23 +156,23 @@ extension VoiceRoomViewController {
     }
     
     func isSitting(_ userId: String = Environment.currentUserId) -> Bool {
-        return seatlist.contains { $0.userId == userId }
+        return seatList.contains { $0.userId == userId }
     }
     
     func seatIndex(of userId: String = Environment.currentUserId) -> Int? {
-        return seatlist.firstIndex { $0.userId == userId }
+        return seatList.firstIndex { $0.userId == userId }
     }
 }
 
 //MARK: - Seat CollectionView DataSource
 extension VoiceRoomViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return seatlist.count - 1
+        return seatList.count - 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: VoiceRoomSeatCollectionViewCell.self)
-        cell.update(seatInfo: seatlist[indexPath.row + 1],
+        cell.update(seatInfo: seatList[indexPath.row + 1],
                     index: indexPath.row + 1,
                     managers: managers,
                     giftValues: userGiftInfo)
@@ -183,7 +183,7 @@ extension VoiceRoomViewController: UICollectionViewDataSource {
 extension VoiceRoomViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let seatIndex = indexPath.row + 1
-        let seatInfo = seatlist[seatIndex]
+        let seatInfo = seatList[seatIndex]
         switch seatInfo.status {
         case .empty:
             if currentUserRole() == .creator {
@@ -197,7 +197,7 @@ extension VoiceRoomViewController: UICollectionViewDelegate {
                         guard let self = self else { return }
                         self.roomState.isEnterSeatWaiting.toggle()
                         self.roomState.connectState = .connecting
-                        guard !self.seatlist[seatIndex].isMuted else { return }
+                        guard !self.seatList[seatIndex].isMuted else { return }
                     } error: { [weak self] code, msg in
                         self?.roomState.isEnterSeatWaiting.toggle()
                     }
@@ -214,7 +214,7 @@ extension VoiceRoomViewController: UICollectionViewDelegate {
                 return
             }
             if userId == Environment.currentUserId {
-                let seatInfo = self.seatlist[seatIndex]
+                let seatInfo = self.seatList[seatIndex]
                 navigator(.userSeatPop(seatIndex: UInt(seatIndex), isUserMute: roomState.isCloseSelfMic, isSeatMute: seatInfo.isMuted, delegate: self))
             } else {
                 operate(userId)

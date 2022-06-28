@@ -140,7 +140,7 @@ extension VoiceRoomViewController {
     }
     /// 房间背景
     func modifyRoomBackgroundDidClick() {
-        navigator(.changeBackground(imagelist: SceneRoomManager.shared.backgrounds, delegate: self))
+        navigator(.changeBackground(imageList: SceneRoomManager.shared.backgrounds, delegate: self))
     }
     /// 座位数量
     func lessSeatDidClick(isLess: Bool) {

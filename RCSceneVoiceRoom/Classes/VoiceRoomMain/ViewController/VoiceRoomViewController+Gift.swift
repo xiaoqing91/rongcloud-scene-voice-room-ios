@@ -44,10 +44,10 @@ extension VoiceRoomViewController {
     
     @objc func handleGiftButtonClick() {
         RCSensorAction.giftClick(voiceRoomInfo).trigger()
-        var userIds = seatlist[1..<seatlist.count].compactMap { $0.userId }
+        var userIds = seatList[1..<seatList.count].compactMap { $0.userId }
         userIds.insert(voiceRoomInfo.userId, at: 0)
         
-        let seatUsers: [String] = seatlist.map { $0.userId ?? "" }
+        let seatUsers: [String] = seatList.map { $0.userId ?? "" }
         let dependency = RCSceneGiftDependency(room: voiceRoomInfo,
                                                  seats: seatUsers,
                                                  userIds: userIds)
@@ -69,7 +69,7 @@ extension VoiceRoomViewController {
         else if let giftMessage = content as? RCChatroomGiftAll {
             let giftValue = giftMessage.number * giftMessage.price
             var giftValues = userGiftInfo
-            seatlist
+            seatList
                 .filter { $0.userId != nil }
                 .forEach { seatInfo in
                     let userId = seatInfo.userId!

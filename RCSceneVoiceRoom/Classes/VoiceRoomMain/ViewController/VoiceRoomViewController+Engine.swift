@@ -50,7 +50,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         } else {
             getPKStatus()
         }
-        roomInfoView.updateRoomUserNumber()
+        roomInfoView.userNumberNeedUpdate()
     }
     
     func roomInfoDidUpdate(_ roomInfo: RCVoiceRoomInfo) {
@@ -58,7 +58,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     }
     
     func seatInfoDidUpdate(_ seatInfolist: [RCVoiceSeatInfo]) {
-        seatlist = seatInfolist
+        seatList = seatInfolist
         print("seatinlist count is \(seatInfolist.count)")
     }
     
@@ -79,11 +79,11 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     
     
     func userDidEnter(_ userId: String) {
-        roomInfoView.updateRoomUserNumber()
+        roomInfoView.roomUserIncrease()
     }
     
     func userDidExit(_ userId: String) {
-        roomInfoView.updateRoomUserNumber()
+        roomInfoView.roomUserDecrease()
     }
     
 
@@ -185,7 +185,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     }
     
     func userDidKick(fromRoom targetId: String, byUserId userId: String) {
-        roomInfoView.updateRoomUserNumber()
+        roomInfoView.roomUserDecrease()
         if targetId == Environment.currentUserId {
             if managers.contains(where: { $0.userId == userId }) {
                 RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in

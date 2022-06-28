@@ -53,11 +53,11 @@ class ChangeBackgroundViewController: UIViewController {
         instance.addTarget(self, action: #selector(handleConfirmButtonClick), for: .touchUpInside)
         return instance
     }()
-    private let imagelist: [String]
+    private let imageList: [String]
     private var selectedRow: Int?
     
-    init(imagelist: [String], delegate: ChangeBackgroundImageProtocol) {
-        self.imagelist = imagelist
+    init(imageList: [String], delegate: ChangeBackgroundImageProtocol) {
+        self.imageList = imageList
         self.delegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
@@ -109,19 +109,19 @@ class ChangeBackgroundViewController: UIViewController {
         guard let row = selectedRow else {
             return
         }
-        delegate?.didConfirmImage(urlSuffix: imagelist[row])
+        delegate?.didConfirmImage(urlSuffix: imageList[row])
         dismiss(animated: true, completion: nil)
     }
 }
 
 extension ChangeBackgroundViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imagelist.count
+        return imageList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: BackgroundImageCollectionViewCell.self)
-        cell.updateCell(item: imagelist[indexPath.row])
+        cell.updateCell(item: imageList[indexPath.row])
         return cell
     }
 }

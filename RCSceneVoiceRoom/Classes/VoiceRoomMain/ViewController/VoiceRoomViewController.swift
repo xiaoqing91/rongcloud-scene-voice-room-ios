@@ -20,7 +20,7 @@ class VoiceRoomViewController: UIViewController {
     weak var roomContainerAction: RCRoomContainerAction?
     dynamic var kvRoomInfo: RCVoiceRoomInfo?
     dynamic var voiceRoomInfo: RCSceneRoom
-    dynamic var seatlist: [RCVoiceSeatInfo] = {
+    dynamic var seatList: [RCVoiceSeatInfo] = {
         var list = [RCVoiceSeatInfo]()
         for _ in 0...8 {
             let info = RCVoiceSeatInfo()
@@ -35,6 +35,8 @@ class VoiceRoomViewController: UIViewController {
     dynamic var isRoomClosed = false
     dynamic var timer: Timer?
     dynamic var inviterCount: Int = 10
+    
+    var roomUsers = Set<String>()
 
     private(set) lazy var roomNoticeView = SceneRoomNoticeView()
     private(set) lazy var roomInfoView = SceneRoomInfoView(voiceRoomInfo)
@@ -376,7 +378,7 @@ extension VoiceRoomViewController {
     }
     
     var enableMic: Bool {
-        let tmpSeat = seatlist.first(where: { $0.userId == Environment.currentUserId })
+        let tmpSeat = seatList.first(where: { $0.userId == Environment.currentUserId })
         guard let seat = tmpSeat else { return false }
         if RCVoiceRoomEngine.sharedInstance().isDisableAudioRecording() {
             return false

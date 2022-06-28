@@ -66,6 +66,17 @@ class SceneRoomInfoView: UIView {
     
     private var isFollow: Bool = false
     
+    private var roomUserCount: Int = 0 {
+        didSet {
+            let count = max(0, roomUserCount)
+            onlineMemberLabel.text = "在线 \(count)"
+            calibrator.outerUserCount = roomUserCount
+            self.layoutIfNeeded()
+        }
+    }
+    
+    private lazy var calibrator = RCSRoomUserCalibrator(self)
+    
     /// 电台模式不支持网络延时
     private var networkEnable: Bool {
         return room.roomType != 2
@@ -85,6 +96,8 @@ class SceneRoomInfoView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleViewClick))
         tap.numberOfTouchesRequired = 1
         addGestureRecognizer(tap)
+        
+        userNumberNeedUpdate()
     }
     
     required init?(coder: NSCoder) {
@@ -99,18 +112,14 @@ class SceneRoomInfoView: UIView {
     func updateRoom(info: RCSceneRoom) {
         nameLabel.text = info.roomName
         idLabel.text = "ID " + String(info.id)
-        updateRoomUserNumber()
     }
     
+    func roomUserIncrease() {
+        roomUserCount += 1
+    }
     
-    func updateRoomUserNumber() {
-        RCChatRoomClient.shared()
-            .getChatRoomInfo(room.roomId, count: 0, order: .chatRoom_Member_Asc) { info in
-                DispatchQueue.main.async {
-                    self.onlineMemberLabel.text = "在线 \(info.totalMemberCount)"
-                    self.layoutIfNeeded()
-                }
-            } error: { _ in }
+    func roomUserDecrease() {
+        roomUserCount -= 1
     }
     
     @objc func handleViewClick() {
@@ -282,5 +291,16 @@ extension SceneRoomInfoView {
             .image { renderer in
                 layer.render(in: renderer.cgContext)
             }
+    }
+}
+
+extension SceneRoomInfoView: RCSRoomUserCalibratorDelegate {
+    func userNumberNeedUpdate() {
+        RCChatRoomClient.shared()
+            .getChatRoomInfo(room.roomId, count: 0, order: .chatRoom_Member_Asc) { info in
+                DispatchQueue.main.async {
+                    self.roomUserCount = Int(info.totalMemberCount)
+                }
+            } error: { _ in }
     }
 }
