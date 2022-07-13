@@ -19,7 +19,6 @@ class LiveNoticeChecker {
                 }
             case let .failure(error):
                 completion(false,"文件检测未通过")
-                RCSRLog.debug(error.localizedDescription)
             }
         }
     }

@@ -54,7 +54,6 @@ extension VoiceRoomViewController {
         handleReceivedMessage(message)
         /// 同步最新礼物信息
         if let pkGiftMessage = message.content as? RCPKGiftMessage, let content = pkGiftMessage.content {
-            RCSRLog.info("updateGiftValue")
             pkView.updateGiftValue(content: content, currentRoomId: voiceRoomInfo.roomId)
         }
         /// 同步PK状态
@@ -63,7 +62,6 @@ extension VoiceRoomViewController {
                 return
             }
             if content.statusMsg == 0 {
-                RCSRLog.info("receive pk begin message", context: nil)
                 self.roomState.pkConnectState = .connecting
                 
                 // 检查之前是否关闭对面PK主播的声音，然后恢复
@@ -82,11 +80,9 @@ extension VoiceRoomViewController {
                 lockAllRoomAudienceToLeaveSeat()
             }
             if content.statusMsg == 1 {
-                RCSRLog.info("receive pk punnishment message")
                 self.pkView.beginPunishment(passedSeconds: content.timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId)
             }
             if content.statusMsg == 2 {
-                RCSRLog.info("receive pk finished message")
                 self.roomState.pkConnectState = .request
 
                 let reason: ClosePKReason = {
@@ -106,7 +102,6 @@ extension VoiceRoomViewController {
                 case .inviter:
                     self.sendTextMessage(text: "本轮PK结束")
                     if reason == .timeEnd { //pk自然结束，由邀请者挂断pk
-                        RCSRLog.info("timeEnd and inviter call quitPK")
                         RCVoiceRoomEngine.sharedInstance().quitPK {} error: { _, _ in }
                     }
                 case .invitee:
@@ -186,7 +181,6 @@ extension VoiceRoomViewController {
             return
         }
         guard inviterCount > 0 else {
-            RCSRLog.info("response pk invite to ignore")
             RCVoiceRoomEngine.sharedInstance().responsePKInvitation(inviterRoomId, inviter: inviterId, responseType: .ignore) {
                 DispatchQueue.main.async {
                     alertController.dismiss(animated: true, completion: nil)
@@ -238,7 +232,6 @@ extension VoiceRoomViewController {
     }
     /// RTC 已建立连接，向服务端请求PK开始
     private func sendPKRequest() {
-        RCSRLog.info("向服务器发送 pk 开始的请求")
         guard let info = roomState.currentPKInfo else {
             return
         }
@@ -272,7 +265,6 @@ extension VoiceRoomViewController {
     
     func getPKStatus() {
         /// 获取服务器PK最新信息
-        RCSRLog.info("获取服务器PK最新信息")
         voiceRoomService.getCurrentPKInfo(roomId: self.voiceRoomInfo.roomId) { [weak self] pkStatus in
             guard let statusModel = pkStatus, let self = self, statusModel.roomScores.count == 2 else {
                 return
@@ -311,7 +303,6 @@ extension VoiceRoomViewController {
         guard let pkInfo = roomState.currentPKInfo, pkInfo.currentUserRole() != .audience else {
             return
         }
-        RCSRLog.info("恢复 pk 连接")
         RCVoiceRoomEngine.sharedInstance().resumePK(with: RCVoicePKInfo(inviterId: pkInfo.inviterId, inviterRoomId: pkInfo.inviterRoomId, inviteeId: pkInfo.inviteeId, inviteeRoomId: pkInfo.inviteeRoomId)) {
             SVProgressHUD.showSuccess(withStatus: "恢复PK成功")
         } error: { _, _ in
@@ -335,7 +326,6 @@ extension VoiceRoomViewController {
     }
     
     private func quitPKConnectAndNotifyServer() {
-        RCSRLog.info("退出 pk 并通知 server")
         guard let info = roomState.currentPKInfo else {
             return
         }
@@ -439,7 +429,6 @@ extension VoiceRoomViewController {
     }
 
     func pkDidFinish() {
-        RCSRLog.info("pkDidFinish possable by pk kv removed or other brocaster quitPKWithNotify")
         self.roomState.pkConnectState = .request
         if self.currentUserRole() == .creator {
             forceLockOthers(isLock: false)

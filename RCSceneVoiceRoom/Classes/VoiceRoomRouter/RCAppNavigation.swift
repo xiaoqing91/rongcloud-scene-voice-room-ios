@@ -13,13 +13,13 @@ enum RCNavigation: Navigation {
     case requestOrInvite(roomId: String, delegate: HandleRequestSeatProtocol, showPage: Int, onSeatUserIds:[String])
     case masterSeatOperation(String, Bool, VoiceRoomMasterSeatOperationProtocol)
     case userSeatPop(seatIndex: UInt, isUserMute: Bool, isSeatMute: Bool, delegate: VoiceRoomSeatedOperationProtocol)
-    case manageUser(dependency: RCSceneRoomUserOperationDependency, delegate: RCSceneRoomUserOperationProtocol?)
+    case manageUser(dependency: RCSRUserOperationDependency, delegate: RCSRUserOperationProtocol?)
     case ownerClickEmptySeat(RCVoiceSeatInfo, UInt, VoiceRoomEmptySeatOperationProtocol)
     case inputText(name: String, delegate: VoiceRoomInputTextProtocol)
     case inputPassword(completion: RCSRPasswordCompletion)
     case requestSeatPop(delegate: RequestSeatPopProtocol)
     case changeBackground(imageList: [String], delegate: ChangeBackgroundImageProtocol)
-    case userList(room: RCSceneRoom, delegate: RCSceneRoomUserOperationProtocol)
+    case userList(room: RCSceneRoom, delegate: RCSRUserOperationProtocol)
     case gift(dependency: RCSceneGiftDependency, delegate: RCSceneGiftViewControllerDelegate)
     case voiceRoomAlert(title: String, actions: [VoiceRoomAlertAction], alertType: String, delegate: VoiceRoomAlertProtocol?)
     case leaveAlert(isOwner: Bool, delegate: RCSceneLeaveViewProtocol)
@@ -76,7 +76,7 @@ struct RCAppNavigation: AppNavigation {
             vc.modalPresentationStyle = .popover
             return vc
         case let .manageUser(dependency, delegate):
-            let vc = RCSceneRoomUserOperationViewController(dependency: dependency, delegate: delegate)
+            let vc = RCSRUserOperationViewController(dependency: dependency, delegate: delegate)
             vc.modalTransitionStyle = .coverVertical
             vc.modalPresentationStyle = .popover
             return vc
@@ -107,7 +107,7 @@ struct RCAppNavigation: AppNavigation {
             vc.modalPresentationStyle = .popover
             return vc
         case let .userList(room, delegate):
-            let vc = RCSceneRoomUsersViewController(room: room, delegate: delegate)
+            let vc = RCSRUsersViewController(room: room, delegate: delegate)
             let nav = UINavigationController(rootViewController: vc)
             nav.navigationBar.titleTextAttributes = [.foregroundColor : UIColor.white]
             nav.modalTransitionStyle = .coverVertical

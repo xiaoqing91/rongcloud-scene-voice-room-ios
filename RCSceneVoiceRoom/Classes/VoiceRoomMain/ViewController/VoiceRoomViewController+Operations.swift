@@ -45,7 +45,7 @@ extension VoiceRoomViewController {
             seat.userId == userId
         }
         let lock: Bool = seat?.status == .locking
-        let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
+        let dependency = RCSRUserOperationDependency(room: voiceRoomInfo,
                                                  userId: userId,
                                                  userRole: role,
                                                  userSeatIndex: index,
@@ -76,7 +76,7 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
         guard let userId = seatList.first?.userId, userId.count > 0 else {
             return
         }
-        let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
+        let dependency = RCSRUserOperationDependency(room: voiceRoomInfo,
                                                             userId: userId,
                                                             userRole: .audience,
                                                             userSeatIndex: 0,
@@ -143,7 +143,7 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
 }
 
 // MARK: - Owner Click User Seat Pop view Deleagte
-extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
+extension VoiceRoomViewController: RCSRUserOperationProtocol {
     /// 抱下麦
     func kickUserOffSeat(seatIndex: UInt) {
         guard let userId = seatList[Int(seatIndex)].userId else {

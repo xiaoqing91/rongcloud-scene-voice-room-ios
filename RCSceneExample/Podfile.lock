@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (5.6.1)
   - FCFileManager (1.0.20)
-  - Kingfisher (7.2.4)
+  - Kingfisher (6.3.1)
   - Masonry (1.1.0)
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
@@ -22,59 +22,49 @@ PODS:
     - RCCoreKit
     - YYModel
   - RCSceneLog (0.0.1.2)
-  - RCSceneRoom/RCSceneAnalytics (0.0.3.6):
+  - RCSceneRoom/RCSceneAnalytics (0.0.4):
     - RCSceneRoom/RCSceneRoomSetting
     - SensorsAnalyticsSDK
-  - RCSceneRoom/RCSceneGift (0.0.3.6):
+  - RCSceneRoom/RCSceneGift (0.0.4):
     - Kingfisher
     - RCSceneRoom/RCSceneMessage
     - RCSceneRoom/RCSceneService
     - Reusable
     - SnapKit
     - SVProgressHUD
-  - RCSceneRoom/RCSceneMessage (0.0.3.6):
+  - RCSceneRoom/RCSceneMessage (0.0.4):
     - RongCloudIM/IMLib
-  - RCSceneRoom/RCSceneMusic (0.0.3.6):
+  - RCSceneRoom/RCSceneMusic (0.0.4):
     - RCMusicControlKit
     - RCSceneRoom/RCSceneMessage
     - RCSceneRoom/RCSceneService
     - RongCloudRTC/RongRTCLib
     - SVProgressHUD
-  - RCSceneRoom/RCSceneRoom (0.0.3.6):
+  - RCSceneRoom/RCSceneRoom (0.0.4):
     - RCSceneChatroomKit
     - RCSceneRoom/RCSceneGift
     - RCSceneRoom/RCSceneMusic
     - RCSceneRoom/RCSceneRoomSetting
     - RCSceneRoom/RCSRChat
-    - RCSceneRoom/RCSRUserControl
-  - RCSceneRoom/RCSceneRoomSetting (0.0.3.6):
+  - RCSceneRoom/RCSceneRoomSetting (0.0.4):
     - RCSceneRoom/RCSceneService
     - RCSceneRoom/RCSRPassword
     - Reusable
-  - RCSceneRoom/RCSceneService (0.0.3.6):
+  - RCSceneRoom/RCSceneService (0.0.4):
     - RCSceneRoom/RCSRBase
     - ReachabilitySwift
-  - RCSceneRoom/RCSRAssets (0.0.3.6)
-  - RCSceneRoom/RCSRBase (0.0.3.6):
+  - RCSceneRoom/RCSRAssets (0.0.4)
+  - RCSceneRoom/RCSRBase (0.0.4):
     - Moya
-    - SwiftyBeaver
-  - RCSceneRoom/RCSRChat (0.0.3.6):
+  - RCSceneRoom/RCSRChat (0.0.4):
     - RCSceneRoom/RCSceneService
     - RongCloudOpenSource/IMKit
     - SVProgressHUD
-  - RCSceneRoom/RCSRPassword (0.0.3.6):
+  - RCSceneRoom/RCSRPassword (0.0.4):
     - RCSceneRoom/RCSRAssets
     - RCSceneRoom/RCSRBase
     - SnapKit
-  - RCSceneRoom/RCSRUserControl (0.0.3.6):
-    - Kingfisher
-    - RCSceneRoom/RCSceneService
-    - RCSceneRoom/RCSRAssets
-    - RCSceneRoom/RCSRBase
-    - Reusable
-    - SnapKit
-    - SVProgressHUD
-  - RCSceneVoiceRoom (0.0.3.4):
+  - RCSceneVoiceRoom (0.0.4):
     - Pulsator
     - RCSceneRoom/RCSceneAnalytics
     - RCSceneRoom/RCSceneRoom
@@ -114,26 +104,25 @@ PODS:
   - SDWebImage (5.13.0):
     - SDWebImage/Core (= 5.13.0)
   - SDWebImage/Core (5.13.0)
-  - SensorsAnalyticsSDK (4.3.4):
-    - SensorsAnalyticsSDK/Core (= 4.3.4)
-  - SensorsAnalyticsSDK/__Store (4.3.4)
-  - SensorsAnalyticsSDK/AutoTrack (4.3.4):
+  - SensorsAnalyticsSDK (4.4.0):
+    - SensorsAnalyticsSDK/Core (= 4.4.0)
+  - SensorsAnalyticsSDK/__Store (4.4.0)
+  - SensorsAnalyticsSDK/AutoTrack (4.4.0):
     - SensorsAnalyticsSDK/Common
-  - SensorsAnalyticsSDK/Base (4.3.4):
+  - SensorsAnalyticsSDK/Base (4.4.0):
     - SensorsAnalyticsSDK/__Store
-  - SensorsAnalyticsSDK/Common (4.3.4):
+  - SensorsAnalyticsSDK/Common (4.4.0):
     - SensorsAnalyticsSDK/Extension
-  - SensorsAnalyticsSDK/Core (4.3.4):
+  - SensorsAnalyticsSDK/Core (4.4.0):
     - SensorsAnalyticsSDK/Common
     - SensorsAnalyticsSDK/Visualized
-  - SensorsAnalyticsSDK/Extension (4.3.4):
+  - SensorsAnalyticsSDK/Extension (4.4.0):
     - SensorsAnalyticsSDK/Base
-  - SensorsAnalyticsSDK/Visualized (4.3.4):
+  - SensorsAnalyticsSDK/Visualized (4.4.0):
     - SensorsAnalyticsSDK/AutoTrack
   - SnapKit (5.6.0)
   - SSZipArchive (2.4.3)
   - SVProgressHUD (2.2.5)
-  - SwiftyBeaver (1.9.5)
   - YYModel (1.0.4)
 
 DEPENDENCIES:
@@ -163,7 +152,6 @@ SPEC REPOS:
     - SnapKit
     - SSZipArchive
     - SVProgressHUD
-    - SwiftyBeaver
     - YYModel
 
 EXTERNAL SOURCES:
@@ -173,7 +161,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
   FCFileManager: e0f73316e6aa2eb04d2ff4caa75fe7df1ae44270
-  Kingfisher: 2457be2121734e69e54a2312ecc0150eb9ae70b3
+  Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   Pulsator: eb5a9f9be4bdcbd19903984c65deca6aabe50a17
@@ -181,8 +169,8 @@ SPEC CHECKSUMS:
   RCMusicControlKit: 79841e9b266ceccf380bf6a1c2fdec08723d2604
   RCSceneChatroomKit: 86d8c5ead5c2cb10efce95d3eea2e854e55b7942
   RCSceneLog: c38de10f8ccd4aa65eb9ac7c0a5c6b2042e7579e
-  RCSceneRoom: fc268190dc383b23d9ad083ee0467f871cdb09f2
-  RCSceneVoiceRoom: f751e883b339ee13fb57dc8c38b3e93f67a45d12
+  RCSceneRoom: 69c4b9eb6768c61999918625d2b1316d2046d14a
+  RCSceneVoiceRoom: ca4a201cccdc9b8af66a36bc41d68ae7c4bb7227
   RCVoiceRoomLib: cda6173fd70bbb393b383a64a879917c2af14167
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
@@ -190,13 +178,12 @@ SPEC CHECKSUMS:
   RongCloudOpenSource: 72f8519472b2c90975d18680dafbca2244388f0e
   RongCloudRTC: 0b9d996c067bce8e9b31f90045babef7342a92ee
   SDWebImage: 0327043dbb9533e75f2eff8445b3df0f2ceca6ac
-  SensorsAnalyticsSDK: 159263992e8bf2e61b18fff55939db826050764c
+  SensorsAnalyticsSDK: b906c7bbe686ce94e8886077e0111397955aca2c
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
-  SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 984ec2faa9e3075b8553db175561db5f91c69ae4
+PODFILE CHECKSUM: faf9ef103b4e3d7635c751ba65eac97478f6fa94
 
 COCOAPODS: 1.11.3
