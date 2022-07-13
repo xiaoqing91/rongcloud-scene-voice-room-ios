@@ -8,8 +8,8 @@
 import SVProgressHUD
 
 extension VoiceRoomViewController {
-    @_dynamicReplacement(for: seatlist)
-    private var seats_seatlist: [RCVoiceSeatInfo] {
+    @_dynamicReplacement(for: seatList)
+    private var seats_seatList: [RCVoiceSeatInfo] {
         get { seatList }
         set {
             seatList = newValue

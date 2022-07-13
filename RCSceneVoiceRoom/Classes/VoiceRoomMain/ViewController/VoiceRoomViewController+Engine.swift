@@ -57,9 +57,9 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         kvRoomInfo = roomInfo
     }
     
-    func seatInfoDidUpdate(_ seatInfolist: [RCVoiceSeatInfo]) {
-        seatList = seatInfolist
-        print("seatinlist count is \(seatInfolist.count)")
+    func seatInfoDidUpdate(_ seatInfoList: [RCVoiceSeatInfo]) {
+        seatList = seatInfoList
+        print("seatinList count is \(seatInfoList.count)")
     }
     
     func userDidEnterSeat(_ seatIndex: Int, user userId: String) {
