@@ -123,7 +123,7 @@ class VoiceRoomViewController: UIViewController {
         if parent == nil {
             navigationController?.setNavigationBarHidden(true, animated: animated)
         }
-        fetchmanagers()
+        fetchManagers()
         messageButton.refreshMessageCount()
     }
     
@@ -315,7 +315,7 @@ extension VoiceRoomViewController {
 }
 
 extension VoiceRoomViewController {
-    func fetchmanagers() {
+    func fetchManagers() {
         voiceRoomService.roomManagers(roomId: voiceRoomInfo.roomId) { [weak self] result in
             switch result.map(managersWrapper.self) {
             case let .success(wrapper):

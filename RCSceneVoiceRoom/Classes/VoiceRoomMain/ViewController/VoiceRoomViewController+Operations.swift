@@ -174,7 +174,7 @@ extension VoiceRoomViewController: RCSRUserOperationProtocol {
         
     }
     /// 踢出房间
-    func kickoutRoom(userId: String) {
+    func kickOutRoom(userId: String) {
         RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId) {
             RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
                 RCSceneUserManager.shared.fetchUserInfo(userId: userId) { targetUser in
@@ -191,7 +191,7 @@ extension VoiceRoomViewController: RCSRUserOperationProtocol {
     }
     
     func didSetManager(userId: String, isManager: Bool) {
-        fetchmanagers()
+        fetchManagers()
         RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in
             let event = RCChatroomAdmin()
             event.userId = user.userId

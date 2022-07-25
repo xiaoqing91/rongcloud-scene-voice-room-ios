@@ -131,7 +131,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         case .backgroundChanged:
             NotificationNameRoomBackgroundUpdated.post((voiceRoomInfo.roomId, content))
         case .mangerlistNeedRefresh:
-            fetchmanagers()
+            fetchManagers()
         case .rejectManagePick:
             if content == Environment.currentUserId {
                 SVProgressHUD.showError(withStatus: "用户拒绝邀请")

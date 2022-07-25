@@ -28,9 +28,9 @@ class RCSRUsersViewController: UIViewController {
         return instance
     }()
     
-    private var userlist = [RCSceneRoomUser]() {
+    private var users = [RCSceneRoomUser]() {
         didSet {
-            emptyView.isHidden = userlist.count > 0
+            emptyView.isHidden = users.count > 0
         }
     }
     private var managers = [String]()
@@ -65,8 +65,8 @@ class RCSRUsersViewController: UIViewController {
             make.centerY.equalToSuperview().offset(-72.resize)
             make.width.height.equalTo(190.resize)
         }
-        fetchRoomUserlist()
-        fetchmanagers()
+        fetchRoomUsers()
+        fetchManagers()
     }
     
     private func buildLayout() {
@@ -83,12 +83,12 @@ class RCSRUsersViewController: UIViewController {
         }
     }
     
-    private func fetchRoomUserlist() {
+    private func fetchRoomUsers() {
         userService.roomUsers(roomId: room.roomId) { [weak self] result in
             switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 if let users = wrapper.data {
-                    self?.userlist = users
+                    self?.users = users
                     self?.tableView.reloadData()
                 }
             case let .failure(error):
@@ -97,7 +97,7 @@ class RCSRUsersViewController: UIViewController {
         }
     }
     
-    private func fetchmanagers() {
+    private func fetchManagers() {
         userService.roomManagers(roomId: room.roomId) { [weak self] result in
             switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
@@ -118,19 +118,19 @@ class RCSRUsersViewController: UIViewController {
 
 extension RCSRUsersViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userlist.count
+        return users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: RCSRUserCell.self)
-        cell.updateCell(user: userlist[indexPath.row], hidesInvite: true)
+        cell.updateCell(user: users[indexPath.row], hidesInvite: true)
         return cell
     }
 }
 
 extension RCSRUsersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = userlist[indexPath.row]
+        let user = users[indexPath.row]
         guard user.userId != Environment.currentUserId else {
             return
         }
@@ -150,6 +150,6 @@ extension RCSRUsersViewController: UITableViewDelegate {
         
         let controller = RCSRUserOperationViewController(dependency: dependency,
                                                          delegate: delegate)
-        show(controller, sender: nil)
+        present(controller, animated: true)
     }
 }

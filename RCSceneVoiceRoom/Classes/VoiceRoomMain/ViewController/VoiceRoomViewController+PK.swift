@@ -447,10 +447,9 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
             case .success(let response):
                 guard
                     let status = try? JSONDecoder().decode(RCSceneWrapper<Bool>.self, from: response.data),
-                        status.data == true
+                        status.data == false
                 else {
-                    SVProgressHUD.showError(withStatus: "对方正在PK中")
-                    return
+                    return SVProgressHUD.showError(withStatus: "对方正在PK中")
                 }
                 RCVoiceRoomEngine.sharedInstance().sendPKInvitation(roomId, invitee: userId) {
                     self.roomState.pkConnectState = .waiting
