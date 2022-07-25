@@ -105,8 +105,9 @@ class RCChatroomSceneButton: UIButton {
 
 extension RCChatroomSceneButton {
     func refreshMessageCount() {
+        let num = NSNumber(value: RCConversationType.ConversationType_PRIVATE.rawValue)
         let unreadCount = RCIMClient.shared()
-            .getUnreadCount([RCConversationType.ConversationType_PRIVATE.rawValue])
+            .getUnreadCount([num])
         setBadgeCount(Int(unreadCount))
     }
 }
