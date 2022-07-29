@@ -35,7 +35,7 @@ enum RCChatroomSceneMicState {
         case .user: return RCSCAsset.Images.voiceRoomMicOrderIcon.image
         case .request: return RCSCAsset.Images.connectMicStateNone.image
         case .waiting: return RCSCAsset.Images.connectMicStateWaiting.image
-        case .connecting: return RCSCAsset.Images.connectMicStateWaiting.image
+        case .connecting: return RCSCAsset.Images.connectMicStateConnecting.image
         }
     }
 }
