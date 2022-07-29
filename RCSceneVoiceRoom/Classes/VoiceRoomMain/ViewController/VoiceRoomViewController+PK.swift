@@ -59,60 +59,79 @@ extension VoiceRoomViewController {
         /// 同步PK状态
         if let pkStatusContent = message.content as? RCPKStatusMessage, let content = pkStatusContent.content {
             guard let info = self.roomState.currentPKInfo else {
+                voiceRoomService.getCurrentPKInfo(roomId: self.voiceRoomInfo.roomId) { [weak self] pkStatus in
+                    guard let statusModel = pkStatus, let self = self, statusModel.roomScores.count == 2 else {
+                        return
+                    }
+                    let pkInfo: VoiceRoomPKInfo = {
+                        let roomscore1 = statusModel.roomScores[0]
+                        let roomscore2 = statusModel.roomScores[1]
+                        if roomscore1.leader {
+                            return VoiceRoomPKInfo(inviterId: roomscore1.userId, inviteeId: roomscore2.userId, inviterRoomId: roomscore1.roomId, inviteeRoomId: roomscore2.roomId)
+                        }
+                        return VoiceRoomPKInfo(inviterId: roomscore2.userId, inviteeId: roomscore1.userId, inviterRoomId: roomscore2.roomId, inviteeRoomId: roomscore1.roomId)
+                    }()
+                    self.roomState.currentPKInfo = pkInfo
+                    self.beginPK(pkStatus: statusModel.statusMsg, timeDiff: statusModel.timeDiff, stopPkRoomId: nil, info: pkInfo)
+                }
                 return
             }
-            if content.statusMsg == 0 {
-                self.roomState.pkConnectState = .connecting
-                
-                // 检查之前是否关闭对面PK主播的声音，然后恢复
-                if roomState.isMutePKUser {
-                    RCVoiceRoomEngine.sharedInstance().mutePKUser(false) {
-                        self.roomState.isMutePKUser = false
-                    } error: { code, msg in
-                        SVProgressHUD.showError(withStatus: "取消静音 PK 失败，请重试")
-                    }
-                }
-
-                // 打开邀请菜单时，确认同意被其他主播邀请PK后，把邀请菜单关闭
-                self.presentedViewController?.dismiss(animated: true, completion: nil)
-                self.pkView.beginPK(info: info, timeDiff: content.timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId, currentRoomId: self.voiceRoomInfo.roomId)
-             
-                lockAllRoomAudienceToLeaveSeat()
-            }
-            if content.statusMsg == 1 {
-                self.pkView.beginPunishment(passedSeconds: content.timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId)
-            }
-            if content.statusMsg == 2 {
-                self.roomState.pkConnectState = .request
-
-                let reason: ClosePKReason = {
-                    if let roomID = content.stopPkRoomId, !roomID.isEmpty {
-                        if roomID == voiceRoomInfo.roomId {
-                            return .myown
-                        } else {
-                            return .remote
-                        }
-                    } else {
-                        return .timeEnd
-                    }
-                }()
-                self.showCloseReasonHud(reason: reason)
-
-                switch info.currentUserRole() {
-                case .inviter:
-                    self.sendTextMessage(text: "本轮PK结束")
-                    if reason == .timeEnd { //pk自然结束，由邀请者挂断pk
-                        RCVoiceRoomEngine.sharedInstance().quitPK {} error: { _, _ in }
-                    }
-                case .invitee:
-                    self.sendTextMessage(text: "本轮PK结束")
-                case .audience:
-                    ()
-                }
+            beginPK(pkStatus: content.statusMsg, timeDiff: content.timeDiff, stopPkRoomId:content.stopPkRoomId, info: info)
+        }
+    }
     
-                if self.currentUserRole() == .creator {
-                    forceLockOthers(isLock: false)
+    private func beginPK(pkStatus: Int, timeDiff: Int, stopPkRoomId: String?, info: VoiceRoomPKInfo) {
+        if pkStatus == 0 {
+            self.roomState.pkConnectState = .connecting
+            
+            // 检查之前是否关闭对面PK主播的声音，然后恢复
+            if roomState.isMutePKUser {
+                RCVoiceRoomEngine.sharedInstance().mutePKUser(false) {
+                    self.roomState.isMutePKUser = false
+                } error: { code, msg in
+                    SVProgressHUD.showError(withStatus: "取消静音 PK 失败，请重试")
                 }
+            }
+
+            // 打开邀请菜单时，确认同意被其他主播邀请PK后，把邀请菜单关闭
+            self.presentedViewController?.dismiss(animated: true, completion: nil)
+            self.pkView.beginPK(info: info, timeDiff: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId, currentRoomId: self.voiceRoomInfo.roomId)
+         
+            lockAllRoomAudienceToLeaveSeat()
+        }
+        if pkStatus == 1 {
+            self.pkView.beginPunishment(passedSeconds: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId)
+        }
+        if pkStatus == 2 {
+            self.roomState.pkConnectState = .request
+
+            let reason: ClosePKReason = {
+                if let roomID = stopPkRoomId, !roomID.isEmpty {
+                    if roomID == voiceRoomInfo.roomId {
+                        return .myown
+                    } else {
+                        return .remote
+                    }
+                } else {
+                    return .timeEnd
+                }
+            }()
+            self.showCloseReasonHud(reason: reason)
+
+            switch info.currentUserRole() {
+            case .inviter:
+                self.sendTextMessage(text: "本轮PK结束")
+                if reason == .timeEnd { //pk自然结束，由邀请者挂断pk
+                    RCVoiceRoomEngine.sharedInstance().quitPK {} error: { _, _ in }
+                }
+            case .invitee:
+                self.sendTextMessage(text: "本轮PK结束")
+            case .audience:
+                ()
+            }
+
+            if self.currentUserRole() == .creator {
+                forceLockOthers(isLock: false)
             }
         }
     }
