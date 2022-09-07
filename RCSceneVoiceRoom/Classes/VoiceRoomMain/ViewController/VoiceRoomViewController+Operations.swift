@@ -38,18 +38,21 @@ extension VoiceRoomViewController {
             }
             return .audience
         }()
-        let index = seatList.firstIndex { seat in
-            seat.userId == userId
+        
+        
+        let seatIndex = seatList.firstIndex { seat in
+            seat.seatUser?.userId == userId
         }
-        let seat = seatList.first { seat in
-            seat.userId == userId
+        let seatInfo = seatList.first { seat in
+            seat.seatUser?.userId == userId
         }
-        let lock: Bool = seat?.status == .locking
+
+        let lock: Bool = seatInfo?.isLocked ?? false
         let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
                                                  userId: userId,
                                                  userRole: role,
-                                                 userSeatIndex: index,
-                                                 userSeatMute: seat?.isMuted,
+                                                 userSeatIndex: seatIndex,
+                                                 userSeatMute: seatInfo?.isMuted,
                                                  userSeatLock: lock)
         navigator(.manageUser(dependency: dependency, delegate: self))
     }
@@ -61,7 +64,8 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
         guard currentUserRole() == .creator else {
             return userDidClickMasterView()
         }
-        guard let index = seatIndex(), index == 0 else {
+       
+        guard let index = findSeatIndex(), index == 0 else {
             return enterSeat(index: 0)
         }
         var disableRecording = false
@@ -73,11 +77,11 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
     }
     
     func userDidClickMasterView() {
-        guard let userId = seatList.first?.userId, userId.count > 0 else {
+        guard let seatUser = seatList.first?.seatUser else {
             return
         }
         let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
-                                                            userId: userId,
+                                                            userId: seatUser.userId,
                                                             userRole: .audience,
                                                             userSeatIndex: 0,
                                                             userSeatMute: false,
@@ -89,7 +93,12 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
 // MARK: - Owenr Seat Pop View Delegate
 extension VoiceRoomViewController: VoiceRoomMasterSeatOperationProtocol {
     func didMasterSeatMuteButtonClicked(_ isMute: Bool) {
-        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(isMute)
+        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(isMute) {
+            
+        } error: { _, _ in
+            
+        }
+        /// TODO if delete
         let seatInfo = RoomSeatInfoExtra(disableRecording: isMute)
         if let jsonString = seatInfo.toJsonString() {
             RCVoiceRoomEngine.sharedInstance().updateSeatInfo(0, withExtra: jsonString) {} error: { _, _ in }
@@ -109,7 +118,11 @@ extension VoiceRoomViewController: VoiceRoomMasterSeatOperationProtocol {
 extension VoiceRoomViewController: VoiceRoomSeatedOperationProtocol {
     func seated(_ index: UInt, _ mute: Bool) {
         roomState.isCloseSelfMic = mute
-        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(mute)
+        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(mute) {
+            
+        } error: { _, _ in
+            
+        }
     }
     
     func seatedDidLeaveClicked() {
@@ -122,7 +135,7 @@ extension VoiceRoomViewController: VoiceRoomSeatedOperationProtocol {
 extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
     func emptySeat(_ index: UInt, isLock: Bool) {
         let title = isLock ? "关闭" : "打开"
-        RCVoiceRoomEngine.sharedInstance().lockSeat(index, lock: isLock) {
+        RCVoiceRoomEngine.sharedInstance().lockSeat([NSNumber(value: index)], lock: isLock) {
             SVProgressHUD.showSuccess(withStatus: "\(title)\(index)号麦位成功")
         } error: { code, msg in
             SVProgressHUD.showError(withStatus: "\(title)\(index)号麦位失败")
@@ -134,10 +147,13 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
     }
     
     func emptySeatInvitationDidClicked() {
+        let onSeatUserIds = self.onSeatUsers.map { $0.userId }
+        let requesterIds = requesterInfos.compactMap(\.userId)
         let navigation = RCNavigation.requestOrInvite(roomId: voiceRoomInfo.roomId,
                                                       delegate: self,
                                                       showPage: 1,
-                                                      onSeatUserIds: seatList.compactMap(\.userId))
+                                                      onSeatUserIds: onSeatUserIds,
+                                                      requesterIds: requesterIds)
         navigator(navigation)
     }
 }
@@ -146,10 +162,10 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
 extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
     /// 抱下麦
     func kickUserOffSeat(seatIndex: UInt) {
-        guard let userId = seatList[Int(seatIndex)].userId else {
+        guard let user = seatList[Int(seatIndex)].seatUser else {
             return
         }
-        RCVoiceRoomEngine.sharedInstance().kickUser(fromSeat: userId) {
+        RCVoiceRoomEngine.sharedInstance().kickUser(fromSeat: user.userId, content: "") {
             SVProgressHUD.showSuccess(withStatus: "发送下麦通知成功")
         } error: { code, msg in
             SVProgressHUD.showError(withStatus: "发送下麦通知失败")
@@ -157,12 +173,11 @@ extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
     }
     /// 锁座位
     func lockSeatDidClick(isLock: Bool, seatIndex: UInt) {
-        RCVoiceRoomEngine.sharedInstance()
-            .lockSeat(seatIndex, lock: isLock) {} error: { code, msg in }
+        RCVoiceRoomEngine.sharedInstance().lockSeat([NSNumber(value: seatIndex)], lock: isLock) {} error: { code, msg in }
     }
     /// 座位静音
     func muteSeat(isMute: Bool, seatIndex: UInt) {
-        RCVoiceRoomEngine.sharedInstance().muteSeat(seatIndex, mute: isMute) {
+        RCVoiceRoomEngine.sharedInstance().muteSeat([NSNumber(value: seatIndex)], mute: isMute) {
             if isMute {
                 SVProgressHUD.showSuccess(withStatus: "此麦位已闭麦")
             } else {
@@ -175,7 +190,7 @@ extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
     }
     /// 踢出房间
     func kickoutRoom(userId: String) {
-        RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId) {
+        RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId, content: "") {
             RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
                 RCSceneUserManager.shared.fetchUserInfo(userId: userId) { targetUser in
                     let event = RCChatroomKickOut()
@@ -229,7 +244,7 @@ extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
             return
         }
          
-        let seatUsers: [String] = seatList.map { $0.userId ?? "" }
+        let seatUsers = self.onSeatUsers.map { $0.userId }
         let dependency = RCSceneGiftDependency(room: voiceRoomInfo,
                                                  seats: seatUsers,
                                                  userIds: [userId])

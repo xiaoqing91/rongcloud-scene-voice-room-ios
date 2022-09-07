@@ -8,12 +8,6 @@
 import SVProgressHUD
 import RCVoiceRoomLib
 
-extension RCVoiceSeatInfo {
-    var isEmpty: Bool {
-        return status == .empty && userId == nil
-    }
-}
-
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)
     private func setupSettingModule() {
@@ -52,11 +46,16 @@ extension VoiceRoomViewController {
             SVProgressHUD.showError(withStatus: "当前 PK 中，无法进行该操作")
             return
         }
-        let navigation: RCNavigation = .requestOrInvite(roomId: voiceRoomInfo.roomId,
+        
+        let onSeatUserIds = self.onSeatUsers.map { $0.userId }
+        let requesterIds = requesterInfos.compactMap(\.userId)
+        
+        let dest: RCNavigation = .requestOrInvite(roomId: voiceRoomInfo.roomId,
                                                         delegate: self,
                                                         showPage: 0,
-                                                        onSeatUserIds: seatList.compactMap(\.userId))
-        navigator(navigation)
+                                                        onSeatUserIds: onSeatUserIds,
+                                                        requesterIds: requesterIds)
+        navigator(dest)
     }
     
     @objc private func handleRequestSeat() {
@@ -70,47 +69,47 @@ extension VoiceRoomViewController {
         case .waiting:
             navigator(.requestSeatPop(delegate: self))
         case .connecting:
-            let tmpIndex = seatList.firstIndex { $0.userId == Environment.currentUserId }
-            guard let seatIndex = tmpIndex else { return }
-            let seatInfo = seatList[seatIndex]
-            navigator(.userSeatPop(seatIndex: UInt(seatIndex), isUserMute: roomState.isCloseSelfMic, isSeatMute: seatInfo.isMuted, delegate: self))
+            let seatIndex = self.findSeatIndex()
+            guard let seatIndex = seatIndex else { return }
+            let seatInfo = self.seatList[Int(seatIndex)]
+            navigator(.userSeatPop(seatIndex: seatIndex, isUserMute: roomState.isCloseSelfMic, isSeatMute: seatInfo.isMuted, delegate: self))
         }
     }
     
-    func hasEmptySeat() -> Bool {
-        return seatList[1..<seatList.count].contains { $0.isEmpty }
+    func hasNoEmptySeat() -> Bool {
+        return self.onSeatUsers.count == seatList.count - 1
     }
     
     func setupRequestStateAndMicOrderListState() {
-        RCVoiceRoomEngine.sharedInstance()
-            .getRequestSeatUserIds { [weak self] userlist in
-                guard let self = self else { return }
-                DispatchQueue.main.async {
-                    if self.currentUserRole() == .creator  {
-                        self.micButton.setBadgeCount(userlist.count)
-                    } else  {
-                        if userlist.contains(Environment.currentUserId) {
-                            self.roomState.connectState = .waiting
-                        }
-                        if self.isSitting() {
-                            self.roomState.connectState = .connecting
-                        }
+        RCVoiceRoomEngine.sharedInstance().getRequesterInfoList { [weak self] infos in
+            guard let self = self else { return }
+            self.requesterInfos = infos
+            DispatchQueue.main.async {
+                if self.currentUserRole() == .creator  {
+                    self.micButton.setBadgeCount(infos.count)
+                } else {
+                    if infos.map { $0.userId }.contains(Environment.currentUserId) {
+                        self.roomState.connectState = .waiting
+                    }
+                    if self.isSitting() {
+                        self.roomState.connectState = .connecting
                     }
                 }
-            } error: { code, msg in
-                SVProgressHUD.showError(withStatus: "获取排麦列表失败")
             }
+        } error: { code, msg in
+            SVProgressHUD.showError(withStatus: "获取排麦列表失败")
+        }
     }
 }
 
 // MARK: - Handle Seat Request Or Invite Delegate
 extension VoiceRoomViewController: HandleRequestSeatProtocol {
     func acceptUserRequestSeat(userId: String) {
-        guard hasEmptySeat() else {
+        if hasNoEmptySeat() {
             SVProgressHUD.showError(withStatus: "麦位已满")
             return
         }
-        RCVoiceRoomEngine.sharedInstance().acceptRequestSeat(userId) {
+        RCVoiceRoomEngine.sharedInstance().responseRequestSeat(true, userId: userId, content: "") {
             DispatchQueue.main.async {
                 self.setupRequestStateAndMicOrderListState()
             }
@@ -123,11 +122,12 @@ extension VoiceRoomViewController: HandleRequestSeatProtocol {
         if isSitting(userId) {
             return SVProgressHUD.showError(withStatus: "用户已经在麦位上了哦")
         }
-        guard hasEmptySeat() else {
+        if hasNoEmptySeat() {
             SVProgressHUD.showError(withStatus: "麦位已满")
             return
         }
-        RCVoiceRoomEngine.sharedInstance().pickUser(toSeat: userId) {
+        
+        RCVoiceRoomEngine.sharedInstance().sendInvitation(userId, content: "") { invitatonId in 
             SVProgressHUD.showSuccess(withStatus: "已邀请上麦")
         } error: { code, msg in
             SVProgressHUD.showError(withStatus: "邀请连麦发送失败")

@@ -23,8 +23,6 @@ class VoiceRoomViewController: UIViewController {
     dynamic var seatList: [RCVoiceSeatInfo] = {
         var list = [RCVoiceSeatInfo]()
         for _ in 0...8 {
-            let info = RCVoiceSeatInfo()
-            info.status = .empty
             list.append(RCVoiceSeatInfo())
         }
         return list
@@ -84,6 +82,9 @@ class VoiceRoomViewController: UIViewController {
     private let isCreate: Bool
     
     var floatingManager: RCSceneRoomFloatingProtocol?
+    
+    var requesterInfos = [RCVoiceRequesterInfo]()
+    var onSeatUsers = [RCVoiceUserInfo]()
     
     init(roomInfo: RCSceneRoom, isCreate: Bool = false) {
         voiceRoomInfo = roomInfo
@@ -378,7 +379,7 @@ extension VoiceRoomViewController {
     }
     
     var enableMic: Bool {
-        let tmpSeat = seatList.first(where: { $0.userId == Environment.currentUserId })
+        let tmpSeat = seatList.first(where: { $0.seatUser?.userId == Environment.currentUserId })
         guard let seat = tmpSeat else { return false }
         if RCVoiceRoomEngine.sharedInstance().isDisableAudioRecording() {
             return false

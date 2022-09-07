@@ -35,10 +35,8 @@ extension VoiceRoomViewController {
 
 //MARK: - Voice Room Delegate
 extension VoiceRoomViewController: RCVoiceRoomDelegate {
-    func roomDidOccurError(_ code: RCVoiceRoomErrorCode) {
-        if code == .syncRoomInfoFailed {
-            SVProgressHUD.showError(withStatus: "房间初始化信息失败，请关闭房间重新创建")
-        }
+    func roomDidOccurError(withDetails error: RCVoiceRoomError) {
+        SVProgressHUD.showError(withStatus: error.message)
     }
     
     func roomKVDidReady() {
@@ -61,6 +59,18 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         seatList = seatInfolist
         print("seatinlist count is \(seatInfolist.count)")
     }
+    
+    
+    func onSeatUserInfoDidUpdate(_ seatUserlist: [RCVoiceUserInfo]) {
+        if seatUserlist.contains(where: { $0.userId == Environment.currentUserId }) {
+            self.roomContainerAction?.disableSwitchRoom()
+        } else if voiceRoomInfo.isOwner == false {
+            self.roomContainerAction?.enableSwitchRoom()
+        }
+        
+        self.onSeatUsers = seatUserlist;
+    }
+    
     
     func userDidEnterSeat(_ seatIndex: Int, user userId: String) {
         
@@ -168,9 +178,11 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         SVProgressHUD.showError(withStatus: "您的连麦请求被拒绝")
     }
     
+    
     func requestSeatListDidChange() {
         setupRequestStateAndMicOrderListState()
     }
+     
     
     func invitationDidReceive(_ invitationId: String, from userId: String, content: String) {
     }

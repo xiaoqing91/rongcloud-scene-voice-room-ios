@@ -106,14 +106,16 @@ extension VoiceRoomViewController {
     /// 全麦锁麦
     func muteAllSeatDidClick(isMute: Bool) {
         roomState.isMuteAll = isMute
-        RCVoiceRoomEngine.sharedInstance().muteOtherSeats(isMute)
+        /// TODO
+//        RCVoiceRoomEngine.sharedInstance().muteOtherSeats(isMute)
         SVProgressHUD.showSuccess(withStatus: isMute ? "全部麦位已静音" : "已解锁全麦")
     }
     
     /// 全麦锁座
     func lockAllSeatDidClick(isLock: Bool) {
         roomState.isLockAll = isLock
-        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
+        /// TODO
+//        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
         SVProgressHUD.showSuccess(withStatus: isLock ? "全部座位已锁定" : "已解锁全座")
     }
     /// 静音
@@ -153,8 +155,6 @@ extension VoiceRoomViewController {
         } else {
             kvRoom.seatCount = 9
         }
-        kvRoom.isMuteAll = false
-        kvRoom.isLockAll = false
         RCVoiceRoomEngine.sharedInstance().setRoomInfo(kvRoom) {
             let content = RCChatroomSeats()
             content.count = kvRoom.seatCount - 1

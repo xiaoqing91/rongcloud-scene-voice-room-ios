@@ -40,9 +40,14 @@ class RequestOrInviteViewController: UIViewController {
         let instance = UIVisualEffectView(effect: effect)
         return instance
     }()
+    
     private let contentView = UIView()
+    
+    private let onSeatUserIds: [String]?
+    private let requesterIds: [String]
+    
     private lazy var controllers: [UIViewController] = {
-        let requestVC = RequestSeatViewController { [weak self] userId in
+        let requestVC = RequestSeatViewController(requesterIds: requesterIds) { [weak self] userId in
             self?.delegate?.acceptUserRequestSeat(userId: userId)
             self?.dismiss(animated: true, completion: nil)
         }
@@ -52,13 +57,14 @@ class RequestOrInviteViewController: UIViewController {
         }
        return [requestVC, inviteVC]
     }()
-    private let onSeatUserIds: [String]
     
-    init(roomId: String, delegate: HandleRequestSeatProtocol, showPage: Int, onSeatUserIds: [String]) {
+
+    init(roomId: String, delegate: HandleRequestSeatProtocol, showPage: Int, onSeatUserIds: [String]?, requesterIds: [String]) {
         self.delegate = delegate
         self.roomId = roomId
         self.showPage = showPage
         self.onSeatUserIds = onSeatUserIds
+        self.requesterIds = requesterIds
         super.init(nibName: nil, bundle: nil)
     }
     

@@ -74,12 +74,12 @@ PODS:
     - Reusable
     - SnapKit
     - SVProgressHUD
-  - RCSceneVoiceRoom (0.0.3.4):
+  - RCSceneVoiceRoom (0.0.3.5):
     - Pulsator
     - RCSceneRoom/RCSceneAnalytics
     - RCSceneRoom/RCSceneRoom
     - RCVoiceRoomLib
-  - RCVoiceRoomLib (2.0.8.100):
+  - RCVoiceRoomLib (3.0.0):
     - RCSceneLog
     - RongCloudIM/IMLib
     - RongCloudRTC/RongRTCLib
@@ -138,6 +138,7 @@ PODS:
 
 DEPENDENCIES:
   - RCSceneVoiceRoom (from `../`)
+  - RCVoiceRoomLib (from `../../../gerrit-repo/rcvoiceroomlib-ios`)
 
 SPEC REPOS:
   trunk:
@@ -152,7 +153,6 @@ SPEC REPOS:
     - RCSceneChatroomKit
     - RCSceneLog
     - RCSceneRoom
-    - RCVoiceRoomLib
     - ReachabilitySwift
     - Reusable
     - RongCloudIM
@@ -169,6 +169,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   RCSceneVoiceRoom:
     :path: "../"
+  RCVoiceRoomLib:
+    :path: "../../../gerrit-repo/rcvoiceroomlib-ios"
 
 SPEC CHECKSUMS:
   Alamofire: 87bd8c952f9a4454320fce00d9cc3de57bcadaf5
@@ -182,8 +184,8 @@ SPEC CHECKSUMS:
   RCSceneChatroomKit: 86d8c5ead5c2cb10efce95d3eea2e854e55b7942
   RCSceneLog: c38de10f8ccd4aa65eb9ac7c0a5c6b2042e7579e
   RCSceneRoom: fc268190dc383b23d9ad083ee0467f871cdb09f2
-  RCSceneVoiceRoom: f751e883b339ee13fb57dc8c38b3e93f67a45d12
-  RCVoiceRoomLib: cda6173fd70bbb393b383a64a879917c2af14167
+  RCSceneVoiceRoom: 4022d6e0a49a14d96969a336e8f79d81634806dd
+  RCVoiceRoomLib: 77a81319ded9fd0e22d88a4dab9eb6e3d04e7c5f
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: be2941344f84bfa7ec6ea60e6379333a652bd8e3
@@ -197,6 +199,6 @@ SPEC CHECKSUMS:
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 984ec2faa9e3075b8553db175561db5f91c69ae4
+PODFILE CHECKSUM: 4d1060b394b319ac876a483355e4297559386885
 
 COCOAPODS: 1.11.3

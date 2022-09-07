@@ -31,8 +31,6 @@ extension VoiceRoomViewController {
     private func updateRoomInfo(info: RCVoiceRoomInfo) {
         voiceRoomInfo.roomName = info.roomName
         roomState.isFreeEnterSeat = info.isFreeEnterSeat
-        roomState.isLockAll = info.isLockAll
-        roomState.isMuteAll = info.isMuteAll
         roomState.isSeatModeLess = (info.seatCount < 9)
         roomInfoView.updateRoom(info: voiceRoomInfo)
     }

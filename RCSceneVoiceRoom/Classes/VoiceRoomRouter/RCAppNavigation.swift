@@ -10,7 +10,7 @@ import RCSceneRoom
 
 enum RCNavigation: Navigation {
     case voiceRoom(roomInfo: RCSceneRoom, needCreate: Bool)
-    case requestOrInvite(roomId: String, delegate: HandleRequestSeatProtocol, showPage: Int, onSeatUserIds:[String])
+    case requestOrInvite(roomId: String, delegate: HandleRequestSeatProtocol, showPage: Int, onSeatUserIds:[String]?, requesterIds:[String])
     case masterSeatOperation(String, Bool, VoiceRoomMasterSeatOperationProtocol)
     case userSeatPop(seatIndex: UInt, isUserMute: Bool, isSeatMute: Bool, delegate: VoiceRoomSeatedOperationProtocol)
     case manageUser(dependency: RCSceneRoomUserOperationDependency, delegate: RCSceneRoomUserOperationProtocol?)
@@ -63,8 +63,8 @@ struct RCAppNavigation: AppNavigation {
         switch router {
         case let .voiceRoom(roomInfo, needCreate):
             return VoiceRoomViewController(roomInfo: roomInfo, isCreate: needCreate)
-        case let .requestOrInvite(roomId, delegate, page, list):
-            return RequestOrInviteViewController(roomId: roomId, delegate: delegate, showPage: page, onSeatUserIds: list)
+        case let .requestOrInvite(roomId, delegate, page, list, requesterIds):
+            return RequestOrInviteViewController(roomId: roomId, delegate: delegate, showPage: page, onSeatUserIds: list, requesterIds: requesterIds)
         case let .masterSeatOperation(userId, isMute, object):
             let vc = VoiceRoomMasterSeatOperationViewController(userId: userId, isMute: isMute, delegate: object)
             vc.modalTransitionStyle = .coverVertical

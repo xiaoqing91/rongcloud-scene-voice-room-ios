@@ -81,6 +81,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         return instance
     }()
     private var seatInfo: RCVoiceSeatInfo?
+    private var seatUser: RCVoiceUserInfo?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -159,47 +160,51 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         radarView.stop()
     }
     
-    func update(seatInfo: RCVoiceSeatInfo, index: Int, managers: [RCSceneRoomUser], giftValues: [String: Int]) {
+    func update(seatInfo: RCVoiceSeatInfo, seatUser: RCVoiceUserInfo?, index: Int, managers: [RCSceneRoomUser], giftValues: [String: Int]) {
         self.seatInfo = seatInfo
-        switch seatInfo.status {
-        case .using: ()
-        case .empty:
+        self.seatUser = seatUser
+        
+        var userExist = false
+        if let user = seatUser {
+            userExist = true
+            starImageView.isHidden = !(managers.contains { $0.userId == user.userId })
+            RCSceneUserManager.shared.fetchUserInfo(userId: user.userId) { [weak self] user in
+                self?.nameLabel.text = user.userName
+                self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image, completionHandler: { result in
+                    if self?.seatUser?.userId == user.userId { return }
+                    self?.avatarImageView.image = nil
+                })
+            }
+            giftView.update(value: giftValues[user.userId] ?? 0)
+        } else {
             statusImageView.image = RCSCAsset.Images.plusUserToSeatIcon.image
-        case .locking:
-            statusImageView.image = RCSCAsset.Images.lockSeatIcon.image
-        @unknown default:
-          ()
+            avatarImageView.image = RCSCAsset.Images.circleBg.image
+            starImageView.isHidden = true
         }
-        let userExist = (seatInfo.userId != nil)
+        
+        if seatInfo.isLocked {
+            statusImageView.image = RCSCAsset.Images.lockSeatIcon.image
+        }
+        
+        
         borderImageView.isHidden = !userExist
         statusImageView.isHidden = userExist
         giftView.isHidden = !userExist
         seatViewContainer.isHidden = userExist
         nameLabel.isHidden = !userExist
         gradientLayer.isHidden = !userExist
+        
         seatView.update(index: index)
+        
         muteMicrophoneImageView.isHidden = !seatInfo.isMuted
-        if let userId = seatInfo.userId {
-            starImageView.isHidden = !(managers.contains { $0.userId == userId })
-            //avatarImageView.image = RCSCAsset.Images.defaultAvatar.image
-            RCSceneUserManager.shared.fetchUserInfo(userId: userId) { [weak self] user in
-                self?.nameLabel.text = user.userName
-                self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image, completionHandler: { result in
-                    if self?.seatInfo?.userId == seatInfo.userId { return }
-                    self?.avatarImageView.image = nil
-                })
-            }
-            giftView.update(value: giftValues[userId] ?? 0)
-        } else {
-            avatarImageView.image = RCSCAsset.Images.circleBg.image
-            starImageView.isHidden = true
-        }
+        
+
         layer.insertSublayer(radarView, at: 0)
     }
     
     func setSpeakingState(isSpeaking: Bool) {
         let isMuted = seatInfo?.isMuted ?? true
-        guard isSpeaking, seatInfo?.status == .using, !isMuted else {
+        guard isSpeaking, seatUser != nil, !isMuted else {
             self.radarView.stop()
             return
         }

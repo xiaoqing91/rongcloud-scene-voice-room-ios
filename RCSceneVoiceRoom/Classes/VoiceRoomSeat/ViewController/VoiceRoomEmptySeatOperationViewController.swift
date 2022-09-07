@@ -145,7 +145,7 @@ class VoiceRoomEmptySeatOperationViewController: UIViewController {
     }
     
     private func setupButtonState() {
-        let isLockSeat = seatInfo.status == .locking
+        let isLockSeat = seatInfo.isLocked
         if isLockSeat {
             lockSeatButton.setTitle("打开座位", for: .normal)
             lockSeatButton.setImage(RCSCAsset.Images.voiceroomSettingUnlockallseat.image, for: .normal)
@@ -164,7 +164,7 @@ class VoiceRoomEmptySeatOperationViewController: UIViewController {
     }
     
     @objc func handleLockSeat() {
-        let isLock = seatInfo.status == .locking
+        let isLock = seatInfo.isLocked
         delegate?.emptySeat(seatIndex, isLock: !isLock)
         setupButtonState()
         dismiss(animated: true, completion: nil)

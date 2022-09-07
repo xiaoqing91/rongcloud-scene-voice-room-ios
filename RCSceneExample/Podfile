@@ -8,6 +8,7 @@ target 'RCSceneExample' do
   use_frameworks!
   
   # Pods for RCSceneExample
+  pod 'RCVoiceRoomLib', :path => '../../../gerrit-repo/rcvoiceroomlib-ios'
   pod 'RCSceneVoiceRoom', :path => '../'
   
 end

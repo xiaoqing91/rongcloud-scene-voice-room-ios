@@ -20,15 +20,13 @@ class RequestSeatViewController: UIViewController {
     }()
     private lazy var emptyView = RCSceneRoomUsersEmptyView()
     private let acceptUserCallback:((String) -> Void)
-    private var userIdlist = [String]()
-    private var userlist = [RCSceneRoomUser]() {
-        didSet {
-            emptyView.isHidden = userlist.count > 0
-        }
-    }
     
-    init(callback: @escaping ((String) -> Void)) {
+    private let requesterIds: [String]
+    private var requesterInfos: [RCSceneRoomUser] = [RCSceneRoomUser]()
+    
+    init(requesterIds: [String], callback: @escaping ((String) -> Void)) {
         self.acceptUserCallback = callback
+        self.requesterIds = requesterIds
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,7 +46,8 @@ class RequestSeatViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        requestWaitinglist()
+        emptyView.isHidden = requesterIds.count > 0
+        fetchAllUserInfo()
     }
     
     private func buildLayout() {
@@ -60,22 +59,12 @@ class RequestSeatViewController: UIViewController {
         }
     }
     
-    private func requestWaitinglist() {
-        RCVoiceRoomEngine.sharedInstance().getRequestSeatUserIds { list in
-            self.userIdlist = list
-            self.fetchAllUserInfo()
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "获取排麦用户列表失败")
-        }
-
-    }
-    
     private func fetchAllUserInfo() {
-        voiceRoomService.usersInfo(id: self.userIdlist) { result in
+        voiceRoomService.usersInfo(id: self.requesterIds) { result in
             switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 guard let list = wrapper.data else {return}
-                self.userlist = list
+                self.requesterInfos = list
                 self.tableView.reloadData()
             case let .failure(error):
                 debugPrint(error.localizedDescription)
@@ -86,12 +75,12 @@ class RequestSeatViewController: UIViewController {
 
 extension RequestSeatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userlist.count
+        return requesterInfos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(for: indexPath, cellType: RequestSeatTableViewCell.self)
-        cell.updateCell(user: userlist[indexPath.row])
+        cell.updateCell(user: requesterInfos[indexPath.row])
         cell.acceptCallback = {
            [weak self] userId in
             self?.acceptUserCallback(userId)

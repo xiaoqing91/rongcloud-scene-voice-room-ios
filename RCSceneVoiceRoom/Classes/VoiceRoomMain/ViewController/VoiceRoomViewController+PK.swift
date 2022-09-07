@@ -7,6 +7,7 @@
 
 import SVProgressHUD
 import RCVoiceRoomLib
+import Combine
 
 enum ClosePKReason {
     case remote
@@ -139,34 +140,33 @@ extension VoiceRoomViewController {
     
     private func lockAllRoomAudienceToLeaveSeat() {
         RCVoiceRoomEngine.sharedInstance().getLatestSeatInfo({ seats in
-            for i in (0..<seats.count) {
-                let seat = seats[i]
-                if i == 0 { continue }
-                if seat.userId != nil {
-                    RCVoiceRoomEngine.sharedInstance()
-                        .lockSeat(UInt(i), lock: true) {} error: { code, msg in }
-                }
-            }
+            /// TODO
+//            for i in (0..<seats.count) {
+//                let seat = seats[i]
+//                if i == 0 { continue }
+//                if seat.userId != nil {
+//                    RCVoiceRoomEngine.sharedInstance()
+//                        .lockSeat(UInt(i), lock: true) {} error: { code, msg in }
+//                }
+//            }
         }, error: { _,_ in })
     }
 
     private func showPKInvite(roomId: String, userId: String) {
         let vc = UIAlertController(title: "是否接受PK邀请(10)", message: nil, preferredStyle: .alert)
         vc.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
-            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, responseType: .agree) {
+            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: true) {
                 
             } error: { errorCode, msg in
                 
             }
         }))
         vc.addAction(UIAlertAction(title: "拒绝", style: .cancel, handler: { _ in
-            SVProgressHUD.showSuccess(withStatus: "已拒绝 PK 邀请")
-            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, responseType: .reject) {
-                
+            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: false) {
+                SVProgressHUD.showSuccess(withStatus: "已拒绝 PK 邀请")
             } error: { errorCode, msg in
                 
             }
-            
         }))
         
         UIApplication.shared.topmostController()?.present(vc, animated: true, completion: {
@@ -187,16 +187,11 @@ extension VoiceRoomViewController {
         }
         guard inviterCount > 0 else {
             RCSRLog.info("response pk invite to ignore")
-            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(inviterRoomId, inviter: inviterId, responseType: .ignore) {
-                DispatchQueue.main.async {
-                    alertController.dismiss(animated: true, completion: nil)
-                }
-            } error: { _, _ in
-                
-            }
+            alertController.dismiss(animated: true, completion: nil)
             timer?.invalidate()
             return
         }
+        /// TODO 待test是否有问题
         alertController.title = "是否接受PK邀请(\(inviterCount))"
     }
     
@@ -225,16 +220,17 @@ extension VoiceRoomViewController {
     }
     
     private func sendTextMessage(text: String) {
-        let textMessage = RCTextMessage()
-        textMessage.content = text
-        RCVoiceRoomEngine.sharedInstance().sendMessage(textMessage) {
-            [weak self] in
-            DispatchQueue.main.async {
-                self?.messageView.addMessage(textMessage)
-            }
-        } error: { code, text in
-            
-        }
+        /// TODO connecting
+//        let textMessage = RCTextMessage()
+//        textMessage.content = text
+//        RCVoiceRoomEngine.sharedInstance().sendMessage(textMessage) {
+//            [weak self] in
+//            DispatchQueue.main.async {
+//                self?.messageView.addMessage(textMessage)
+//            }
+//        } error: { code, text in
+//
+//        }
     }
     /// RTC 已建立连接，向服务端请求PK开始
     private func sendPKRequest() {
@@ -267,7 +263,8 @@ extension VoiceRoomViewController {
         guard let seatCount = kvRoomInfo?.seatCount, seatCount >= 2 else {
             return
         }
-        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
+        /// TODO
+//        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
     }
     
     func getPKStatus() {

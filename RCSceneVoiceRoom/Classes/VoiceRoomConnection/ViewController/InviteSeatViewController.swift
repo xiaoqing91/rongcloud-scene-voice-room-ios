@@ -26,9 +26,9 @@ class InviteSeatViewController: UIViewController {
         }
     }
     private let inviteUserCallback:((String) -> Void)
-    private let onSeatUserlist: [String]
+    private let onSeatUserlist: [String]?
     
-    init(roomId: String, onSeatUserList: [String], callback: @escaping ((String) -> Void)) {
+    init(roomId: String, onSeatUserList: [String]?, callback: @escaping ((String) -> Void)) {
         self.roomId = roomId
         self.inviteUserCallback = callback
         self.onSeatUserlist = onSeatUserList
@@ -69,8 +69,10 @@ class InviteSeatViewController: UIViewController {
             switch result.map(RCSceneWrapper<[RCSceneRoomUser]>.self) {
             case let .success(wrapper):
                 if let users = wrapper.data, let self = self {
-                    self.userlist = users.filter { !seatUserIds.contains($0.userId) }
-                    self.tableView.reloadData()
+                    if let seatUserIds = seatUserIds {
+                        self.userlist = users.filter { !seatUserIds.contains($0.userId) }
+                        self.tableView.reloadData()
+                    }
                 }
             case .failure(_): break
                 
