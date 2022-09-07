@@ -10,7 +10,7 @@ import RCSceneRoom
 class AppConfigs {
     static func config() {
         configRCKey()
-        configHiFive()
+//        configHiFive()
         configBaseURL()
         configBusinessToken()
     }
