@@ -66,7 +66,7 @@ class RCVideoRoomService {
     
     func createRoom(name: String,
                     completion: @escaping (Result<RCSceneRoom, NetError>) -> Void) {
-        let imageUrl = "https://img2.baidu.com/it/u=2842763149,821152972&fm=26&fmt=auto"
+        let imageUrl = "http://rcrtc-api.rongcloud.net/static/room/3.jpg"
         roomProvider.request(.createRoom(name: name, themePictureUrl: imageUrl, backgroundUrl: imageUrl, kv: [], isPrivate: 0, password: "1234", roomType: 1)) { result in
             switch result.map(RCSceneWrapper<RCSceneRoom>.self) {
             case let .success(wrapper):
