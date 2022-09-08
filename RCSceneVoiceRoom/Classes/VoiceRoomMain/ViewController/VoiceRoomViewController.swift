@@ -261,6 +261,7 @@ extension VoiceRoomViewController {
                     SceneRoomManager.shared.currentRoom = self.voiceRoomInfo
                     SVProgressHUD.dismiss()
                     self.sendJoinRoomMessage()
+                    self.roomKVDidReady()
                 case let .failure(error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
                 }

@@ -37,7 +37,7 @@ extension VoiceRoomViewController {
         if voiceRoomInfo.isOwner {
             handleMicOrderClick()
         } else {
-            handleRequestSeat()
+            audienceTapMicToRequestSeat()
         }
     }
     
@@ -58,21 +58,22 @@ extension VoiceRoomViewController {
         navigator(dest)
     }
     
-    @objc private func handleRequestSeat() {
+    @objc private func audienceTapMicToRequestSeat() {
         guard !roomState.isPKOngoing() else {
             SVProgressHUD.showError(withStatus: "当前 PK 中，无法进行该操作")
             return
         }
         switch roomState.connectState {
         case .request:
-            requestSeat()
+            // index -1 代表随机给举手观众一个可用麦位
+            requestSeat(index: -1)
         case .waiting:
             navigator(.requestSeatPop(delegate: self))
         case .connecting:
             let seatIndex = self.findSeatIndex()
             guard let seatIndex = seatIndex else { return }
-            let seatInfo = self.seatList[Int(seatIndex)]
-            navigator(.userSeatPop(seatIndex: seatIndex, isUserMute: roomState.isCloseSelfMic, isSeatMute: seatInfo.isMuted, delegate: self))
+            let seatInfo = self.seatList[seatIndex]
+            navigator(.userSeatPop(seatIndex: UInt(seatIndex), isUserMute: roomState.isCloseSelfMic, isSeatMute: seatInfo.isMuted, delegate: self))
         }
     }
     

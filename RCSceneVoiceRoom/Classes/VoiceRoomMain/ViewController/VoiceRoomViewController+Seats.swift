@@ -8,17 +8,6 @@
 import SVProgressHUD
 
 extension VoiceRoomViewController {
-    @_dynamicReplacement(for: seatlist)
-    private var seats_seatlist: [RCVoiceSeatInfo] {
-        get { seatList }
-        set {
-            seatList = newValue
-            collectionView.reloadData()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.updateCollectionViewHeight()
-            })
-        }
-    }
     
     @_dynamicReplacement(for: managers)
     private var seats_managers: [RCSceneRoomUser] {
@@ -73,9 +62,10 @@ extension VoiceRoomViewController {
         } else if isSitting() {
             micButton.micState = voiceRoomInfo.isOwner ? .user : .connecting
         }
+        collectionView.reloadData()
     }
     
-    func requestSeat() {
+    func requestSeat(index: Int) {
         if roomState.connectState == .waiting {
             navigator(.requestSeatPop(delegate: self))
             return
@@ -84,12 +74,13 @@ extension VoiceRoomViewController {
             return
         }
         RCSensorAction.connectRequest(voiceRoomInfo).trigger()
+        
         if roomState.isFreeEnterSeat {
             return enterSeatIfAvailable()
         }
         
         RCVoiceRoomEngine.sharedInstance()
-            .requestSeat(-1, content: "") { [weak self] in
+            .requestSeat(index, content: "") { [weak self] in
                 DispatchQueue.main.async {
                     SVProgressHUD.showSuccess(withStatus: "已申请连线，等待房主接受")
                     self?.roomState.connectState = .waiting
@@ -164,7 +155,7 @@ extension VoiceRoomViewController {
         return self.onSeatUsers.contains { $0.userId == userId }
     }
     
-    func findSeatIndex(of userId: String = Environment.currentUserId) -> UInt? {
+    func findSeatIndex(of userId: String = Environment.currentUserId) -> Int? {
         let firstIndex = self.onSeatUsers.firstIndex { $0.userId == userId }
         if let firstIndex = firstIndex {
             return self.onSeatUsers[firstIndex].seatIndex
@@ -239,7 +230,7 @@ extension VoiceRoomViewController: UICollectionViewDelegate {
                     if roomState.isFreeEnterSeat {
                         enterSeat(index: seatIndex)
                     } else {
-                        requestSeat()
+                        requestSeat(index: seatIndex)
                     }
                 }
             }

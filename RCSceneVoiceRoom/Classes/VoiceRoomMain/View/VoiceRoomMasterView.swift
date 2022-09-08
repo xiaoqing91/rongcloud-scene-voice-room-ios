@@ -34,7 +34,7 @@ class VoiceRoomMasterView: UIView {
         instance.contentMode = .scaleAspectFill
         instance.clipsToBounds = true
         instance.layer.cornerRadius = 40.resize
-        instance.image = RCSCAsset.Images.defaultAvatar.image
+        instance.image = RCSCAsset.Images.emptySeatUserAvatar.image
         return instance
     }()
     private lazy var borderImageView: UIImageView = {
@@ -57,6 +57,7 @@ class VoiceRoomMasterView: UIView {
         let instance = UIImageView()
         instance.contentMode = .scaleAspectFit
         instance.image = RCSCAsset.Images.muteMicrophoneIcon.image
+        instance.isHidden = true
         return instance
     }()
     private var lastBeginAnimation = Date().timeIntervalSince1970

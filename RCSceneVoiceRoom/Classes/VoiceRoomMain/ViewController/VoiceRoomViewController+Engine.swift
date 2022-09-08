@@ -48,6 +48,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     func seatInfoDidUpdate(_ seatInfolist: [RCVoiceSeatInfo]) {
         seatList = seatInfolist
         print("seatinlist count is \(seatInfolist.count)")
+        self.updateChangesWithSeatUser()
     }
     
     
@@ -134,7 +135,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
     }
     
-    func kickSeatDidReceive(_ seatIndex: UInt) {
+    func kickSeatDidReceive(_ seatIndex: UInt, userId: String, content: String) {
         SVProgressHUD.showSuccess(withStatus: "您已被抱下麦")
         if currentUserRole() == .creator {
             RCSceneMusic.stop()
@@ -143,14 +144,32 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
     }
     
-    func requestSeatRespones(_ isAccept: Bool, content: String) {
+    func userDidKick(fromRoom operatorId: String, userId: String, content: String) {
+        if userId == Environment.currentUserId {
+            if managers.contains(where: { $0.userId == operatorId }) {
+                RCSceneUserManager.shared.fetchUserInfo(userId: operatorId) { user in
+                    SVProgressHUD.showInfo(withStatus: "您被管理员\(user.userName)踢出房间")
+                }
+            } else {
+                SVProgressHUD.showInfo(withStatus: "您被踢出房间")
+            }
+            self.leaveRoom()
+        }
+    }
+    
+    
+    func requestSeatResponse(_ isAccept: Bool, targetIndex: Int, content: String) {
         if isAccept {
-            enterSeatIfAvailable()
+            if targetIndex == -1  {
+                enterSeatIfAvailable()
+            } else {
+                enterSeat(index: targetIndex)
+            }
         } else {
             SVProgressHUD.showError(withStatus: "您的连麦请求被拒绝")
         }
     }
-    
+
     func requestSeatListDidChange() {
         setupRequestStateAndMicOrderListState()
     }
@@ -202,20 +221,6 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     
     func playCDNStream(_ roomId: String, isPlay: Bool) {
         
-    }
-    
-  
-    func userDidKick(fromRoom targetId: String, byUserId userId: String, content: String) {
-        if targetId == Environment.currentUserId {
-            if managers.contains(where: { $0.userId == userId }) {
-                RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in
-                    SVProgressHUD.showInfo(withStatus: "您被管理员\(user.userName)踢出房间")
-                }
-            } else {
-                SVProgressHUD.showInfo(withStatus: "您被踢出房间")
-            }
-            self.leaveRoom()
-        }
     }
     
     func networkStatus(_ status: RCRTCStatusForm) {
