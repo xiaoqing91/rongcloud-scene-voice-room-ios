@@ -83,15 +83,15 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     }
     
     func userDidEnter(_ userId: String) {
-        roomInfoView.roomUserIncrease()
+        
     }
     
     func userDidExit(_ userId: String) {
-        roomInfoView.roomUserDecrease()
+        
     }
     
     func memberCountDidChange(_ memberCount: Int) {
-        
+        roomInfoView.updateUser(count: memberCount)
     }
 
     func seatSpeakingStateChanged(_ speaking: Bool, at index: Int, audioLevel level: Int) {
@@ -206,8 +206,6 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     
   
     func userDidKick(fromRoom targetId: String, byUserId userId: String, content: String) {
-        /// TODO 使用member change
-        roomInfoView.roomUserDecrease()
         if targetId == Environment.currentUserId {
             if managers.contains(where: { $0.userId == userId }) {
                 RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in

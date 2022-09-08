@@ -186,12 +186,10 @@ extension VoiceRoomViewController {
             return
         }
         guard inviterCount > 0 else {
-            RCSRLog.info("response pk invite to ignore")
             alertController.dismiss(animated: true, completion: nil)
             timer?.invalidate()
             return
         }
-        /// TODO 待test是否有问题
         alertController.title = "是否接受PK邀请(\(inviterCount))"
     }
     
@@ -220,17 +218,17 @@ extension VoiceRoomViewController {
     }
     
     private func sendTextMessage(text: String) {
-        /// TODO connecting
-//        let textMessage = RCTextMessage()
-//        textMessage.content = text
-//        RCVoiceRoomEngine.sharedInstance().sendMessage(textMessage) {
-//            [weak self] in
-//            DispatchQueue.main.async {
-//                self?.messageView.addMessage(textMessage)
-//            }
-//        } error: { code, text in
-//
-//        }
+        let textMessage = RCTextMessage()
+        textMessage.content = text
+        ChatroomSendMessage(textMessage) { result in
+            switch result {
+            case let .success(mid):
+                DispatchQueue.main.async {
+                    self.messageView.addMessage(textMessage)
+                }
+            case .failure(_): break
+            }
+        }
     }
     /// RTC 已建立连接，向服务端请求PK开始
     private func sendPKRequest() {
@@ -332,7 +330,6 @@ extension VoiceRoomViewController {
     }
     
     private func quitPKConnectAndNotifyServer() {
-        RCSRLog.info("退出 pk 并通知 server")
         guard let info = roomState.currentPKInfo else {
             return
         }

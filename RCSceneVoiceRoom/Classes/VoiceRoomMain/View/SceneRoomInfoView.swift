@@ -114,12 +114,8 @@ class SceneRoomInfoView: UIView {
         idLabel.text = "ID " + String(info.id)
     }
     
-    func roomUserIncrease() {
-        roomUserCount += 1
-    }
-    
-    func roomUserDecrease() {
-        roomUserCount -= 1
+    func updateUser(count: Int) {
+        roomUserCount = count
     }
     
     @objc func handleViewClick() {

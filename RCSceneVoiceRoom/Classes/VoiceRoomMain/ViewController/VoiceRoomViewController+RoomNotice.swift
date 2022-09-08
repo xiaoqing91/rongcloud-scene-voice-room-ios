@@ -35,15 +35,15 @@ extension VoiceRoomViewController: VoiceRoomNoticeDelegate {
             }
             let textMessage = RCTextMessage()
             textMessage.content = "房间公告已更新"
-            /// TODO sendMessage
-//            RCVoiceRoomEngine.sharedInstance().sendMessage(textMessage) {
-//                [weak self] in
-//                DispatchQueue.main.async {
-//                    self?.messageView.addMessage(textMessage)
-//                }
-//            } error: { code, msg in
-//
-//            }
+            ChatroomSendMessage(textMessage) { result in
+                switch result {
+                case let .success(mid):
+                    DispatchQueue.main.async {
+                        self.messageView.addMessage(textMessage)
+                    }
+                case .failure(_): break
+                }
+            }
         }
     }
 }
