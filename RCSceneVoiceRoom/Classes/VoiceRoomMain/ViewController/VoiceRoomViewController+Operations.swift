@@ -68,11 +68,12 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
         guard let index = findSeatIndex(), index == 0 else {
             return enterSeat(index: 0)
         }
-        var disableRecording = false
-        if let seatInfo = seatList.first {
-            disableRecording = seatInfo.disableRecording
+
+        var disableMic = false
+        if let seatInfo = seatList.first, let user = seatInfo.seatUser {
+            disableMic = user.disableMic
         }
-        let navigation = RCNavigation.masterSeatOperation(Environment.currentUserId, disableRecording, self)
+        let navigation = RCNavigation.masterSeatOperation(Environment.currentUserId, disableMic, self)
         navigator(navigation)
     }
     
@@ -97,11 +98,6 @@ extension VoiceRoomViewController: VoiceRoomMasterSeatOperationProtocol {
             
         } error: { _, _ in
             
-        }
-        /// TODO if delete
-        let seatInfo = RoomSeatInfoExtra(disableRecording: isMute)
-        if let jsonString = seatInfo.toJsonString() {
-            RCVoiceRoomEngine.sharedInstance().updateSeatInfo(0, withExtra: jsonString) {} error: { _, _ in }
         }
     }
     

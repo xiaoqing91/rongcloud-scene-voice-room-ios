@@ -17,17 +17,6 @@ extension VoiceRoomViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                 self.updateCollectionViewHeight()
             })
-            /// TODO 这一块都要根据 seatUser来改变
-            if let seatInfo = seatList.first {
-                ownerView.updateOwner(seatInfo: seatInfo)
-                ownerView.updateGiftVales(giftValues: userGiftInfo)
-            }
-            /// 当麦位数量变化时，触发连麦用户下麦，需要更新状态
-            if roomState.connectState == .connecting {
-                roomState.connectState = isSitting() ? .connecting : .request
-            } else if isSitting() {
-                micButton.micState = voiceRoomInfo.isOwner ? .user : .connecting
-            }
         }
     }
     
@@ -71,6 +60,21 @@ extension VoiceRoomViewController {
 }
 
 extension VoiceRoomViewController {
+
+    func updateChangesWithSeatUser() {
+        if let seatInfo = seatList.first {
+            ownerView.updateOwner(seatInfo: seatInfo)
+            ownerView.updateGiftVales(giftValues: userGiftInfo)
+        }
+        
+        /// 当麦位数量变化时，触发连麦用户下麦，需要更新状态
+        if roomState.connectState == .connecting {
+            roomState.connectState = isSitting() ? .connecting : .request
+        } else if isSitting() {
+            micButton.micState = voiceRoomInfo.isOwner ? .user : .connecting
+        }
+    }
+    
     func requestSeat() {
         if roomState.connectState == .waiting {
             navigator(.requestSeatPop(delegate: self))

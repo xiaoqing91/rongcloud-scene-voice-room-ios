@@ -11,10 +11,7 @@ import SwiftUI
 
 extension RCVoiceSeatInfo {
     var radarDisable: Bool {
-        if seatUser == nil {
-            return true
-        }
-        return self.disableRecording
+        return seatUser == nil
     }
 }
 
@@ -121,22 +118,21 @@ class VoiceRoomMasterView: UIView {
     
     func updateOwner(seatInfo: RCVoiceSeatInfo) {
         self.seatInfo = seatInfo
-        
-    
-        
+        radarView.isHidden = seatInfo.radarDisable
+
         if let seatUser = seatInfo.seatUser {
             RCSceneUserManager.shared.fetchUserInfo(userId: seatUser.userId) { [weak self] user in
                 self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
                 self?.nameLabel.text = user.userName
             }
+            borderImageView.isHidden = false
+            muteMicrophoneImageView.isHidden = !seatUser.disableMic
         } else {
+            borderImageView.isHidden = true
+            muteMicrophoneImageView.isHidden = true
             self.avatarImageView.image = RCSCAsset.Images.emptySeatUserAvatar.image
             self.nameLabel.text = " "
         }
-
-        muteMicrophoneImageView.isHidden = !seatInfo.disableRecording
-        radarView.isHidden = seatInfo.radarDisable
-        borderImageView.isHidden = (seatInfo.seatUser == nil)
     }
     
     func updateGiftVales(giftValues: [String: Int]) {

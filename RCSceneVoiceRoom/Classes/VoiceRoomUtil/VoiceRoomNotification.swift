@@ -10,8 +10,6 @@ import Foundation
 enum VoiceRoomNotification: String {
     case backgroundChanged = "VoiceRoomBackgroundChanged"
     case mangerlistNeedRefresh = "VoiceRoomNeedRefreshmanagers"
-    case rejectManagePick = "VoiceRoomRejectManagePick"
-    case agreeManagePick = "VoiceRoomAgreeManagePick"
     case forbiddenAdd = "EVENT_ADD_SHIELD"
     case forbiddenDelete = "EVENT_DELETE_SHIELD"
 }

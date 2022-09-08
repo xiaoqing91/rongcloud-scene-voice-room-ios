@@ -243,8 +243,7 @@ extension VoiceRoomForbiddenViewController {
                 }
                 self.fetchForbiddenList()
                 
-                let type = VoiceRoomNotification.forbiddenAdd
-                RCVoiceRoomEngine.sharedInstance().notifyVoiceRoom(type.rawValue, content: name)
+                VoiceRoomNotification.forbiddenAdd.send(content: name)
                 SceneRoomManager.shared.forbiddenWords.append(name)
                 
             case let .failure(error):
@@ -265,8 +264,7 @@ extension VoiceRoomForbiddenViewController {
                 self.fetchForbiddenList()
                 
                 let name = item.name
-                let type = VoiceRoomNotification.forbiddenDelete
-                RCVoiceRoomEngine.sharedInstance().notifyVoiceRoom(type.rawValue, content: name)
+                 VoiceRoomNotification.forbiddenDelete.send(content: name)
                 SceneRoomManager.shared.forbiddenWords.removeAll(where: { $0 == name })
                 
             case let .failure(error):

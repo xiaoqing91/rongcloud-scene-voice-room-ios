@@ -5,31 +5,12 @@
 //  Created by shaoshuai on 2021/6/18.
 //
 
+import Combine
+
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)
     private func setupSettingModule() {
         setupModules()
-    }
-    
-    private func handleReceivePickSeat(from: String) {
-        var inviter = "房主"
-        if managers.map(\.userId).contains(from) {
-            inviter = "管理员"
-        }
-        let alertVC = UIAlertController(title: "是否同意上麦", message: "您被\(inviter)邀请上麦，是否同意？", preferredStyle: .alert)
-        alertVC.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
-            self.enterSeatIfAvailable()
-            VoiceRoomNotification.agreeManagePick.send(content: from)
-        }))
-        alertVC.addAction(UIAlertAction(title: "拒绝", style: .cancel, handler: { _ in
-            VoiceRoomNotification.rejectManagePick.send(content: from)
-        }))
-        
-        if let fm = self.floatingManager, fm.showing {
-            UIApplication.shared.keyWindow()?.rootViewController?.present(alertVC, animated: true)
-        } else {
-            topmostController().present(alertVC, animated: true)
-        }
     }
 }
 
@@ -55,6 +36,15 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         kvRoomInfo = roomInfo
     }
     
+    func roomDidClosed() {
+        isRoomClosed = true
+        navigator(.voiceRoomAlert(title: "当前直播已结束",
+                                  actions: [.confirm("确定")],
+                                  alertType: alertTypeVideoAlreadyClose,
+                                  delegate: self))
+    }
+    
+    
     func seatInfoDidUpdate(_ seatInfolist: [RCVoiceSeatInfo]) {
         seatList = seatInfolist
         print("seatinlist count is \(seatInfolist.count)")
@@ -67,10 +57,10 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         } else if voiceRoomInfo.isOwner == false {
             self.roomContainerAction?.enableSwitchRoom()
         }
-        
         self.onSeatUsers = seatUserlist;
+        self.updateChangesWithSeatUser()
     }
-    
+
     
     func userDidEnterSeat(_ seatIndex: Int, user userId: String) {
         
@@ -85,8 +75,12 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     }
     
     func seatDidLock(_ index: Int, isLock: Bool) {
+        
     }
     
+    func seatUserAudio(_ index: Int, userId: String, isDisable: Bool) {
+        
+    }
     
     func userDidEnter(_ userId: String) {
         roomInfoView.roomUserIncrease()
@@ -96,6 +90,9 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         roomInfoView.roomUserDecrease()
     }
     
+    func memberCountDidChange(_ memberCount: Int) {
+        
+    }
 
     func seatSpeakingStateChanged(_ speaking: Bool, at index: Int, audioLevel level: Int) {
         let isSpeaking = level > 4
@@ -111,27 +108,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
             }
         }
     }
-    
-    // will be deprecated
-    func speakingStateDidChange(_ seatIndex: UInt, speakingState isSpeaking: Bool) {
-        
-    }
-    
-    // room distory call back
-    func roomDidClosed() {
-        isRoomClosed = true
-        navigator(.voiceRoomAlert(title: "当前直播已结束",
-                                  actions: [.confirm("确定")],
-                                  alertType: alertTypeVideoAlreadyClose,
-                                  delegate: self))
-    }
-    
-    func messageDidReceive(_ message: RCMessage) {
-        if message.content == nil { return }
-        DispatchQueue.main.async {
-            self.handleReceivedMessage(message)
-        }
-    }
+
     
     func roomNotificationDidReceive(_ name: String, content: String) {
         guard let type = VoiceRoomNotification(rawValue: name) else {
@@ -142,14 +119,6 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
             NotificationNameRoomBackgroundUpdated.post((voiceRoomInfo.roomId, content))
         case .mangerlistNeedRefresh:
             fetchmanagers()
-        case .rejectManagePick:
-            if content == Environment.currentUserId {
-                SVProgressHUD.showError(withStatus: "用户拒绝邀请")
-            }
-        case .agreeManagePick:
-            if content == Environment.currentUserId {
-                SVProgressHUD.showSuccess(withStatus: "用户连线成功")
-            }
         case .forbiddenAdd:
             SceneRoomManager.shared.forbiddenWords.append(content)
         case .forbiddenDelete:
@@ -157,8 +126,12 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
     }
     
-    func pickSeatDidReceive(by userId: String) {
-        handleReceivePickSeat(from: userId)
+
+    func messageDidReceive(_ message: RCMessage) {
+        if message.content == nil { return }
+        DispatchQueue.main.async {
+            self.handleReceivedMessage(message)
+        }
     }
     
     func kickSeatDidReceive(_ seatIndex: UInt) {
@@ -170,33 +143,70 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
     }
     
-    func requestSeatDidAccept() {
-        enterSeatIfAvailable()
+    func requestSeatRespones(_ isAccept: Bool, content: String) {
+        if isAccept {
+            enterSeatIfAvailable()
+        } else {
+            SVProgressHUD.showError(withStatus: "您的连麦请求被拒绝")
+        }
     }
-    
-    func requestSeatDidReject() {
-        SVProgressHUD.showError(withStatus: "您的连麦请求被拒绝")
-    }
-    
     
     func requestSeatListDidChange() {
         setupRequestStateAndMicOrderListState()
     }
      
-    
     func invitationDidReceive(_ invitationId: String, from userId: String, content: String) {
+        var inviter = "房主"
+        if managers.map(\.userId).contains(userId) {
+            inviter = "管理员"
+        }
+        let alertVC = UIAlertController(title: "是否同意上麦", message: "您被\(inviter)邀请上麦，是否同意？", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
+            RCVoiceRoomEngine.sharedInstance().responseInvitation(invitationId, accept: true, content: content) {
+                self.enterSeatIfAvailable()
+            } error: { code, msg in
+            }
+        }))
+        alertVC.addAction(UIAlertAction(title: "拒绝", style: .cancel, handler: { _ in
+            RCVoiceRoomEngine.sharedInstance().responseInvitation(invitationId, accept: false, content: content) {
+                
+            } error: { code, msg in
+            }
+        }))
+        
+        if let fm = self.floatingManager, fm.showing {
+            UIApplication.shared.keyWindow()?.rootViewController?.present(alertVC, animated: true)
+        } else {
+            topmostController().present(alertVC, animated: true)
+        }
     }
     
-    func invitationDidAccept(_ invitationId: String) {
-    }
-    
-    func invitationDidReject(_ invitationId: String) {
-    }
+
     
     func invitationDidCancel(_ invitationId: String) {
+        
     }
     
-    func userDidKick(fromRoom targetId: String, byUserId userId: String) {
+    /// 邀请得到响应
+    func invitationDidRespones(_ isAccept: Bool, invitationId: String, content: String) {
+        if isAccept {
+            SVProgressHUD.showError(withStatus: "用户接受邀请")
+        } else {
+            SVProgressHUD.showError(withStatus: "用户拒绝邀请")
+        }
+    }
+    
+    func streamTypeChange(_ streamType: RCVoiceStreamType) {
+        
+    }
+    
+    func playCDNStream(_ roomId: String, isPlay: Bool) {
+        
+    }
+    
+  
+    func userDidKick(fromRoom targetId: String, byUserId userId: String, content: String) {
+        /// TODO 使用member change
         roomInfoView.roomUserDecrease()
         if targetId == Environment.currentUserId {
             if managers.contains(where: { $0.userId == userId }) {
@@ -210,7 +220,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
     }
     
-    func networkStatus(_ rtt: Int) {
-        roomInfoView.updateNetworking(rtt: rtt)
-    }    
+    func networkStatus(_ status: RCRTCStatusForm) {
+        roomInfoView.updateNetworking(rtt: status.rtt)
+    }
 }
