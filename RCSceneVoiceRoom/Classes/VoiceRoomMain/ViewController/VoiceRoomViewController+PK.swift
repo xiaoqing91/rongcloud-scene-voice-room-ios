@@ -445,7 +445,7 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
     func selectedUserDidClick(userId: String, from roomId: String) {
         showCancelPKAlert(roomId: roomId, userId: userId)
     }
-    
+    /// TODO PK error
     func userDidInvite(userId: String, from roomId: String) {
         voiceRoomService.isPK(roomId: roomId) { result in
             switch result {

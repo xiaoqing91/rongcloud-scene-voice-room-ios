@@ -209,7 +209,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     /// 邀请得到响应
     func invitationDidRespones(_ isAccept: Bool, invitationId: String, content: String) {
         if isAccept {
-            SVProgressHUD.showError(withStatus: "用户接受邀请")
+            SVProgressHUD.showSuccess(withStatus: "用户同意邀请")
         } else {
             SVProgressHUD.showError(withStatus: "用户拒绝邀请")
         }

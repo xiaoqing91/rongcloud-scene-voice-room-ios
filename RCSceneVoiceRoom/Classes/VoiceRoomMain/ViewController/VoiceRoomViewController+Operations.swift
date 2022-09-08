@@ -185,7 +185,7 @@ extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
         
     }
     /// 踢出房间
-    func kickoutRoom(userId: String) {
+    func kickOutRoom(userId: String) {
         RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId, content: "") {
             RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
                 RCSceneUserManager.shared.fetchUserInfo(userId: userId) { targetUser in
