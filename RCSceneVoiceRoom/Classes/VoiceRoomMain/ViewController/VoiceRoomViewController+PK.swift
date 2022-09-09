@@ -155,17 +155,18 @@ extension VoiceRoomViewController {
     }
     
     private func lockAllRoomAudienceToLeaveSeat() {
-        RCVoiceRoomEngine.sharedInstance().getLatestSeatInfo({ seats in
-            /// TODO
-//            for i in (0..<seats.count) {
-//                let seat = seats[i]
-//                if i == 0 { continue }
-//                if seat.userId != nil {
-//                    RCVoiceRoomEngine.sharedInstance()
-//                        .lockSeat(UInt(i), lock: true) {} error: { code, msg in }
-//                }
-//            }
-        }, error: { _,_ in })
+        let currentUserIndex = findSeatIndex() ?? 0
+        
+        let range = 0 ... 8
+        var seatIndexes = [Int](range)
+        seatIndexes.remove(at: currentUserIndex)
+        
+        let indexes = seatIndexes.map { NSNumber(value: $0) }
+        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: true) {
+            
+        } error: { code, msg in
+            
+        }
     }
 
     private func showPKInvite(roomId: String, userId: String) {
@@ -276,8 +277,18 @@ extension VoiceRoomViewController {
         guard let seatCount = kvRoomInfo?.seatCount, seatCount >= 2 else {
             return
         }
-        /// TODO
-//        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
+        let currentUserIndex = findSeatIndex() ?? 0
+        
+        let range = 0 ... 8
+        var seatIndexes = [Int](range)
+        seatIndexes.remove(at: currentUserIndex)
+        
+        let indexes = seatIndexes.map { NSNumber(value: $0) }
+        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: isLock) {
+            
+        } error: { code, msg in
+            
+        }
     }
     
     func getPKStatus() {

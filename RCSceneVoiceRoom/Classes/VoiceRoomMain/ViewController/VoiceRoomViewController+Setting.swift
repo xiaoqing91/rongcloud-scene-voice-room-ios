@@ -106,17 +106,37 @@ extension VoiceRoomViewController {
     /// 全麦锁麦
     func muteAllSeatDidClick(isMute: Bool) {
         roomState.isMuteAll = isMute
-        /// TODO
-//        RCVoiceRoomEngine.sharedInstance().muteOtherSeats(isMute)
-        SVProgressHUD.showSuccess(withStatus: isMute ? "全部麦位已静音" : "已解锁全麦")
+        
+        let currentUserIndex = findSeatIndex() ?? 0
+        let range = 0 ... 8
+        var seatIndexes = [Int](range)
+        seatIndexes.remove(at: currentUserIndex)
+        
+        let muteIndexes = seatIndexes.map { NSNumber(value: $0) }
+        RCVoiceRoomEngine.sharedInstance().muteSeat(muteIndexes, mute: isMute) {
+            SVProgressHUD.showSuccess(withStatus: isMute ? "全部麦位已静音" : "已解锁全麦")
+        } error: { code, msg in
+            SVProgressHUD.showSuccess(withStatus: isMute ? "全部麦位静音失败" : "解锁全麦失败")
+        }
     }
     
     /// 全麦锁座
     func lockAllSeatDidClick(isLock: Bool) {
         roomState.isLockAll = isLock
-        /// TODO
-//        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
-        SVProgressHUD.showSuccess(withStatus: isLock ? "全部座位已锁定" : "已解锁全座")
+        
+        let currentUserIndex = findSeatIndex() ?? 0
+        
+        let range = 0 ... 8
+        var seatIndexes = [Int](range)
+        seatIndexes.remove(at: currentUserIndex)
+        
+        let indexes = seatIndexes.map { NSNumber(value: $0) }
+        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: isLock) {
+            SVProgressHUD.showSuccess(withStatus: isLock ? "已锁定全座" : "已解锁全座")
+        } error: { code, msg in
+            SVProgressHUD.showSuccess(withStatus: isLock ? "锁定全座失败" : "解锁全座失败")
+        }
+       
     }
     /// 静音
     func silenceSelfDidClick(isSilence: Bool) {
