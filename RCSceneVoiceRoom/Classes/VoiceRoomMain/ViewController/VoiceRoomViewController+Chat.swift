@@ -59,6 +59,8 @@ extension VoiceRoomViewController {
             event.userId = user.userId
             event.userName = user.userName
             ChatroomSendMessage(event, messageView: self.messageView)
+            
+            self.autoEnterSeat()
         }
     }
 }

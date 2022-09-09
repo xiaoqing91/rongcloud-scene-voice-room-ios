@@ -20,18 +20,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         SVProgressHUD.showError(withStatus: error.message)
     }
     
-    func roomKVDidReady() {
-        if currentUserRole() == .creator {
-            enterSeat(index: 0) {
-                [weak self] in
-                self?.getPKStatus()
-            }
-        } else {
-            getPKStatus()
-        }
-        roomInfoView.userNumberNeedUpdate()
-    }
-    
+
     func roomInfoDidUpdate(_ roomInfo: RCVoiceRoomInfo) {
         kvRoomInfo = roomInfo
     }

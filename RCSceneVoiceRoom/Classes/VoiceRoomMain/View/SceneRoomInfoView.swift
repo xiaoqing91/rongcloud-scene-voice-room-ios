@@ -96,8 +96,6 @@ class SceneRoomInfoView: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleViewClick))
         tap.numberOfTouchesRequired = 1
         addGestureRecognizer(tap)
-        
-        userNumberNeedUpdate()
     }
     
     required init?(coder: NSCoder) {

@@ -156,7 +156,6 @@ extension VoiceRoomViewController {
         let vc = UIAlertController(title: "是否接受PK邀请(10)", message: nil, preferredStyle: .alert)
         vc.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
             RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: true) {
-                
             } error: { errorCode, msg in
                 
             }
@@ -266,8 +265,6 @@ extension VoiceRoomViewController {
     }
     
     func getPKStatus() {
-        /// 获取服务器PK最新信息
-        RCSRLog.info("获取服务器PK最新信息")
         voiceRoomService.getCurrentPKInfo(roomId: self.voiceRoomInfo.roomId) { [weak self] pkStatus in
             guard let statusModel = pkStatus, let self = self, statusModel.roomScores.count == 2 else {
                 return
@@ -306,7 +303,6 @@ extension VoiceRoomViewController {
         guard let pkInfo = roomState.currentPKInfo, pkInfo.currentUserRole() != .audience else {
             return
         }
-        RCSRLog.info("恢复 pk 连接")
         RCVoiceRoomEngine.sharedInstance().resumePK(with: RCVoicePKInfo(inviterId: pkInfo.inviterId, inviterRoomId: pkInfo.inviterRoomId, inviteeId: pkInfo.inviteeId, inviteeRoomId: pkInfo.inviteeRoomId)) {
             SVProgressHUD.showSuccess(withStatus: "恢复PK成功")
         } error: { _, _ in
@@ -427,10 +423,6 @@ extension VoiceRoomViewController {
         self.roomState.pkConnectState = .request
     }
     
-    func ignorePKInvitationDidReceive(fromRoom inviteeRoomId: String, byUser inviteeUserId: String) {
-        SVProgressHUD.showError(withStatus: "对方无回应，PK发起失败")
-        self.roomState.pkConnectState = .request
-    }
 
     func pkDidFinish() {
         RCSRLog.info("pkDidFinish possable by pk kv removed or other brocaster quitPKWithNotify")
@@ -445,18 +437,14 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
     func selectedUserDidClick(userId: String, from roomId: String) {
         showCancelPKAlert(roomId: roomId, userId: userId)
     }
-    /// TODO PK error
     func userDidInvite(userId: String, from roomId: String) {
-        voiceRoomService.isPK(roomId: roomId) { result in
-            switch result {
-            case .success(let response):
-                guard
-                    let status = try? JSONDecoder().decode(RCSceneWrapper<Bool>.self, from: response.data),
-                        status.data == true
-                else {
+        let currentRoomId = voiceRoomInfo.roomId
+        voiceRoomService.getCurrentPKInfo(roomId: roomId) { pkStatus in
+            if let pkStatus = pkStatus {
+                if pkStatus.statusMsg == 0 {
                     SVProgressHUD.showError(withStatus: "对方正在PK中")
-                    return
                 }
+            } else {
                 RCVoiceRoomEngine.sharedInstance().sendPKInvitation(roomId, invitee: userId) {
                     self.roomState.pkConnectState = .waiting
                     self.roomState.lastInviteRoomId = roomId
@@ -464,12 +452,8 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
                 } error: { _, _ in
                     SVProgressHUD.showError(withStatus: "邀请PK失败")
                 }
-
-            case .failure(_):
-                SVProgressHUD.showError(withStatus: "对方正在PK中")
             }
         }
-        
     }
 }
 

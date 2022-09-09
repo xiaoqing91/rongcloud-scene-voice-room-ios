@@ -261,12 +261,24 @@ extension VoiceRoomViewController {
                     SceneRoomManager.shared.currentRoom = self.voiceRoomInfo
                     SVProgressHUD.dismiss()
                     self.sendJoinRoomMessage()
-                    self.roomKVDidReady()
+                  
                 case let .failure(error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
                 }
             }
         RCSensorAction.joinRoom(voiceRoomInfo, enableMic: false, enableCamera: false).trigger()
+    }
+    
+    
+    func autoEnterSeat() {
+        if currentUserRole() == .creator {
+            enterSeat(index: 0) {
+                [weak self] in
+                self?.getPKStatus()
+            }
+        } else {
+            getPKStatus()
+        }
     }
     
     func leaveRoom() {
