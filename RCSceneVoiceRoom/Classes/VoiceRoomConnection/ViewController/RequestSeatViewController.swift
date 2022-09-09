@@ -18,7 +18,7 @@ class RequestSeatViewController: UIViewController {
         instance.dataSource = self
         return instance
     }()
-    private lazy var emptyView = RCSceneRoomUsersEmptyView()
+    private lazy var emptyView = RCSRUsersEmptyView()
     private let acceptUserCallback:((String) -> Void)
     
     private let requesterIds: [String]

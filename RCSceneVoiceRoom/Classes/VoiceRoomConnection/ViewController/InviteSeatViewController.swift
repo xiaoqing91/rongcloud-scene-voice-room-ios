@@ -18,7 +18,7 @@ class InviteSeatViewController: UIViewController {
         instance.dataSource = self
         return instance
     }()
-    private lazy var emptyView = RCSceneRoomUsersEmptyView()
+    private lazy var emptyView = RCSRUsersEmptyView()
     private var userIdlist = [String]()
     private var userlist = [RCSceneRoomUser](){
         didSet {

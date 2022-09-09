@@ -39,7 +39,6 @@ extension VoiceRoomViewController {
             return .audience
         }()
         
-        
         let seatIndex = seatList.firstIndex { seat in
             seat.seatUser?.userId == userId
         }
@@ -48,12 +47,12 @@ extension VoiceRoomViewController {
         }
 
         let lock: Bool = seatInfo?.isLocked ?? false
-        let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
-                                                 userId: userId,
-                                                 userRole: role,
-                                                 userSeatIndex: seatIndex,
-                                                 userSeatMute: seatInfo?.isMuted,
-                                                 userSeatLock: lock)
+        let dependency = RCSRUserOperationDependency(room: voiceRoomInfo,
+                                                     userId: userId,
+                                                     userRole: role,
+                                                     userSeatIndex: seatIndex,
+                                                     userSeatMute: seatInfo?.isMuted,
+                                                     userSeatLock: lock)
         navigator(.manageUser(dependency: dependency, delegate: self))
     }
 }
@@ -81,8 +80,8 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
         guard let seatUser = seatList.first?.seatUser else {
             return
         }
-        let dependency = RCSceneRoomUserOperationDependency(room: voiceRoomInfo,
-                                                            userId: seatUser.userId,
+        let dependency = RCSRUserOperationDependency(room: voiceRoomInfo,
+                                                     userId: seatUser.userId,
                                                             userRole: .audience,
                                                             userSeatIndex: 0,
                                                             userSeatMute: false,
@@ -155,7 +154,7 @@ extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
 }
 
 // MARK: - Owner Click User Seat Pop view Deleagte
-extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
+extension VoiceRoomViewController: RCSRUserOperationProtocol {
     /// 抱下麦
     func kickUserOffSeat(seatIndex: UInt) {
         guard let user = seatList[Int(seatIndex)].seatUser else {
@@ -202,7 +201,7 @@ extension VoiceRoomViewController: RCSceneRoomUserOperationProtocol {
     }
     
     func didSetManager(userId: String, isManager: Bool) {
-        fetchmanagers()
+        fetchManagers()
         RCSceneUserManager.shared.fetchUserInfo(userId: userId) { user in
             let event = RCChatroomAdmin()
             event.userId = user.userId

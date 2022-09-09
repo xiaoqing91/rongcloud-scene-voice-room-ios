@@ -35,7 +35,7 @@ enum RCChatroomSceneMicState {
         case .user: return RCSCAsset.Images.voiceRoomMicOrderIcon.image
         case .request: return RCSCAsset.Images.connectMicStateNone.image
         case .waiting: return RCSCAsset.Images.connectMicStateWaiting.image
-        case .connecting: return RCSCAsset.Images.connectMicStateWaiting.image
+        case .connecting: return RCSCAsset.Images.connectMicStateConnecting.image
         }
     }
 }
@@ -105,8 +105,9 @@ class RCChatroomSceneButton: UIButton {
 
 extension RCChatroomSceneButton {
     func refreshMessageCount() {
+        let num = NSNumber(value: RCConversationType.ConversationType_PRIVATE.rawValue)
         let unreadCount = RCIMClient.shared()
-            .getUnreadCount([RCConversationType.ConversationType_PRIVATE.rawValue])
+            .getUnreadCount([num])
         setBadgeCount(Int(unreadCount))
     }
 }

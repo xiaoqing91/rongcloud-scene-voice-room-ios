@@ -7,8 +7,7 @@
 
 import SVProgressHUD
 
-extension VoiceRoomViewController {
-    
+extension VoiceRoomViewController {    
     @_dynamicReplacement(for: managers)
     private var seats_managers: [RCSceneRoomUser] {
         get { managers }

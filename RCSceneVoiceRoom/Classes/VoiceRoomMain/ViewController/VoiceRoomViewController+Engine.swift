@@ -108,7 +108,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         case .backgroundChanged:
             NotificationNameRoomBackgroundUpdated.post((voiceRoomInfo.roomId, content))
         case .mangerlistNeedRefresh:
-            fetchmanagers()
+            fetchManagers()
         case .forbiddenAdd:
             SceneRoomManager.shared.forbiddenWords.append(content)
         case .forbiddenDelete:

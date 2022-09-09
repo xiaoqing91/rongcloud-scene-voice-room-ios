@@ -55,89 +55,87 @@ extension VoiceRoomViewController {
         handleReceivedMessage(message)
         /// 同步最新礼物信息
         if let pkGiftMessage = message.content as? RCPKGiftMessage, let content = pkGiftMessage.content {
-            RCSRLog.info("updateGiftValue")
             pkView.updateGiftValue(content: content, currentRoomId: voiceRoomInfo.roomId)
         }
-        
+        /// 同步PK状态
         if let pkStatusContent = message.content as? RCPKStatusMessage, let content = pkStatusContent.content {
-                   guard let info = self.roomState.currentPKInfo else {
-                       voiceRoomService.getCurrentPKInfo(roomId: self.voiceRoomInfo.roomId) { [weak self] pkStatus in
-                           guard let statusModel = pkStatus, let self = self, statusModel.roomScores.count == 2 else {
-                               return
-                           }
-                           let pkInfo: VoiceRoomPKInfo = {
-                               let roomscore1 = statusModel.roomScores[0]
-                               let roomscore2 = statusModel.roomScores[1]
-                               if roomscore1.leader {
-                                   return VoiceRoomPKInfo(inviterId: roomscore1.userId, inviteeId: roomscore2.userId, inviterRoomId: roomscore1.roomId, inviteeRoomId: roomscore2.roomId)
-                               }
-                               return VoiceRoomPKInfo(inviterId: roomscore2.userId, inviteeId: roomscore1.userId, inviterRoomId: roomscore2.roomId, inviteeRoomId: roomscore1.roomId)
-                           }()
-                           self.roomState.currentPKInfo = pkInfo
-                           self.beginPK(pkStatus: statusModel.statusMsg, timeDiff: statusModel.timeDiff, stopPkRoomId: nil, info: pkInfo)
-                       }
-                       return
-                   }
-                   beginPK(pkStatus: content.statusMsg, timeDiff: content.timeDiff, stopPkRoomId:content.stopPkRoomId, info: info)
-               }
-        
+            guard let info = self.roomState.currentPKInfo else {
+                voiceRoomService.getCurrentPKInfo(roomId: self.voiceRoomInfo.roomId) { [weak self] pkStatus in
+                    guard let statusModel = pkStatus, let self = self, statusModel.roomScores.count == 2 else {
+                        return
+                    }
+                    let pkInfo: VoiceRoomPKInfo = {
+                        let roomscore1 = statusModel.roomScores[0]
+                        let roomscore2 = statusModel.roomScores[1]
+                        if roomscore1.leader {
+                            return VoiceRoomPKInfo(inviterId: roomscore1.userId, inviteeId: roomscore2.userId, inviterRoomId: roomscore1.roomId, inviteeRoomId: roomscore2.roomId)
+                        }
+                        return VoiceRoomPKInfo(inviterId: roomscore2.userId, inviteeId: roomscore1.userId, inviterRoomId: roomscore2.roomId, inviteeRoomId: roomscore1.roomId)
+                    }()
+                    self.roomState.currentPKInfo = pkInfo
+                    self.beginPK(pkStatus: statusModel.statusMsg, timeDiff: statusModel.timeDiff, stopPkRoomId: nil, info: pkInfo)
+                }
+                return
+            }
+            beginPK(pkStatus: content.statusMsg, timeDiff: content.timeDiff, stopPkRoomId:content.stopPkRoomId, info: info)
+        }
     }
     
     private func beginPK(pkStatus: Int, timeDiff: Int, stopPkRoomId: String?, info: VoiceRoomPKInfo) {
-            if pkStatus == 0 {
-                self.roomState.pkConnectState = .connecting
-                
-                // 检查之前是否关闭对面PK主播的声音，然后恢复
-                if roomState.isMutePKUser {
-                    RCVoiceRoomEngine.sharedInstance().mutePKUser(false) {
-                        self.roomState.isMutePKUser = false
-                    } error: { code, msg in
-                        SVProgressHUD.showError(withStatus: "取消静音 PK 失败，请重试")
-                    }
+        if pkStatus == 0 {
+            self.roomState.pkConnectState = .connecting
+            
+            // 检查之前是否关闭对面PK主播的声音，然后恢复
+            if roomState.isMutePKUser {
+                RCVoiceRoomEngine.sharedInstance().mutePKUser(false) {
+                    self.roomState.isMutePKUser = false
+                } error: { code, msg in
+                    SVProgressHUD.showError(withStatus: "取消静音 PK 失败，请重试")
                 }
-
-                // 打开邀请菜单时，确认同意被其他主播邀请PK后，把邀请菜单关闭
-                self.presentedViewController?.dismiss(animated: true, completion: nil)
-                self.pkView.beginPK(info: info, timeDiff: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId, currentRoomId: self.voiceRoomInfo.roomId)
-             
-                lockAllRoomAudienceToLeaveSeat()
             }
-            if pkStatus == 1 {
-                self.pkView.beginPunishment(passedSeconds: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId)
-            }
-            if pkStatus == 2 {
-                self.roomState.pkConnectState = .request
 
-                let reason: ClosePKReason = {
-                    if let roomID = stopPkRoomId, !roomID.isEmpty {
-                        if roomID == voiceRoomInfo.roomId {
-                            return .myown
-                        } else {
-                            return .remote
-                        }
+            // 打开邀请菜单时，确认同意被其他主播邀请PK后，把邀请菜单关闭
+            self.presentedViewController?.dismiss(animated: true, completion: nil)
+            self.pkView.beginPK(info: info, timeDiff: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId, currentRoomId: self.voiceRoomInfo.roomId)
+         
+            lockAllRoomAudienceToLeaveSeat()
+        }
+        if pkStatus == 1 {
+            self.pkView.beginPunishment(passedSeconds: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId)
+        }
+        if pkStatus == 2 {
+            self.roomState.pkConnectState = .request
+
+            let reason: ClosePKReason = {
+                if let roomID = stopPkRoomId, !roomID.isEmpty {
+                    if roomID == voiceRoomInfo.roomId {
+                        return .myown
                     } else {
-                        return .timeEnd
+                        return .remote
                     }
-                }()
-                self.showCloseReasonHud(reason: reason)
-
-                switch info.currentUserRole() {
-                case .inviter:
-                    self.sendTextMessage(text: "本轮PK结束")
-                    if reason == .timeEnd { //pk自然结束，由邀请者挂断pk
-                        RCVoiceRoomEngine.sharedInstance().quitPK {} error: { _, _ in }
-                    }
-                case .invitee:
-                    self.sendTextMessage(text: "本轮PK结束")
-                case .audience:
-                    ()
+                } else {
+                    return .timeEnd
                 }
+            }()
+            self.showCloseReasonHud(reason: reason)
 
-                if self.currentUserRole() == .creator {
-                    forceLockOthers(isLock: false)
+            switch info.currentUserRole() {
+            case .inviter:
+                self.sendTextMessage(text: "本轮PK结束")
+                if reason == .timeEnd { //pk自然结束，由邀请者挂断pk
+                    RCVoiceRoomEngine.sharedInstance().quitPK {} error: { _, _ in }
                 }
+            case .invitee:
+                self.sendTextMessage(text: "本轮PK结束")
+            case .audience:
+                ()
+            }
+
+            if self.currentUserRole() == .creator {
+                forceLockOthers(isLock: false)
             }
         }
+    }
     
     @objc private func handlePkButtonClick() {
         RCSensorAction.PKClick(voiceRoomInfo).trigger()
@@ -173,18 +171,20 @@ extension VoiceRoomViewController {
         let vc = UIAlertController(title: "是否接受PK邀请(10)", message: nil, preferredStyle: .alert)
         vc.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
             RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: true) {
+                
             } error: { errorCode, msg in
                 
             }
         }))
         vc.addAction(UIAlertAction(title: "拒绝", style: .cancel, handler: { _ in
+            SVProgressHUD.showSuccess(withStatus: "已拒绝 PK 邀请")
             RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: false) {
-                SVProgressHUD.showSuccess(withStatus: "已拒绝 PK 邀请")
+                
             } error: { errorCode, msg in
                 
             }
         }))
-        
+
         UIApplication.shared.topmostController()?.present(vc, animated: true, completion: {
             self.inviterCount = 10
             self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: {
@@ -202,7 +202,6 @@ extension VoiceRoomViewController {
             return
         }
         guard inviterCount > 0 else {
-            alertController.dismiss(animated: true, completion: nil)
             timer?.invalidate()
             return
         }
@@ -248,7 +247,6 @@ extension VoiceRoomViewController {
     }
     /// RTC 已建立连接，向服务端请求PK开始
     private func sendPKRequest() {
-        RCSRLog.info("向服务器发送 pk 开始的请求")
         guard let info = roomState.currentPKInfo else {
             return
         }
@@ -292,6 +290,7 @@ extension VoiceRoomViewController {
     }
     
     func getPKStatus() {
+        /// 获取服务器PK最新信息
         voiceRoomService.getCurrentPKInfo(roomId: self.voiceRoomInfo.roomId) { [weak self] pkStatus in
             guard let statusModel = pkStatus, let self = self, statusModel.roomScores.count == 2 else {
                 return
@@ -450,9 +449,12 @@ extension VoiceRoomViewController {
         self.roomState.pkConnectState = .request
     }
     
+    func ignorePKInvitationDidReceive(fromRoom inviteeRoomId: String, byUser inviteeUserId: String) {
+        SVProgressHUD.showError(withStatus: "对方无回应，PK发起失败")
+        self.roomState.pkConnectState = .request
+    }
 
     func pkDidFinish() {
-        RCSRLog.info("pkDidFinish possable by pk kv removed or other brocaster quitPKWithNotify")
         self.roomState.pkConnectState = .request
         if self.currentUserRole() == .creator {
             forceLockOthers(isLock: false)
@@ -464,14 +466,17 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
     func selectedUserDidClick(userId: String, from roomId: String) {
         showCancelPKAlert(roomId: roomId, userId: userId)
     }
+    
     func userDidInvite(userId: String, from roomId: String) {
-        let currentRoomId = voiceRoomInfo.roomId
-        voiceRoomService.getCurrentPKInfo(roomId: roomId) { pkStatus in
-            if let pkStatus = pkStatus {
-                if pkStatus.statusMsg == 0 {
-                    SVProgressHUD.showError(withStatus: "对方正在PK中")
+        voiceRoomService.isPK(roomId: roomId) { result in
+            switch result {
+            case .success(let response):
+                guard
+                    let status = try? JSONDecoder().decode(RCSceneWrapper<Bool>.self, from: response.data),
+                        status.data == false
+                else {
+                    return SVProgressHUD.showError(withStatus: "对方正在PK中")
                 }
-            } else {
                 RCVoiceRoomEngine.sharedInstance().sendPKInvitation(roomId, invitee: userId) {
                     self.roomState.pkConnectState = .waiting
                     self.roomState.lastInviteRoomId = roomId
@@ -479,6 +484,9 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
                 } error: { _, _ in
                     SVProgressHUD.showError(withStatus: "邀请PK失败")
                 }
+
+            case .failure(_):
+                SVProgressHUD.showError(withStatus: "对方正在PK中")
             }
         }
     }
