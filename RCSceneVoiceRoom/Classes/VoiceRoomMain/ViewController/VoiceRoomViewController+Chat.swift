@@ -36,10 +36,10 @@ extension VoiceRoomViewController {
     }
     
     private func addConstMessages() {
-        let welcome = RCTextMessage(content: "欢迎来到\(voiceRoomInfo.roomName)")!
+        let welcome = RCTextMessage(content: "欢迎来到\(voiceRoomInfo.roomName)")
         welcome.extra = "welcome"
         messageView.addMessage(welcome)
-        let statement = RCTextMessage(content: "感谢使用融云RTC语音房，请遵守相关法规，不要传播低俗、暴力等不良信息。欢迎您把使用过程中的感受反馈与我们。")!
+        let statement = RCTextMessage(content: "感谢使用融云RTC语音房，请遵守相关法规，不要传播低俗、暴力等不良信息。欢迎您把使用过程中的感受反馈与我们。")
         statement.extra = "statement"
         messageView.addMessage(statement)
     }
