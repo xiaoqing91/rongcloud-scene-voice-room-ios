@@ -21,6 +21,7 @@ PODS:
     - Masonry
     - RCCoreKit
     - YYModel
+  - RCSceneLog (0.0.1.2)
   - RCSceneRoom/RCSceneAnalytics (0.0.4.5):
     - RCSceneRoom/RCSceneRoomSetting
     - SensorsAnalyticsSDK
@@ -68,8 +69,9 @@ PODS:
     - RCSceneRoom/RCSceneAnalytics
     - RCSceneRoom/RCSceneRoom (>= 0.0.4.5)
     - RCVoiceRoomLib
-  - RCVoiceRoomLib (2.1.0.1):
-    - RongCloudIM/ChatRoom
+  - RCVoiceRoomLib (3.0.0):
+    - RCSceneLog
+    - RongCloudIM/IMLib
     - RongCloudRTC/RongRTCLib
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
@@ -135,6 +137,7 @@ SPEC REPOS:
     - RCCoreKit
     - RCMusicControlKit
     - RCSceneChatroomKit
+    - RCSceneLog
     - RCSceneRoom
     - ReachabilitySwift
     - Reusable
@@ -164,9 +167,10 @@ SPEC CHECKSUMS:
   RCCoreKit: 3f143441ac62880b454cca9066f526a27c45d4ce
   RCMusicControlKit: 79841e9b266ceccf380bf6a1c2fdec08723d2604
   RCSceneChatroomKit: 86d8c5ead5c2cb10efce95d3eea2e854e55b7942
+  RCSceneLog: c38de10f8ccd4aa65eb9ac7c0a5c6b2042e7579e
   RCSceneRoom: 4b28ec63e29bf376f9455a2f5a7fde0c4696a989
   RCSceneVoiceRoom: 6ef46e7c34151a4bfeb982c24066d3877ac8ff4a
-  RCVoiceRoomLib: 2f0fb3060ebf2b7bc82099e5ad65989580739796
+  RCVoiceRoomLib: 77a81319ded9fd0e22d88a4dab9eb6e3d04e7c5f
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: 4c3befbe6e9dd813a87c499c81fb2eac54c354b3
