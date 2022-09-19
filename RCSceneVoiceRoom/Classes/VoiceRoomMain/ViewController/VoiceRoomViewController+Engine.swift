@@ -83,10 +83,19 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     func memberCountDidChange(_ memberCount: Int) {
         roomInfoView.updateUser(count: memberCount)
     }
+    
+    func userSpeakingStateChanged(_ speaking: Bool, userId: String, audioLevel level: Int) {
+        let isSpeaking = level > 4
+        if isSpeaking {
+            print("userId:\(userId),audioLevel:\(level)")
+        }
+    }
 
     func seatSpeakingStateChanged(_ speaking: Bool, at index: Int, audioLevel level: Int) {
         let isSpeaking = level > 4
-        print("speaking:\(isSpeaking),index:\(index),audioLevel:\(level)")
+        if isSpeaking {
+            print("index:\(index),audioLevel:\(level)")
+        }
         if index == 0 {
             ownerView.setSpeakingState(isSpeaking: isSpeaking)
             if let fm = self.floatingManager {
