@@ -179,6 +179,7 @@ extension VoiceRoomViewController {
             let content = RCChatroomSeats()
             content.count = kvRoom.seatCount - 1
             ChatroomSendMessage(content, messageView: self.messageView)
+            self.collectionView.reloadData()
         } error: { code, msg in
             SVProgressHUD.showError(withStatus: msg)
         }
