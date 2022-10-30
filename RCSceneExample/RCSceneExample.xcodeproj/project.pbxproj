@@ -714,7 +714,7 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RCSceneExample/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SceneVoice;
+				INFOPLIST_KEY_CFBundleDisplayName = RCSceneExample;
 				INFOPLIST_KEY_NSCameraUsageDescription = "是否允许使用摄像头？";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "是否允许使用麦克风？";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -751,7 +751,7 @@
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RCSceneExample/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SceneVoice;
+				INFOPLIST_KEY_CFBundleDisplayName = RCSceneExample;
 				INFOPLIST_KEY_NSCameraUsageDescription = "是否允许使用摄像头？";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "是否允许使用麦克风？";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

@@ -79,14 +79,14 @@ extension VoiceRoomViewController {
         }
         
         RCVoiceRoomEngine.sharedInstance()
-            .requestSeat(index, content: "") { [weak self] in
+            .requestSeat(index, content: "") { [weak self] result in
                 DispatchQueue.main.async {
-                    SVProgressHUD.showSuccess(withStatus: "已申请连线，等待房主接受")
-                    self?.roomState.connectState = .waiting
-                }
-            } error: { code, msg in
-                DispatchQueue.main.async {
-                    SVProgressHUD.showError(withStatus: "请求连麦失败\(msg)")
+                    if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                        SVProgressHUD.showSuccess(withStatus: "已申请连线，等待房主接受")
+                        self?.roomState.connectState = .waiting
+                    } else {
+                        SVProgressHUD.showSuccess(withStatus: "申请连线失败")
+                    }
                 }
             }
     }

@@ -83,7 +83,7 @@ class VoiceRoomViewController: UIViewController {
     
     var floatingManager: RCSceneRoomFloatingProtocol?
     
-    var requesterInfos = [RCVoiceRequesterInfo]()
+    var requesterInfos = [RCSRequester]()
     var onSeatUsers = [RCVoiceUserInfo]()
     
     init(roomInfo: RCSceneRoom, isCreate: Bool = false) {

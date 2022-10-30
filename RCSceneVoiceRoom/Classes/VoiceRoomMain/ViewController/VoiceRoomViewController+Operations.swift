@@ -93,9 +93,7 @@ extension VoiceRoomViewController: VoiceRoomMasterViewProtocol {
 // MARK: - Owenr Seat Pop View Delegate
 extension VoiceRoomViewController: VoiceRoomMasterSeatOperationProtocol {
     func didMasterSeatMuteButtonClicked(_ isMute: Bool) {
-        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(isMute) {
-            
-        } error: { _, _ in
+        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(isMute) { _ in
             
         }
     }
@@ -113,10 +111,7 @@ extension VoiceRoomViewController: VoiceRoomMasterSeatOperationProtocol {
 extension VoiceRoomViewController: VoiceRoomSeatedOperationProtocol {
     func seated(_ index: UInt, _ mute: Bool) {
         roomState.isCloseSelfMic = mute
-        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(mute) {
-            
-        } error: { _, _ in
-            
+        RCVoiceRoomEngine.sharedInstance().disableAudioRecording(mute) { _ in
         }
     }
     
@@ -130,10 +125,12 @@ extension VoiceRoomViewController: VoiceRoomSeatedOperationProtocol {
 extension VoiceRoomViewController: VoiceRoomEmptySeatOperationProtocol {
     func emptySeat(_ index: UInt, isLock: Bool) {
         let title = isLock ? "关闭" : "打开"
-        RCVoiceRoomEngine.sharedInstance().lockSeat([NSNumber(value: index)], lock: isLock) {
-            SVProgressHUD.showSuccess(withStatus: "\(title)\(index)号麦位成功")
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "\(title)\(index)号麦位失败")
+        RCVoiceRoomEngine.sharedInstance().lockSeat([NSNumber(value: index)], lock: isLock) { result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                SVProgressHUD.showSuccess(withStatus: "\(title)\(index)号麦位成功")
+            } else {
+                SVProgressHUD.showError(withStatus: "\(title)\(index)号麦位失败")
+            }
         }
     }
     
@@ -160,43 +157,47 @@ extension VoiceRoomViewController: RCSRUserOperationProtocol {
         guard let user = seatList[Int(seatIndex)].seatUser else {
             return
         }
-        RCVoiceRoomEngine.sharedInstance().kickUser(fromSeat: user.userId, content: "") {
-            SVProgressHUD.showSuccess(withStatus: "发送下麦通知成功")
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "发送下麦通知失败")
+        RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: user.userId, content: "") { result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                SVProgressHUD.showSuccess(withStatus: "发送下麦通知成功")
+            } else {
+                SVProgressHUD.showError(withStatus: "发送下麦通知失败")
+            }
         }
     }
     /// 锁座位
     func lockSeatDidClick(isLock: Bool, seatIndex: UInt) {
-        RCVoiceRoomEngine.sharedInstance().lockSeat([NSNumber(value: seatIndex)], lock: isLock) {} error: { code, msg in }
+        RCVoiceRoomEngine.sharedInstance().lockSeat([NSNumber(value: seatIndex)], lock: isLock) { result in }
     }
     /// 座位静音
     func muteSeat(isMute: Bool, seatIndex: UInt) {
         RCVoiceRoomEngine.sharedInstance().muteSeat([NSNumber(value: seatIndex)], mute: isMute) {
-            if isMute {
-                SVProgressHUD.showSuccess(withStatus: "此麦位已闭麦")
-            } else {
-                SVProgressHUD.showSuccess(withStatus: "已取消闭麦")
+            result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                if isMute {
+                    SVProgressHUD.showSuccess(withStatus: "此麦位已闭麦")
+                } else {
+                    SVProgressHUD.showSuccess(withStatus: "已取消闭麦")
+                }
             }
-        } error: { code, msg in
-            
         }
-        
     }
     /// 踢出房间
     func kickOutRoom(userId: String) {
-        RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId, content: "") {
+        RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: userId, content: "") { result in
             RCSceneUserManager.shared.fetchUserInfo(userId: Environment.currentUserId) { user in
                 RCSceneUserManager.shared.fetchUserInfo(userId: userId) { targetUser in
-                    let event = RCChatroomKickOut()
-                    event.userId = user.userId
-                    event.userName = user.userName
-                    event.targetId = targetUser.userId
-                    event.targetName = targetUser.userName
-                    ChatroomSendMessage(event, messageView: self.messageView)
+                    if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                        let event = RCChatroomKickOut()
+                        event.userId = user.userId
+                        event.userName = user.userName
+                        event.targetId = targetUser.userId
+                        event.targetName = targetUser.userName
+                        ChatroomSendMessage(event, messageView: self.messageView)
+                    }
                 }
             }
-        } error: { code, msg in }
+        }
         UIApplication.shared.keyWindow()?.rootViewController?.dismiss(animated: true, completion: nil)
     }
     

@@ -87,10 +87,12 @@ extension VoiceRoomViewController {
             
             // 检查之前是否关闭对面PK主播的声音，然后恢复
             if roomState.isMutePKUser {
-                RCVoiceRoomEngine.sharedInstance().mutePKUser(false) {
-                    self.roomState.isMutePKUser = false
-                } error: { code, msg in
-                    SVProgressHUD.showError(withStatus: "取消静音 PK 失败，请重试")
+                RCVoiceRoomEngine.sharedInstance().mutePKUser(false) { result in
+                    if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                        self.roomState.isMutePKUser = false
+                    } else {
+                        SVProgressHUD.showError(withStatus: "取消静音 PK 失败，请重试")
+                    }
                 }
             }
 
@@ -123,7 +125,7 @@ extension VoiceRoomViewController {
             case .inviter:
                 self.sendTextMessage(text: "本轮PK结束")
                 if reason == .timeEnd { //pk自然结束，由邀请者挂断pk
-                    RCVoiceRoomEngine.sharedInstance().quitPK {} error: { _, _ in }
+                    RCVoiceRoomEngine.sharedInstance().quitPK { _ in }
                 }
             case .invitee:
                 self.sendTextMessage(text: "本轮PK结束")
@@ -160,29 +162,18 @@ extension VoiceRoomViewController {
         seatIndexes.remove(at: currentUserIndex)
         
         let indexes = seatIndexes.map { NSNumber(value: $0) }
-        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: true) {
-            
-        } error: { code, msg in
-            
+        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: true) { _ in
         }
     }
 
     private func showPKInvite(roomId: String, userId: String) {
         let vc = UIAlertController(title: "是否接受PK邀请(10)", message: nil, preferredStyle: .alert)
         vc.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
-            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: true) {
-                
-            } error: { errorCode, msg in
-                
-            }
+            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: true) { _ in }
         }))
         vc.addAction(UIAlertAction(title: "拒绝", style: .cancel, handler: { _ in
             SVProgressHUD.showSuccess(withStatus: "已拒绝 PK 邀请")
-            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: false) {
-                
-            } error: { errorCode, msg in
-                
-            }
+            RCVoiceRoomEngine.sharedInstance().responsePKInvitation(roomId, inviter: userId, accept: false) { _ in }
         }))
 
         UIApplication.shared.topmostController()?.present(vc, animated: true, completion: {
@@ -282,11 +273,7 @@ extension VoiceRoomViewController {
         seatIndexes.remove(at: currentUserIndex)
         
         let indexes = seatIndexes.map { NSNumber(value: $0) }
-        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: isLock) {
-            
-        } error: { code, msg in
-            
-        }
+        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: isLock) { _ in }
     }
     
     func getPKStatus() {
@@ -329,10 +316,12 @@ extension VoiceRoomViewController {
         guard let pkInfo = roomState.currentPKInfo, pkInfo.currentUserRole() != .audience else {
             return
         }
-        RCVoiceRoomEngine.sharedInstance().resumePK(with: RCVoicePKInfo(inviterId: pkInfo.inviterId, inviterRoomId: pkInfo.inviterRoomId, inviteeId: pkInfo.inviteeId, inviteeRoomId: pkInfo.inviteeRoomId)) {
-            SVProgressHUD.showSuccess(withStatus: "恢复PK成功")
-        } error: { _, _ in
-            SVProgressHUD.showError(withStatus: "恢复PK 失败")
+        RCVoiceRoomEngine.sharedInstance().resumePK(with: RCVoicePKInfo(inviterId: pkInfo.inviterId, inviterRoomId: pkInfo.inviterRoomId, inviteeId: pkInfo.inviteeId, inviteeRoomId: pkInfo.inviteeRoomId)) { result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                SVProgressHUD.showSuccess(withStatus: "恢复PK成功")
+            } else {
+                SVProgressHUD.showError(withStatus: "恢复PK 失败")
+            }
         }
     }
     
@@ -355,10 +344,12 @@ extension VoiceRoomViewController {
         guard let info = roomState.currentPKInfo else {
             return
         }
-        RCVoiceRoomEngine.sharedInstance().quitPK {
-            SVProgressHUD.showSuccess(withStatus: "退出PK成功")
-        } error: { _, _ in
-            SVProgressHUD.showError(withStatus: "退出PK失败")
+        RCVoiceRoomEngine.sharedInstance().quitPK { result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                SVProgressHUD.showSuccess(withStatus: "退出PK成功")
+            } else {
+                SVProgressHUD.showError(withStatus: "退出PK失败")
+            }
         }
         let roomId = voiceRoomInfo.roomId == info.inviterRoomId ? info.inviterRoomId : info.inviteeRoomId
         let toRoomId = voiceRoomInfo.roomId == info.inviterRoomId ? info.inviteeRoomId : info.inviterRoomId
@@ -517,12 +508,13 @@ extension VoiceRoomViewController: VoiceRoomPKViewDelegate {
     func silenceButtonDidClick() {
         let isMute = !roomState.isMutePKUser
         let message = isMute ? "静音" : "取消静音"
-        RCVoiceRoomEngine.sharedInstance().mutePKUser(isMute) {
-            [weak self] in
-            self?.roomState.isMutePKUser.toggle()
-            SVProgressHUD.showSuccess(withStatus: "\(message) PK 成功")
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "\(message) PK 失败，请重试")
+        RCVoiceRoomEngine.sharedInstance().mutePKUser(isMute) { [weak self] result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                self?.roomState.isMutePKUser.toggle()
+                SVProgressHUD.showSuccess(withStatus: "\(message) PK 成功")
+            } else {
+                SVProgressHUD.showError(withStatus: "\(message) PK 失败，请重试")
+            }
         }
     }
 }

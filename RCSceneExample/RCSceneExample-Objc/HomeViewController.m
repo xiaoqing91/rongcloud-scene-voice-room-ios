@@ -76,7 +76,7 @@
 
 - (IBAction)createRoom:(id)sender
 {
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"创建游戏房间" message:nil preferredStyle: UIAlertControllerStyleAlert];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"创建房间" message:nil preferredStyle: UIAlertControllerStyleAlert];
     [actionSheet addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
         textField.placeholder = @"输入房间名字";
     }];

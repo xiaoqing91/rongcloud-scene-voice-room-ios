@@ -179,15 +179,12 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
         let alertVC = UIAlertController(title: "是否同意上麦", message: "您被\(inviter)邀请上麦，是否同意？", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
-            RCVoiceRoomEngine.sharedInstance().responseInvitation(invitationId, accept: true, content: content) {
+            RCVoiceRoomEngine.sharedInstance().responseInvitation(invitationId, accept: true, content: content) { result in
                 self.enterSeatIfAvailable()
-            } error: { code, msg in
             }
         }))
         alertVC.addAction(UIAlertAction(title: "拒绝", style: .cancel, handler: { _ in
-            RCVoiceRoomEngine.sharedInstance().responseInvitation(invitationId, accept: false, content: content) {
-                
-            } error: { code, msg in
+            RCVoiceRoomEngine.sharedInstance().responseInvitation(invitationId, accept: false, content: content) { _ in
             }
         }))
         

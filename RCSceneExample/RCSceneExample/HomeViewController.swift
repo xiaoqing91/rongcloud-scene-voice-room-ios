@@ -51,7 +51,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func create() {
-        let actionSheet = UIAlertController(title: "创建游戏房间", message: nil, preferredStyle: .alert)
+        let actionSheet = UIAlertController(title: "创建房间", message: nil, preferredStyle: .alert)
         actionSheet.addTextField(configurationHandler: { textField in
             textField.placeholder = "输入房间名字"
         })

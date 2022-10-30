@@ -82,23 +82,24 @@ extension VoiceRoomViewController {
     }
     
     func setupRequestStateAndMicOrderListState() {
-        RCVoiceRoomEngine.sharedInstance().getRequesterInfoList { [weak self] infos in
-            guard let self = self else { return }
-            self.requesterInfos = infos
-            DispatchQueue.main.async {
-                if self.currentUserRole() == .creator  {
-                    self.micButton.setBadgeCount(infos.count)
-                } else {
-                    if infos.map { $0.userId }.contains(Environment.currentUserId) {
-                        self.roomState.connectState = .waiting
-                    }
-                    if self.isSitting() {
-                        self.roomState.connectState = .connecting
+        RCVoiceRoomEngine.sharedInstance().fetchRequesters { result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                self.requesterInfos = result.content as! [RCSRequester]
+                DispatchQueue.main.async {
+                    if self.currentUserRole() == .creator  {
+                        self.micButton.setBadgeCount(self.requesterInfos.count)
+                    } else {
+                        if self.requesterInfos.map { $0.userId }.contains(Environment.currentUserId) {
+                            self.roomState.connectState = .waiting
+                        }
+                        if self.isSitting() {
+                            self.roomState.connectState = .connecting
+                        }
                     }
                 }
+            } else {
+                SVProgressHUD.showError(withStatus: "获取排麦列表失败")
             }
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "获取排麦列表失败")
         }
     }
 }
@@ -110,12 +111,14 @@ extension VoiceRoomViewController: HandleRequestSeatProtocol {
             SVProgressHUD.showError(withStatus: "麦位已满")
             return
         }
-        RCVoiceRoomEngine.sharedInstance().responseRequestSeat(true, userId: userId, content: "") {
+        RCVoiceRoomEngine.sharedInstance().responseRequestSeat(true, userId: userId, content: "") { result in
             DispatchQueue.main.async {
-                self.setupRequestStateAndMicOrderListState()
+                if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                    self.setupRequestStateAndMicOrderListState()
+                } else {
+                    SVProgressHUD.showError(withStatus: "同意请求失败")
+                }
             }
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "同意请求失败")
         }
     }
     
@@ -128,10 +131,13 @@ extension VoiceRoomViewController: HandleRequestSeatProtocol {
             return
         }
         
-        RCVoiceRoomEngine.sharedInstance().sendInvitation(userId, content: "pick_user_to_seat") { invitatonId in 
-            SVProgressHUD.showSuccess(withStatus: "已邀请上麦")
-        } error: { code, msg in
-            SVProgressHUD.showError(withStatus: "邀请连麦发送失败")
+        RCVoiceRoomEngine.sharedInstance().sendInvitation(userId, content: "pick_user_to_seat") {
+            result in
+            if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
+                SVProgressHUD.showSuccess(withStatus: "已邀请上麦")
+            } else {
+                SVProgressHUD.showError(withStatus: "邀请连麦发送失败")
+            }
         }
     }
 }

@@ -69,7 +69,7 @@ PODS:
     - RCSceneRoom/RCSceneRoom (>= 0.0.4.5)
     - RCVoiceRoomLib
   - RCVoiceRoomLib (3.0.0):
-    - RongCloudIM/IMLib
+    - RongCloudIM/ChatRoom
     - RongCloudRTC/RongRTCLib
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
@@ -166,7 +166,7 @@ SPEC CHECKSUMS:
   RCSceneChatroomKit: 86d8c5ead5c2cb10efce95d3eea2e854e55b7942
   RCSceneRoom: 4b28ec63e29bf376f9455a2f5a7fde0c4696a989
   RCSceneVoiceRoom: 6ef46e7c34151a4bfeb982c24066d3877ac8ff4a
-  RCVoiceRoomLib: 7b98783c7942953c5c904a5ef6589665aa456764
+  RCVoiceRoomLib: 9809c710009d38a98607e2caa0db1a0b9b5f8b5d
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: 4c3befbe6e9dd813a87c499c81fb2eac54c354b3

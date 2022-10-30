@@ -6,28 +6,27 @@
 //
 
 import Moya
-
 class RCSceneRoomService {
     private lazy var provider = MoyaProvider<RCSRUserService>(plugins:[RCSServiceLogger])
     
-    func roomUsers(roomId: String, completion: @escaping RCSCompletion) {
+    func roomUsers(roomId: String, completion: @escaping Moya.Completion) {
         provider.request(.roomUsers(roomId: roomId), completion: completion)
     }
     
-    func follow(userId: String, completion: @escaping RCSCompletion) {
+    func follow(userId: String, completion: @escaping Moya.Completion) {
         provider.request(.follow(userId: userId), completion: completion)
     }
     
-    func followList(page: Int, type: Int, completion: @escaping RCSCompletion) {
+    func followList(page: Int, type: Int, completion: @escaping Moya.Completion) {
         let api = RCSRUserService.followList(page: page, type: type)
         provider.request(api, completion: completion)
     }
     
-    func roomManagers(roomId: String, completion: @escaping RCSCompletion) {
+    func roomManagers(roomId: String, completion: @escaping Moya.Completion) {
         provider.request(.roomManagers(roomId: roomId), completion: completion)
     }
     
-    func setRoomManager(roomId: String, userId: String, isManager: Bool, completion: @escaping RCSCompletion) {
+    func setRoomManager(roomId: String, userId: String, isManager: Bool, completion: @escaping Moya.Completion) {
         let api = RCSRUserService.setRoomManager(roomId: roomId,
                                                  userId: userId,
                                                  isManager: isManager)
