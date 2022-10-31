@@ -157,7 +157,7 @@ extension VoiceRoomViewController: RCSRUserOperationProtocol {
         guard let user = seatList[Int(seatIndex)].seatUser else {
             return
         }
-        RCVoiceRoomEngine.sharedInstance().kickUser(fromRoom: user.userId, content: "") { result in
+        RCVoiceRoomEngine.sharedInstance().kickUser(fromSeat: user.userId, content: "乱说话") { result in
             if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
                 SVProgressHUD.showSuccess(withStatus: "发送下麦通知成功")
             } else {

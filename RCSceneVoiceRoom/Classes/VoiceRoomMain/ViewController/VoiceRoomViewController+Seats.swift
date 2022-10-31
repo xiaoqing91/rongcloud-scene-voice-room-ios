@@ -50,11 +50,6 @@ extension VoiceRoomViewController {
 extension VoiceRoomViewController {
 
     func updateChangesWithSeatUser() {
-        if let seatInfo = seatList.first {
-            ownerView.updateOwner(seatInfo: seatInfo)
-            ownerView.updateGiftVales(giftValues: userGiftInfo)
-        }
-        
         /// 当麦位数量变化时，触发连麦用户下麦，需要更新状态
         if roomState.connectState == .connecting {
             roomState.connectState = isSitting() ? .connecting : .request
@@ -172,16 +167,8 @@ extension VoiceRoomViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(for: indexPath, cellType: VoiceRoomSeatCollectionViewCell.self)
-        
         let seatIndex = indexPath.row + 1
-        
-        var user: RCVoiceUserInfo? = nil
-        let firstIndex = self.onSeatUsers.firstIndex { $0.seatIndex == seatIndex }
-        if let firstIndex = firstIndex {
-            user = self.onSeatUsers[firstIndex]
-        }
         cell.update(seatInfo: seatList[seatIndex],
-                    seatUser: user,
                     index: seatIndex,
                     managers: managers,
                     giftValues: userGiftInfo)

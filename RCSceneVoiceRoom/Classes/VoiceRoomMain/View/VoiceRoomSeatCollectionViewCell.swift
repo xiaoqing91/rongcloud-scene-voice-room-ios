@@ -160,12 +160,12 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         radarView.stop()
     }
     
-    func update(seatInfo: RCVoiceSeatInfo, seatUser: RCVoiceUserInfo?, index: Int, managers: [RCSceneRoomUser], giftValues: [String: Int]) {
+    func update(seatInfo: RCVoiceSeatInfo, index: Int, managers: [RCSceneRoomUser], giftValues: [String: Int]) {
         self.seatInfo = seatInfo
-        self.seatUser = seatUser
+        self.seatUser = seatInfo.seatUser
         
         var userExist = false
-        if let user = seatUser {
+        if let user = self.seatUser {
             userExist = true
             starImageView.isHidden = !(managers.contains { $0.userId == user.userId })
             RCSceneUserManager.shared.fetchUserInfo(userId: user.userId) { [weak self] user in

@@ -36,7 +36,6 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     
     func seatInfoDidUpdate(_ seatInfolist: [RCVoiceSeatInfo]) {
         seatList = seatInfolist
-        print("seatinlist count is \(seatInfolist.count)")
         self.updateChangesWithSeatUser()
     }
     
@@ -48,6 +47,11 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
             self.roomContainerAction?.enableSwitchRoom()
         }
         self.onSeatUsers = seatUserlist;
+        
+        if let seatInfo = seatList.first {
+            ownerView.updateOwner(seatInfo: seatInfo)
+            ownerView.updateGiftVales(giftValues: userGiftInfo)
+        }
         self.updateChangesWithSeatUser()
     }
 
@@ -202,7 +206,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     }
     
     /// 邀请得到响应
-    func invitationDidRespones(_ isAccept: Bool, invitationId: String, content: String) {
+    func invitationDidResponse(_ isAccept: Bool, invitationId: String, content: String) {
         if isAccept {
             SVProgressHUD.showSuccess(withStatus: "用户同意邀请")
         } else {

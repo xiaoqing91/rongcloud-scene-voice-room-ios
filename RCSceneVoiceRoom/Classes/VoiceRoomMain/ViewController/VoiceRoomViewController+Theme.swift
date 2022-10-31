@@ -6,6 +6,7 @@
 //
 
 import Kingfisher
+import Foundation
 
 extension VoiceRoomViewController {
     @_dynamicReplacement(for: setupModules)
@@ -13,17 +14,17 @@ extension VoiceRoomViewController {
         setupModules()
         
         NotificationNameRoomBackgroundUpdated
-            .addObserver(self, selector: #selector(onBackgroundChanged))
+            .addObserver(self, selector: #selector(onBackgroundChanged(_:)))
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.onBackgroundChanged()
-        }
+        let imageURL = URL(string: voiceRoomInfo.backgroundUrl ?? "")
+        backgroundImageView.kf.setImage(with: imageURL, options: [.memoryCacheExpiration(.expired)])
     }
     
     @objc
-    private func onBackgroundChanged() {
+    private func onBackgroundChanged(_ notification: NSNotification) {
         if RCSceneVoiceRoomEnableSwitchableBackgroundImage { return }
-        let imageURL = URL(string: voiceRoomInfo.backgroundUrl ?? "")
+        let obj = notification.object as? (String, String)
+        let imageURL = URL(string: obj?.1 ?? "")
         backgroundImageView.kf.setImage(with: imageURL, options: [.memoryCacheExpiration(.expired)])
     }
 }

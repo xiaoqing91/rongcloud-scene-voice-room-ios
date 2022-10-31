@@ -131,7 +131,7 @@ extension VoiceRoomViewController: HandleRequestSeatProtocol {
             return
         }
         
-        RCVoiceRoomEngine.sharedInstance().sendInvitation(userId, content: "pick_user_to_seat") {
+        RCVoiceRoomEngine.sharedInstance().sendInvitation(userId, content: RCPickerUserSeatContent) {
             result in
             if result.code == RCVoiceRoomErrorCode.roomSuccess.rawValue {
                 SVProgressHUD.showSuccess(withStatus: "已邀请上麦")

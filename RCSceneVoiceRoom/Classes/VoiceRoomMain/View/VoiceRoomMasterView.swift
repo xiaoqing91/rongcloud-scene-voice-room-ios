@@ -123,7 +123,11 @@ class VoiceRoomMasterView: UIView {
 
         if let seatUser = seatInfo.seatUser {
             RCSceneUserManager.shared.fetchUserInfo(userId: seatUser.userId) { [weak self] user in
-                self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
+                if user.portraitUrl.isEmpty {
+                    self?.avatarImageView.image = RCSCAsset.Images.defaultAvatar.image
+                } else {
+                    self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image)
+                }
                 self?.nameLabel.text = user.userName
             }
             borderImageView.isHidden = false
