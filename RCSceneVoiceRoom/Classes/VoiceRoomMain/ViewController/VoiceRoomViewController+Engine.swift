@@ -137,7 +137,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
         }
     }
     
-    func kickSeatDidReceive(_ seatIndex: UInt, userId: String, content: String) {
+    func kickSeatDidReceive(_ seatIndex: UInt, userId: String, content: String?) {
         SVProgressHUD.showSuccess(withStatus: "您已被抱下麦")
         if currentUserRole() == .creator {
             RCSceneMusic.stop()
@@ -206,7 +206,7 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
     }
     
     /// 邀请得到响应
-    func invitationDidResponse(_ isAccept: Bool, invitationId: String, content: String) {
+    func invitationDidResponse(_ isAccept: Bool, invitationId: String, content: String?) {
         if isAccept {
             SVProgressHUD.showSuccess(withStatus: "用户同意邀请")
         } else {

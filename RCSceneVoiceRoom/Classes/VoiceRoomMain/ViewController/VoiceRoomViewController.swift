@@ -92,6 +92,7 @@ class VoiceRoomViewController: UIViewController {
         roomState = RoomSettingState(room: roomInfo)
         super.init(nibName: nil, bundle: nil)
         hidesBottomBarWhenPushed = true
+        RCVoiceRoomEngine.sharedInstance().version2Compatible = true
         RCVoiceRoomEngine.sharedInstance().setDelegate(self)
         /**TO BE FIX 后续用新的router替换*/
         Router.default.setupAppNavigation(appNavigation: RCAppNavigation())
