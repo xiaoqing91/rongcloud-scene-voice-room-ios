@@ -181,7 +181,7 @@ class VoiceRoomViewController: UIViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(ownerView.snp.bottom).offset(20.resize)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(220.resize)
+            $0.height.equalTo(230)
         }
         
         moreButton.snp.makeConstraints {
