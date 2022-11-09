@@ -44,11 +44,10 @@ class VoiceRoomViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 8
-        layout.minimumInteritemSpacing = 0
         let instance = UICollectionView(frame: .zero, collectionViewLayout: layout)
         instance.register(cellType: VoiceRoomSeatCollectionViewCell.self)
         instance.backgroundColor = .clear
-        instance.contentInset = UIEdgeInsets(top: 0, left: 23.resize, bottom: 0, right: 23.resize)
+        instance.contentInset = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
         instance.isScrollEnabled = false
         instance.showsVerticalScrollIndicator = false
         return instance
@@ -182,7 +181,7 @@ class VoiceRoomViewController: UIViewController {
         collectionView.snp.makeConstraints {
             $0.top.equalTo(ownerView.snp.bottom).offset(20.resize)
             $0.left.right.equalToSuperview()
-            $0.height.equalTo(200)
+            $0.height.equalTo(220.resize)
         }
         
         moreButton.snp.makeConstraints {

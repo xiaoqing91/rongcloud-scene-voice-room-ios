@@ -7,7 +7,7 @@
 
 import SVProgressHUD
 
-extension VoiceRoomViewController {    
+extension VoiceRoomViewController {
     @_dynamicReplacement(for: managers)
     private var seats_managers: [RCSceneRoomUser] {
         get { managers }
@@ -235,11 +235,11 @@ extension VoiceRoomViewController: UICollectionViewDelegate {
 
 extension VoiceRoomViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 60.resize, height: 90.resize)
+        return CGSize(width: 60, height: 90)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        let width = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
-        return floor((width - (56.resize + 4) * 4)/3)
+        let width = collectionView.bounds.width - collectionView.contentInset.left * 2
+        return floor((width - 60 * 4) / 3)
     }
 }

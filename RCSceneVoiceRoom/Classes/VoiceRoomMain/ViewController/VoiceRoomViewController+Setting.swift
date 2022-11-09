@@ -193,10 +193,10 @@ extension VoiceRoomViewController {
                 if response.validate() {
                     SVProgressHUD.showSuccess(withStatus: "更新房间名称成功")
                     if let roomInfo = self.kvRoomInfo {
-                        roomInfo.roomName = name
-                        RCVoiceRoomEngine.sharedInstance().setRoomInfo(roomInfo) {
-                        } error: { code, msg in
-                        }
+                        roomInfo.roomName = name;
+                        self.voiceRoomInfo.roomName = name
+                        self.roomInfoView.updateRoom(info: self.voiceRoomInfo)
+                        RCVoiceRoomEngine.sharedInstance().setRoomInfo(roomInfo) { _ in }
                     }
                 } else {
                     SVProgressHUD.showError(withStatus: response.msg ?? "更新房间名称失败")
