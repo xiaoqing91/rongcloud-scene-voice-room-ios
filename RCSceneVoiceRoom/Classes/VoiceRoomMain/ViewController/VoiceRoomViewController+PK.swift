@@ -462,8 +462,7 @@ extension VoiceRoomViewController: OnlineRoomCreatorDelegate {
         voiceRoomService.isPK(roomId: roomId) { result in
             switch result {
             case .success(let response):
-                guard
-                    let status = try? JSONDecoder().decode(RCSceneWrapper<Bool>.self, from: response.data),
+                guard let status = try? JSONDecoder().decode(RCSceneWrapper<Bool>.self, from: response.data),
                         status.data == false
                 else {
                     return SVProgressHUD.showError(withStatus: "对方正在PK中")

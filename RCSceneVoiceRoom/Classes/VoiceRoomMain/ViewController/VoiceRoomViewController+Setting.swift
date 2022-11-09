@@ -132,6 +132,7 @@ extension VoiceRoomViewController {
         if let kvRoom = kvRoomInfo {
             kvRoom.isFreeEnterSeat = isFree
             RCVoiceRoomEngine.sharedInstance().setRoomInfo(kvRoom) {
+                self.roomState.isFreeEnterSeat = isFree;
                 SVProgressHUD.showSuccess(withStatus: isFree ? "当前观众可自由上麦" : "当前观众上麦要申请")
             } error: { code, msg in
                 SVProgressHUD.showError(withStatus: msg)
