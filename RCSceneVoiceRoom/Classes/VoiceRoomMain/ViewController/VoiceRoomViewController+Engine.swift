@@ -47,11 +47,6 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
             self.roomContainerAction?.enableSwitchRoom()
         }
         self.onSeatUsers = seatUserlist;
-        
-        if let seatInfo = seatList.first {
-            ownerView.updateOwner(seatInfo: seatInfo)
-            ownerView.updateGiftVales(giftValues: userGiftInfo)
-        }
         self.updateChangesWithSeatUser()
     }
 

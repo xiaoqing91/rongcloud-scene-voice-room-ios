@@ -56,6 +56,10 @@ extension VoiceRoomViewController {
         } else if isSitting() {
             micButton.micState = voiceRoomInfo.isOwner ? .user : .connecting
         }
+        if let seatInfo = seatList.first {
+            ownerView.updateOwner(seatInfo: seatInfo)
+            ownerView.updateGiftVales(giftValues: userGiftInfo)
+        }
         collectionView.reloadData()
     }
     
