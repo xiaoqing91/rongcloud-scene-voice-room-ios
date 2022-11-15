@@ -18,14 +18,14 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         ]
         instance.startPoint = CGPoint(x: 0, y: 0)
         instance.endPoint = CGPoint(x: 1, y: 1)
-        instance.cornerRadius = 29.resize
+        instance.cornerRadius = 28
         instance.masksToBounds = true
         return instance
     }()
     private lazy var radarView: Pulsator = {
         let instance = Pulsator()
         instance.numPulse = 4
-        instance.radius = 60.resize
+        instance.radius = 45
         instance.animationDuration = 1.5
         instance.backgroundColor = UIColor(hexString: "#FF69FD").cgColor
         return instance
@@ -33,8 +33,6 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     private lazy var avatarImageView: UIImageView = {
         let instance = UIImageView()
         instance.contentMode = .scaleAspectFill
-        instance.clipsToBounds = true
-        instance.layer.cornerRadius = 28.resize
         instance.image = RCSCAsset.Images.circleBg.image
         return instance
     }()
@@ -68,6 +66,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     }()
     private lazy var starImageView: UIImageView = {
         let instance = UIImageView(image: RCSCAsset.Images.fullStar.image)
+        instance.isHidden = true
         return instance
     }()
     private lazy var seatView: SeatIndexView = {
@@ -86,6 +85,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     override init(frame: CGRect) {
         super.init(frame: frame)
         layer.addSublayer(radarView)
+        contentView.addSubview(statusImageView)
         contentView.addSubview(avatarImageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(giftView)
@@ -93,12 +93,16 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         contentView.addSubview(seatViewContainer)
         contentView.addSubview(starImageView)
         contentView.addSubview(borderImageView)
+
         seatViewContainer.addSubview(seatView)
-        avatarImageView.addSubview(statusImageView)
         
         avatarImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 56.resize, height: 56.resize))
-            $0.top.left.right.equalToSuperview().inset(2)
+            $0.size.equalTo(CGSize(width: 58, height: 58))
+            $0.center.equalToSuperview()
+        }
+        
+        statusImageView.snp.makeConstraints {
+            $0.center.equalTo(avatarImageView)
         }
         
         borderImageView.snp.makeConstraints { make in
@@ -132,10 +136,6 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
             $0.centerX.equalToSuperview()
         }
         
-        statusImageView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
         starImageView.snp.makeConstraints { make in
             make.right.equalTo(nameLabel.snp.left)
             make.centerY.equalTo(nameLabel)
@@ -146,7 +146,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     override func layoutSubviews() {
         super.layoutSubviews()
         radarView.position = avatarImageView.center
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: 58.resize, height: 58.resize)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 56, height: 56)
         gradientLayer.position = avatarImageView.center
     }
     
@@ -164,6 +164,9 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         self.seatInfo = seatInfo
         self.seatUser = seatInfo.seatUser
         
+        avatarImageView.image = RCSCAsset.Images.circleBg.image
+        statusImageView.image = seatInfo.isLocked ? RCSCAsset.Images.lockSeatIcon.image : RCSCAsset.Images.plusUserToSeatIcon.image
+        
         var userExist = false
         if let user = self.seatUser {
             userExist = true
@@ -172,33 +175,23 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
                 self?.nameLabel.text = user.userName
                 self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image, completionHandler: { result in
                     if self?.seatUser?.userId == user.userId { return }
-                    self?.avatarImageView.image = nil
+                    self?.avatarImageView.image = RCSCAsset.Images.circleBg.image
                 })
             }
             giftView.update(value: giftValues[user.userId] ?? 0)
-        } else {
-            statusImageView.image = RCSCAsset.Images.plusUserToSeatIcon.image
-            avatarImageView.image = RCSCAsset.Images.circleBg.image
-            starImageView.isHidden = true
         }
-        
-        if seatInfo.isLocked {
-            statusImageView.image = RCSCAsset.Images.lockSeatIcon.image
-        }
-        
-        
-        borderImageView.isHidden = !userExist
-        statusImageView.isHidden = userExist
-        giftView.isHidden = !userExist
-        seatViewContainer.isHidden = userExist
-        nameLabel.isHidden = !userExist
-        gradientLayer.isHidden = !userExist
-        
-        seatView.update(index: index)
         
         muteMicrophoneImageView.isHidden = !seatInfo.isMuted
         
-
+        borderImageView.isHidden = !userExist
+        gradientLayer.isHidden = !userExist
+        
+        giftView.isHidden = !userExist
+        seatViewContainer.isHidden = userExist
+        nameLabel.isHidden = !userExist
+        
+        seatView.update(index: index)
+        
         layer.insertSublayer(radarView, at: 0)
     }
     

@@ -266,14 +266,7 @@ extension VoiceRoomViewController {
         guard let seatCount = kvRoomInfo?.seatCount, seatCount >= 2 else {
             return
         }
-        let currentUserIndex = findSeatIndex() ?? 0
-        
-        let range = 0 ... 8
-        var seatIndexes = [Int](range)
-        seatIndexes.remove(at: currentUserIndex)
-        
-        let indexes = seatIndexes.map { NSNumber(value: $0) }
-        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: isLock) { _ in }
+        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
     }
     
     func getPKStatus() {

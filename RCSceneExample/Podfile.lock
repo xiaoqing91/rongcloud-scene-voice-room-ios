@@ -66,39 +66,39 @@ PODS:
   - RCSceneVoiceRoom (0.0.4.5):
     - Pulsator
     - RCSceneRoom/RCSceneAnalytics
-    - RCSceneRoom/RCSceneRoom (>= 0.0.4.5)
+    - RCSceneRoom/RCSceneRoom
     - RCVoiceRoomLib
   - RCVoiceRoomLib (3.0.0):
-    - RongCloudIM/ChatRoom
-    - RongCloudRTC/RongRTCLib
+    - RongCloudIM/ChatRoom (= 5.2.5)
+    - RongCloudRTC/RongRTCLib (= 5.2.5)
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
     - Reusable/Storyboard (= 4.1.2)
     - Reusable/View (= 4.1.2)
   - Reusable/Storyboard (4.1.2)
   - Reusable/View (4.1.2)
-  - RongCloudIM/ChatRoom (5.3.0):
+  - RongCloudIM/ChatRoom (5.2.5):
     - RongCloudIM/IMLibCore
-  - RongCloudIM/CustomerService (5.3.0):
+  - RongCloudIM/CustomerService (5.2.5):
     - RongCloudIM/IMLibCore
-  - RongCloudIM/Discussion (5.3.0):
+  - RongCloudIM/Discussion (5.2.5):
     - RongCloudIM/IMLibCore
-  - RongCloudIM/IMLib (5.3.0):
+  - RongCloudIM/IMLib (5.2.5):
     - RongCloudIM/ChatRoom
     - RongCloudIM/CustomerService
     - RongCloudIM/Discussion
     - RongCloudIM/IMLibCore
     - RongCloudIM/PublicService
-  - RongCloudIM/IMLibCore (5.3.0)
-  - RongCloudIM/PublicService (5.3.0):
+  - RongCloudIM/IMLibCore (5.2.5)
+  - RongCloudIM/PublicService (5.2.5):
     - RongCloudIM/IMLibCore
-  - RongCloudOpenSource/IMKit (5.3.0):
-    - RongCloudIM/IMLib (= 5.3.0)
-  - RongCloudRTC/RongRTCLib (5.3.0.1):
-    - RongCloudIM/IMLibCore (>= 5.3.0)
-  - SDWebImage (5.14.0):
-    - SDWebImage/Core (= 5.14.0)
-  - SDWebImage/Core (5.14.0)
+  - RongCloudOpenSource/IMKit (5.2.5):
+    - RongCloudIM/IMLib (= 5.2.5)
+  - RongCloudRTC/RongRTCLib (5.2.5):
+    - RongCloudIM/IMLibCore (>= 5.2.5)
+  - SDWebImage (5.14.2):
+    - SDWebImage/Core (= 5.14.2)
+  - SDWebImage/Core (5.14.2)
   - SensorsAnalyticsSDK (4.4.8):
     - SensorsAnalyticsSDK/Core (= 4.4.8)
   - SensorsAnalyticsSDK/__Store (4.4.8)
@@ -165,20 +165,20 @@ SPEC CHECKSUMS:
   RCMusicControlKit: 79841e9b266ceccf380bf6a1c2fdec08723d2604
   RCSceneChatroomKit: 86d8c5ead5c2cb10efce95d3eea2e854e55b7942
   RCSceneRoom: 3fc1ad5a2cd1075436287a45f2e975c69dc14440
-  RCSceneVoiceRoom: 6ef46e7c34151a4bfeb982c24066d3877ac8ff4a
-  RCVoiceRoomLib: 9809c710009d38a98607e2caa0db1a0b9b5f8b5d
+  RCSceneVoiceRoom: 4ca87c79cec96d3b8b9588f890f64f2a13ca34ea
+  RCVoiceRoomLib: 0cd89adf3d098a6ff09b19f32bb415eb19df2a39
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
-  RongCloudIM: c11bd79157387337cc891b064b746efc92aa5d71
-  RongCloudOpenSource: 6c8e17fee61a22f7a38da0a7227357b6569ea952
-  RongCloudRTC: 1a9ebbc622ad499eadc54fb08314d34d5030c856
-  SDWebImage: 9e391cf38577742f501055dca17e4987f6713fe1
+  RongCloudIM: 4c3befbe6e9dd813a87c499c81fb2eac54c354b3
+  RongCloudOpenSource: 6449646f6d85cbd26d50d8d52fd75bd54b9e0bd5
+  RongCloudRTC: 4ddffa66488977243b32e92923f03af9423b4f29
+  SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
   SensorsAnalyticsSDK: b7ea1ff39a29ebb33252de20f1e227c0275e1f8b
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 9e36d864eea2fae77fda957cb70d3ba9c01bd2f3
+PODFILE CHECKSUM: 13686695ac1a99ff8d4ca7b4a946bad5822457db
 
 COCOAPODS: 1.11.3

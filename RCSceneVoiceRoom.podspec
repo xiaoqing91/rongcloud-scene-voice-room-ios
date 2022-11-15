@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   # 5 - dependency
   s.dependency 'Pulsator'
   s.dependency 'RCVoiceRoomLib'
-  s.dependency 'RCSceneRoom/RCSceneRoom', '>= 0.0.4.5'
+  s.dependency 'RCSceneRoom/RCSceneRoom'
   s.dependency 'RCSceneRoom/RCSceneAnalytics'
   
 end

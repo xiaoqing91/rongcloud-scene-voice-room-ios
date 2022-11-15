@@ -15,7 +15,7 @@ extension VoiceRoomViewController {
 }
 
 //MARK: - Voice Room Delegate
-extension VoiceRoomViewController: RCVoiceRoomDelegate {
+extension VoiceRoomViewController: RCVoiceRoomDelegate, RCVoiceRoomDelegate_DP_2_X {
     func roomDidOccurError(withDetails error: RCVoiceRoomError) {
         SVProgressHUD.showError(withStatus: error.message)
     }
@@ -89,20 +89,20 @@ extension VoiceRoomViewController: RCVoiceRoomDelegate {
             print("userId:\(userId),audioLevel:\(level)")
         }
     }
-
+    
+    
     func seatSpeakingStateChanged(_ speaking: Bool, at index: Int, audioLevel level: Int) {
-        let isSpeaking = level > 4
-        if isSpeaking {
+        if speaking {
             print("index:\(index),audioLevel:\(level)")
         }
         if index == 0 {
-            ownerView.setSpeakingState(isSpeaking: isSpeaking)
+            ownerView.setSpeakingState(isSpeaking: speaking)
             if let fm = self.floatingManager {
                 fm.setSpeakingState(isSpeaking: speaking)
             }
         } else {
             if let cell = collectionView.cellForItem(at: IndexPath(item: Int(index - 1), section: 0)) as? VoiceRoomSeatCollectionViewCell {
-                cell.setSpeakingState(isSpeaking: isSpeaking)
+                cell.setSpeakingState(isSpeaking: speaking)
             }
         }
     }

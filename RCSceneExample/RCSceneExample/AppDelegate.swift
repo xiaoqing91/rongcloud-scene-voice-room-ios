@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        SVProgressHUD.setMaximumDismissTimeInterval(1.3)
+        SVProgressHUD.setMaximumDismissTimeInterval(1.2)
         
         AppConfigs.config()
         
