@@ -33,6 +33,8 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     private lazy var avatarImageView: UIImageView = {
         let instance = UIImageView()
         instance.contentMode = .scaleAspectFill
+        instance.clipsToBounds = true
+        instance.layer.cornerRadius = 28
         instance.image = RCSCAsset.Images.circleBg.image
         return instance
     }()
