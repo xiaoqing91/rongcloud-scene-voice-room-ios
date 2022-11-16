@@ -100,7 +100,7 @@ extension VoiceRoomViewController {
             self.presentedViewController?.dismiss(animated: true, completion: nil)
             self.pkView.beginPK(info: info, timeDiff: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId, currentRoomId: self.voiceRoomInfo.roomId)
          
-            lockAllRoomAudienceToLeaveSeat()
+            forceLockOthers(isLock: true)
         }
         if pkStatus == 1 {
             self.pkView.beginPunishment(passedSeconds: timeDiff/1000, currentRoomOwnerId: self.voiceRoomInfo.userId)
@@ -132,9 +132,7 @@ extension VoiceRoomViewController {
             case .audience:
                 ()
             }
-            if self.currentUserRole() == .creator {
-                forceLockOthers(isLock: false)
-            }
+            forceLockOthers(isLock: false)
         }
     }
     
@@ -153,10 +151,6 @@ extension VoiceRoomViewController {
         }
     }
     
-    private func lockAllRoomAudienceToLeaveSeat() {
-        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(true)
-    }
-
     private func showPKInvite(roomId: String, userId: String) {
         let vc = UIAlertController(title: "是否接受PK邀请(10)", message: nil, preferredStyle: .alert)
         vc.addAction(UIAlertAction(title: "同意", style: .default, handler: { _ in
@@ -254,7 +248,9 @@ extension VoiceRoomViewController {
     }
     
     private func forceLockOthers(isLock: Bool) {
-        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
+        if self.currentUserRole() == .creator {
+            RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
+        }
     }
     
     func getPKStatus() {
@@ -428,9 +424,7 @@ extension VoiceRoomViewController {
 
     func pkDidFinish() {
         self.roomState.pkConnectState = .request
-        if self.currentUserRole() == .creator {
-            forceLockOthers(isLock: false)
-        }
+        forceLockOthers(isLock: false)
     }
 }
 
