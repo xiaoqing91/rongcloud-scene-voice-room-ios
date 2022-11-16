@@ -98,7 +98,8 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         
         avatarImageView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 58, height: 58))
-            $0.center.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-10)
         }
         
         statusImageView.snp.makeConstraints {
@@ -110,7 +111,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(avatarImageView.snp.bottom).offset(8)
+            $0.top.equalTo(avatarImageView.snp.bottom).offset(2)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(14)
         }
@@ -118,7 +119,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         giftView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(nameLabel.snp.bottom).offset(2)
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(12)
         }
         
         muteMicrophoneImageView.snp.makeConstraints {
@@ -126,8 +127,9 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         }
         
         seatViewContainer.snp.makeConstraints {
+            $0.top.equalTo(nameLabel)
+            $0.left.right.equalToSuperview()
             $0.height.equalTo(14)
-            $0.left.right.bottom.equalToSuperview()
         }
         
         seatView.snp.makeConstraints {
