@@ -9,6 +9,8 @@ target 'RCSceneExample' do
   
   # Pods for RCSceneExample
   pod 'RCSceneVoiceRoom', :path => '../'
+#  pod 'RCSceneRoom', :path => '../../rongcloud-scene-room-ios'
+  pod 'RCVoiceRoomLib', :path => '../../../gerrit-repo/rcvoiceroomlib-ios-2x'
   
 end
 

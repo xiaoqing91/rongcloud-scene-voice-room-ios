@@ -46,11 +46,10 @@ class VoiceRoomViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 8
-        layout.minimumInteritemSpacing = 0
         let instance = UICollectionView(frame: .zero, collectionViewLayout: layout)
         instance.register(cellType: VoiceRoomSeatCollectionViewCell.self)
         instance.backgroundColor = .clear
-        instance.contentInset = UIEdgeInsets(top: 20, left: 23.resize, bottom: 20, right: 23.resize)
+        instance.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         instance.isScrollEnabled = false
         instance.showsVerticalScrollIndicator = false
         return instance

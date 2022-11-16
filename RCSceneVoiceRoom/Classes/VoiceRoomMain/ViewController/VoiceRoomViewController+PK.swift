@@ -276,9 +276,6 @@ extension VoiceRoomViewController {
     }
     
     private func forceLockOthers(isLock: Bool) {
-        guard let seatCount = kvRoomInfo?.seatCount, seatCount >= 2 else {
-            return
-        }
         RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
     }
     

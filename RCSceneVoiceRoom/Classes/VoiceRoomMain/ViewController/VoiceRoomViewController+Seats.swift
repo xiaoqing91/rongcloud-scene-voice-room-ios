@@ -235,11 +235,11 @@ extension VoiceRoomViewController: UICollectionViewDelegate {
 
 extension VoiceRoomViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 56.resize + 4, height: 56.resize + 40)
+        return CGSize(width: 70, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        let width = collectionView.bounds.width - collectionView.contentInset.left - collectionView.contentInset.right
-        return floor((width - (56.resize + 4) * 4)/3)
+        let width = collectionView.bounds.width - collectionView.contentInset.left * 2
+        return floor((width - 70 * 4) / 3)
     }
 }

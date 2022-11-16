@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   
   # 1 - Info
   s.name             = 'RCSceneVoiceRoom'
-  s.version          = '0.0.4.5'
+  s.version          = '0.0.4.6'
   s.summary          = 'Scene Voice Room'
   s.description      = "Scene Voice Room module"
   s.homepage         = 'https://github.com/rongcloud'
@@ -30,7 +30,7 @@ Pod::Spec.new do |s|
   # 5 - dependency
   s.dependency 'Pulsator'
   s.dependency 'RCVoiceRoomLib'
-  s.dependency 'RCSceneRoom/RCSceneRoom', '>= 0.0.4.5'
+  s.dependency 'RCSceneRoom/RCSceneRoom'
   s.dependency 'RCSceneRoom/RCSceneAnalytics'
   
 end

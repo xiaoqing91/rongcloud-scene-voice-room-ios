@@ -18,14 +18,14 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         ]
         instance.startPoint = CGPoint(x: 0, y: 0)
         instance.endPoint = CGPoint(x: 1, y: 1)
-        instance.cornerRadius = 29.resize
+        instance.cornerRadius = 28
         instance.masksToBounds = true
         return instance
     }()
     private lazy var radarView: Pulsator = {
         let instance = Pulsator()
         instance.numPulse = 4
-        instance.radius = 60.resize
+        instance.radius = 45
         instance.animationDuration = 1.5
         instance.backgroundColor = UIColor(hexString: "#FF69FD").cgColor
         return instance
@@ -33,8 +33,6 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     private lazy var avatarImageView: UIImageView = {
         let instance = UIImageView()
         instance.contentMode = .scaleAspectFill
-        instance.clipsToBounds = true
-        instance.layer.cornerRadius = 28.resize
         instance.image = RCSCAsset.Images.circleBg.image
         return instance
     }()
@@ -96,8 +94,9 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         avatarImageView.addSubview(statusImageView)
         
         avatarImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 56.resize, height: 56.resize))
-            $0.top.left.right.equalToSuperview().inset(2)
+            $0.size.equalTo(CGSize(width: 58, height: 58))
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-10)
         }
         
         borderImageView.snp.makeConstraints { make in
@@ -105,7 +104,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(avatarImageView.snp.bottom).offset(8)
+            $0.top.equalTo(avatarImageView.snp.bottom).offset(2)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(14)
         }
@@ -113,7 +112,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         giftView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(nameLabel.snp.bottom).offset(2)
-            $0.bottom.equalToSuperview()
+            $0.height.equalTo(12)
         }
         
         muteMicrophoneImageView.snp.makeConstraints {
@@ -122,8 +121,8 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         
         seatViewContainer.snp.makeConstraints {
             $0.top.equalTo(nameLabel)
-            $0.bottom.equalTo(giftView)
             $0.left.right.equalToSuperview()
+            $0.height.equalTo(14)
         }
         
         seatView.snp.makeConstraints {
@@ -145,7 +144,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
     override func layoutSubviews() {
         super.layoutSubviews()
         radarView.position = avatarImageView.center
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: 58.resize, height: 58.resize)
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 56, height: 56)
         gradientLayer.position = avatarImageView.center
     }
     
@@ -186,7 +185,7 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
                 self?.nameLabel.text = user.userName
                 self?.avatarImageView.kf.setImage(with: URL(string: user.portraitUrl), placeholder: RCSCAsset.Images.defaultAvatar.image, completionHandler: { result in
                     if self?.seatInfo?.userId == seatInfo.userId { return }
-                    self?.avatarImageView.image = nil
+                    self?.avatarImageView.image = RCSCAsset.Images.circleBg.image
                 })
             }
             giftView.update(value: giftValues[userId] ?? 0)

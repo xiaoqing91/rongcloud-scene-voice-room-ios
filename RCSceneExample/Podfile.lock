@@ -21,58 +21,56 @@ PODS:
     - Masonry
     - RCCoreKit
     - YYModel
-  - RCSceneRoom (0.0.4.5):
-    - RCSceneRoom/RCSceneRoom (= 0.0.4.5)
-  - RCSceneRoom/RCSceneAnalytics (0.0.4.5):
+  - RCSceneRoom/RCSceneAnalytics (0.0.4.6):
     - RCSceneRoom/RCSceneRoomSetting
     - SensorsAnalyticsSDK
-  - RCSceneRoom/RCSceneGift (0.0.4.5):
+  - RCSceneRoom/RCSceneGift (0.0.4.6):
     - Kingfisher
     - RCSceneRoom/RCSceneMessage
     - RCSceneRoom/RCSceneService
     - Reusable
     - SnapKit
     - SVProgressHUD
-  - RCSceneRoom/RCSceneMessage (0.0.4.5):
+  - RCSceneRoom/RCSceneMessage (0.0.4.6):
     - RongCloudIM/IMLib
-  - RCSceneRoom/RCSceneMusic (0.0.4.5):
+  - RCSceneRoom/RCSceneMusic (0.0.4.6):
     - RCMusicControlKit
     - RCSceneRoom/RCSceneMessage
     - RCSceneRoom/RCSceneService
     - RongCloudRTC/RongRTCLib (>= 5.2.5)
     - SVProgressHUD
-  - RCSceneRoom/RCSceneRoom (0.0.4.5):
+  - RCSceneRoom/RCSceneRoom (0.0.4.6):
     - RCSceneChatroomKit
     - RCSceneRoom/RCSceneGift
     - RCSceneRoom/RCSceneMusic
     - RCSceneRoom/RCSceneRoomSetting
     - RCSceneRoom/RCSRChat
-  - RCSceneRoom/RCSceneRoomSetting (0.0.4.5):
+  - RCSceneRoom/RCSceneRoomSetting (0.0.4.6):
     - RCSceneRoom/RCSceneService
     - RCSceneRoom/RCSRPassword
     - Reusable
-  - RCSceneRoom/RCSceneService (0.0.4.5):
+  - RCSceneRoom/RCSceneService (0.0.4.6):
     - RCSceneRoom/RCSRBase
     - ReachabilitySwift
-  - RCSceneRoom/RCSRAssets (0.0.4.5)
-  - RCSceneRoom/RCSRBase (0.0.4.5):
+  - RCSceneRoom/RCSRAssets (0.0.4.6)
+  - RCSceneRoom/RCSRBase (0.0.4.6):
     - Moya
-  - RCSceneRoom/RCSRChat (0.0.4.5):
+  - RCSceneRoom/RCSRChat (0.0.4.6):
     - RCSceneRoom/RCSceneService
     - RongCloudOpenSource/IMKit
     - SVProgressHUD
-  - RCSceneRoom/RCSRPassword (0.0.4.5):
+  - RCSceneRoom/RCSRPassword (0.0.4.6):
     - RCSceneRoom/RCSRAssets
     - RCSceneRoom/RCSRBase
     - SnapKit
-  - RCSceneVoiceRoom (0.0.4.1):
+  - RCSceneVoiceRoom (0.0.4.6):
     - Pulsator
     - RCSceneRoom/RCSceneAnalytics
     - RCSceneRoom/RCSceneRoom
     - RCVoiceRoomLib
-  - RCVoiceRoomLib (2.1.0.1):
-    - RongCloudIM/ChatRoom
-    - RongCloudRTC/RongRTCLib
+  - RCVoiceRoomLib (2.1.2):
+    - RongCloudIM/ChatRoom (= 5.2.5)
+    - RongCloudRTC/RongRTCLib (= 5.2.5)
   - ReachabilitySwift (5.0.0)
   - Reusable (4.1.2):
     - Reusable/Storyboard (= 4.1.2)
@@ -98,24 +96,24 @@ PODS:
     - RongCloudIM/IMLib (= 5.2.5)
   - RongCloudRTC/RongRTCLib (5.2.5):
     - RongCloudIM/IMLibCore (>= 5.2.5)
-  - SDWebImage (5.13.2):
-    - SDWebImage/Core (= 5.13.2)
-  - SDWebImage/Core (5.13.2)
-  - SensorsAnalyticsSDK (4.4.4):
-    - SensorsAnalyticsSDK/Core (= 4.4.4)
-  - SensorsAnalyticsSDK/__Store (4.4.4)
-  - SensorsAnalyticsSDK/AutoTrack (4.4.4):
+  - SDWebImage (5.14.2):
+    - SDWebImage/Core (= 5.14.2)
+  - SDWebImage/Core (5.14.2)
+  - SensorsAnalyticsSDK (4.4.8):
+    - SensorsAnalyticsSDK/Core (= 4.4.8)
+  - SensorsAnalyticsSDK/__Store (4.4.8)
+  - SensorsAnalyticsSDK/AutoTrack (4.4.8):
     - SensorsAnalyticsSDK/Common
-  - SensorsAnalyticsSDK/Base (4.4.4):
+  - SensorsAnalyticsSDK/Base (4.4.8):
     - SensorsAnalyticsSDK/__Store
-  - SensorsAnalyticsSDK/Common (4.4.4):
+  - SensorsAnalyticsSDK/Common (4.4.8):
     - SensorsAnalyticsSDK/Extension
-  - SensorsAnalyticsSDK/Core (4.4.4):
+  - SensorsAnalyticsSDK/Core (4.4.8):
     - SensorsAnalyticsSDK/Common
     - SensorsAnalyticsSDK/Visualized
-  - SensorsAnalyticsSDK/Extension (4.4.4):
+  - SensorsAnalyticsSDK/Extension (4.4.8):
     - SensorsAnalyticsSDK/Base
-  - SensorsAnalyticsSDK/Visualized (4.4.4):
+  - SensorsAnalyticsSDK/Visualized (4.4.8):
     - SensorsAnalyticsSDK/AutoTrack
   - SnapKit (5.6.0)
   - SSZipArchive (2.4.3)
@@ -123,8 +121,8 @@ PODS:
   - YYModel (1.0.4)
 
 DEPENDENCIES:
-  - RCSceneRoom (from `../../rongcloud-scene-room-ios`)
   - RCSceneVoiceRoom (from `../`)
+  - RCVoiceRoomLib (from `../../../gerrit-repo/rcvoiceroomlib-ios-2x`)
 
 SPEC REPOS:
   trunk:
@@ -137,7 +135,7 @@ SPEC REPOS:
     - RCCoreKit
     - RCMusicControlKit
     - RCSceneChatroomKit
-    - RCVoiceRoomLib
+    - RCSceneRoom
     - ReachabilitySwift
     - Reusable
     - RongCloudIM
@@ -151,10 +149,10 @@ SPEC REPOS:
     - YYModel
 
 EXTERNAL SOURCES:
-  RCSceneRoom:
-    :path: "../../rongcloud-scene-room-ios"
   RCSceneVoiceRoom:
     :path: "../"
+  RCVoiceRoomLib:
+    :path: "../../../gerrit-repo/rcvoiceroomlib-ios-2x"
 
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
@@ -166,21 +164,21 @@ SPEC CHECKSUMS:
   RCCoreKit: 3f143441ac62880b454cca9066f526a27c45d4ce
   RCMusicControlKit: 79841e9b266ceccf380bf6a1c2fdec08723d2604
   RCSceneChatroomKit: 86d8c5ead5c2cb10efce95d3eea2e854e55b7942
-  RCSceneRoom: 4b28ec63e29bf376f9455a2f5a7fde0c4696a989
-  RCSceneVoiceRoom: 6f0b951eabcface9135af05596438d59b7b76039
-  RCVoiceRoomLib: 62466423d838616b1bdbd067184cbc7e34d13dee
+  RCSceneRoom: 3fc1ad5a2cd1075436287a45f2e975c69dc14440
+  RCSceneVoiceRoom: e24a5d0f09cd1dc5ed9184f55f3d7a0aa4199c41
+  RCVoiceRoomLib: 471cf593bd1aa4a88a11bd77f56aebf57460e3a3
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RongCloudIM: 4c3befbe6e9dd813a87c499c81fb2eac54c354b3
   RongCloudOpenSource: 6449646f6d85cbd26d50d8d52fd75bd54b9e0bd5
   RongCloudRTC: 4ddffa66488977243b32e92923f03af9423b4f29
-  SDWebImage: 72f86271a6f3139cc7e4a89220946489d4b9a866
-  SensorsAnalyticsSDK: 4277a63f9cd4797a9e311328fdedd3ad0d8b4576
+  SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
+  SensorsAnalyticsSDK: b7ea1ff39a29ebb33252de20f1e227c0275e1f8b
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SSZipArchive: fe6a26b2a54d5a0890f2567b5cc6de5caa600aef
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   YYModel: 2a7fdd96aaa4b86a824e26d0c517de8928c04b30
 
-PODFILE CHECKSUM: 9fad17614e3b8b131b44e5d3c564669988b83c3a
+PODFILE CHECKSUM: b7838a307d649a1862daf0d61a0e657a2cbdc3c1
 
 COCOAPODS: 1.11.3
