@@ -132,7 +132,6 @@ extension VoiceRoomViewController {
             case .audience:
                 ()
             }
-
             if self.currentUserRole() == .creator {
                 forceLockOthers(isLock: false)
             }
@@ -155,15 +154,7 @@ extension VoiceRoomViewController {
     }
     
     private func lockAllRoomAudienceToLeaveSeat() {
-        let currentUserIndex = findSeatIndex() ?? 0
-        
-        let range = 0 ... 8
-        var seatIndexes = [Int](range)
-        seatIndexes.remove(at: currentUserIndex)
-        
-        let indexes = seatIndexes.map { NSNumber(value: $0) }
-        RCVoiceRoomEngine.sharedInstance().lockSeat(indexes, lock: true) { _ in
-        }
+        RCVoiceRoomEngine.sharedInstance().lockOtherSeats(true)
     }
 
     private func showPKInvite(roomId: String, userId: String) {
@@ -263,9 +254,6 @@ extension VoiceRoomViewController {
     }
     
     private func forceLockOthers(isLock: Bool) {
-        guard let seatCount = kvRoomInfo?.seatCount, seatCount >= 2 else {
-            return
-        }
         RCVoiceRoomEngine.sharedInstance().lockOtherSeats(isLock)
     }
     

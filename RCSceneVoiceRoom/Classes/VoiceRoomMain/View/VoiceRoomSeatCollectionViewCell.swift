@@ -126,9 +126,8 @@ class VoiceRoomSeatCollectionViewCell: UICollectionViewCell, Reusable {
         }
         
         seatViewContainer.snp.makeConstraints {
-            $0.top.equalTo(nameLabel)
-            $0.bottom.equalTo(giftView)
-            $0.left.right.equalToSuperview()
+            $0.height.equalTo(14)
+            $0.left.right.bottom.equalToSuperview()
         }
         
         seatView.snp.makeConstraints {
